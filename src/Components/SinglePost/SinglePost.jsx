@@ -12,6 +12,7 @@ import {
     IoBookmark,
     IoHappyOutline } from "react-icons/io5"
 import PostOptionsV from "../PostOptions-V/PostOptionV"
+import PostOptionsO from "../PostOptions-O/PostOptionO"
 
 const SinglePost = () => {
     const [user, setUser] = useState()
@@ -21,6 +22,7 @@ const SinglePost = () => {
     
     <>
     <PostOptionsV show={showPopup} close={setPopup}/> {/*this needs to be moved in the homepage*/ }
+    {/*IF user is the owner of the post, use <PostOptionsO/> instead */}
     <div className='post-wrap'>
         
         {/*---------------------POST HEADER---------------------*/}
@@ -77,7 +79,7 @@ const SinglePost = () => {
             <div className="view-comments">View all comments</div>
             <div className="single-comment">
                 <div className="comment-infos">
-                    <div className="comment-author"><strong>*username*</strong></div>
+                    <div className="comment-author">*username*</div>
                     <div className="comment-text">This is a comment. I cannot believe this is a real comment. </div>
                 </div>
                 <IoHeartOutline className="comment-add-like"/>
