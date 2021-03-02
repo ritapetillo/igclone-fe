@@ -77,22 +77,22 @@ const Sidebar = () => {
               Woohoo, you're reading this text in a modal!
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
+            //   <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+            //   <Button variant="primary" onClick={handleClose}>
                 Save Changes
               </Button>
             </Modal.Footer> 
           </Modal>*/}
-        <div show={show} onHide={handleClose} className="Sidebar__modal">
+        {/* <div show={show} onHide={handleClose} className="Sidebar__modal">
           <div className="Sidebar__modal__header"></div>
-          <div className="Sidebar__modal__data">
             <img
               className="Sidebar__modal__avatar "
               src="https://i.pravatar.cc/300"
               alt="avatar placeholder"
             />
+          <div className="Sidebar__modal__data">
             <div>
               <h6>Username</h6>
               <p>name surname</p>
@@ -101,7 +101,7 @@ const Sidebar = () => {
           </div>
           <div className="Sidebar__modal__postPreview"></div>
           <div className="Sidebar__modal__footer"></div>
-        </div>
+        </div>*/}
       </Container>
     </div>
   );
