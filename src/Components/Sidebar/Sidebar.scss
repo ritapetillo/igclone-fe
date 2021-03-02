@@ -41,4 +41,21 @@
       background-color: transparent !important;
     }
   }
+
+  .Sidebar__modal {
+    border-radius: 18px;
+    border: 1px solid lightgrey;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.05);
+
+    .Sidebar__modal__avatar {
+      border: 1px solid lightgrey;
+      margin: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+    }
+  }
 }
