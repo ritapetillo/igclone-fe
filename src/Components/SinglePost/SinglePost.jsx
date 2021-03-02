@@ -18,6 +18,9 @@ const SinglePost = () => {
     const [user, setUser] = useState()
     const [show_more, setShow] = useState(false)
     const [showPopup, setPopup] = useState(false)
+    const [saved, setSaved] = useState(false)
+    const [like, setLike] = useState(false)
+    const [liked_comment, likeComment] = useState(false)
     return (
     
     <>
@@ -49,12 +52,12 @@ const SinglePost = () => {
         {/*---------------------POST INTERACTIONS---------------------*/}
         <div className='post-interactions'>
             <div className="like-comment-send">
-                <IoHeartOutline className="interaction-icon" />
+                {!like ? <IoHeartOutline className="interaction-icon" onClick={()=> setLike(!like)} /> : <IoHeartSharp className="interaction-icon" onClick={()=> setLike(!like)} /> }
                 <IoChatbubbleOutline className="interaction-icon" />
                 <IoPaperPlaneOutline className="interaction-icon" />
             </div>
             <div className="save-icon">
-                <IoBookmarkOutline className="interaction-icon" />
+                {!saved ? <IoBookmarkOutline className="interaction-icon" onClick={()=>setSaved(!saved)} /> : <IoBookmark className="interaction-icon" onClick={()=>setSaved(!saved)} />}
             </div>
         </div>
         {/*---------------------POST LIKES---------------------*/}
@@ -82,7 +85,7 @@ const SinglePost = () => {
                     <div className="comment-author">*username*</div>
                     <div className="comment-text">This is a comment. I cannot believe this is a real comment. </div>
                 </div>
-                <IoHeartOutline className="comment-add-like"/>
+                {!liked_comment ? <IoHeartOutline className="comment-add-like" onClick={()=> likeComment(!liked_comment)}/> : <IoHeartSharp className="comment-add-like" onClick={()=> likeComment(!liked_comment)} />}
 
             </div>
         </div>
@@ -90,6 +93,7 @@ const SinglePost = () => {
             1 hour ago
         </div>
         <div className="divider"></div>
+        {/*---------------------ADD COMMENT---------------------*/}
         <div className='post-add-comment'>
             <IoHappyOutline className="add-emoji"/>
             <input className="comment-input" placeholder="Add a comment"/>
