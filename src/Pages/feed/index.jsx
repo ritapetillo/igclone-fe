@@ -1,5 +1,16 @@
 import React from "react";
+import Sidebar from "../../Components/Sidebar";
 
-export const index = () => {
-  return <div>//story //core of the feed //sidebar</div>;
+const Feed = () => {
+  return (
+    <div>
+      {/* //story */}
+      {/*//core of the feed*/}
+
+      {/*sidebar */}
+      <Sidebar />
+    </div>
+  );
 };
+
+export default Feed;
