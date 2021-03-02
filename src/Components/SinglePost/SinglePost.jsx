@@ -22,7 +22,6 @@ const SinglePost = () => {
     const [like, setLike] = useState(false)
     const [liked_comment, likeComment] = useState(false)
     return (
-    
     <>
     <PostOptionsV show={showPopup} close={setPopup}/> {/*this needs to be moved in the homepage*/ }
     {/*IF user is the owner of the post, use <PostOptionsO/> instead */}
