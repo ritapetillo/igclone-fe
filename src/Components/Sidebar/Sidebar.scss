@@ -1,0 +1,44 @@
+@import "../../Styling/Variables";
+
+@use "../../Styling/Shapes" as shapes;
+
+.Sidebar__cointainer {
+  width: 250px;
+
+  .Sidebar__header {
+    .Sidebar__header__avatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+    }
+
+    .Sidebar__header__button {
+      color: $instagram-blue;
+      font-size: 12px;
+      font-weight: 700;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background-color: transparent !important;
+    }
+  }
+
+  .Sidebar__suggestion {
+    .Sidebar__suggestion__avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    .Sidebar__suggestion__Suggestbutton {
+      color: $instagram-text-primary !important;
+    }
+    .Sidebar__suggestion__button {
+      color: $instagram-blue;
+      font-size: 12px;
+      font-weight: 700;
+
+      border: none;
+      background-color: transparent !important;
+    }
+  }
+}
