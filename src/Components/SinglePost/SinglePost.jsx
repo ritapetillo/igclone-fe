@@ -11,11 +11,18 @@ import {
     IoHeartSharp,
     IoBookmark,
     IoHappyOutline } from "react-icons/io5"
+import PostOptionsV from "../PostOptions-V/PostOptionV"
 
 const SinglePost = () => {
     const [user, setUser] = useState()
     const [show_more, setShow] = useState(false)
-    return (<div className='post-wrap'>
+    const [showPopup, setPopup] = useState(false)
+    return (
+    
+    <>
+    <PostOptionsV show={showPopup} close={setPopup}/> {/*this needs to be moved in the homepage*/ }
+    <div className='post-wrap'>
+        
         {/*---------------------POST HEADER---------------------*/}
         <div className='post-header'>
             <div className="post-header-info">
@@ -29,8 +36,8 @@ const SinglePost = () => {
                 </div>
 
             </div>
-            <BsThreeDots className="post-header-options" />
-            {/*NEEDS ADDING A MODAL FOR OPTIONS*/}
+            <BsThreeDots className="post-header-options" onClick={()=>setPopup(true)} />
+            
         </div>
         {/*---------------------POST IMAGE---------------------*/}
         <div className="post-image-wrap">
@@ -86,7 +93,8 @@ const SinglePost = () => {
             <input className="comment-input" placeholder="Add a comment"/>
             <div className="add-comment-button">Post</div>
         </div>
-    </div>)
+    </div>
+    </>)
 }
 
 export default SinglePost
