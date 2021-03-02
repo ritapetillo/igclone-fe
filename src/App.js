@@ -1,12 +1,12 @@
 import { Route } from "react-router-dom";
 import "./App.scss";
-import Spinner from "./Components/Spinner/Spinner"
+import SinglePost from "./Components/SinglePost/SinglePost";
 import Login from "./Pages/Login";
 
 function App() {
   return (
     <div className="App">
-      <Route path="/" component={Spinner} />
+      <Route path="/" component={SinglePost} />
     </div>
   );
 }
