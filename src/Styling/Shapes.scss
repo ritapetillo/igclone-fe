@@ -3,29 +3,57 @@
 
 .circle-sm {
     //navbar pic
+    object-fit: cover;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     border-style: solid;
     border-color: white;
     border-width: 3px;
-    box-shadow: 0 0 0 1.5px lightgray;
+    box-shadow: 0 0 0 1px lightgray;
+}
+
+.story-sm {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    z-index: -1;
+    background: rgb(208, 45, 135);
+    background: linear-gradient(233deg, rgba(208, 45, 135, 1) 0%, rgba(250, 162, 87, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .circle-md {
     //stories, highlights and suggestion
+    object-fit: cover;
     width: 70px;
     height: 70px;
     border-radius: 50%;
     border-style: solid;
     border-color: white;
-    border-width: 3.5px;
-    box-shadow: 0 0 0 1.5px lightgray;
+    border-width: 3px;
+    box-shadow: 0 0 0 2px lightgray;
+}
+.story-md {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    z-index: -1;
+    background: rgb(208, 45, 135);
+    background: linear-gradient(233deg, rgba(208, 45, 135, 1) 0%, rgba(250, 162, 87, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .circle-lg {
     //main pp
+    object-fit: cover;
     width: 150px;
     height: 150px;
     border-radius: 50%;
