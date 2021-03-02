@@ -17,7 +17,7 @@ const PostOptionsO = (props) => {
                 <div className="divider"></div>
                 <div className="option-wrap"><div className="option red">Delete</div></div>
                 <div className="divider"></div>
-                <div className="option-wrap"><div className="option">Cancel</div></div>
+                <div className="option-wrap" onClick={() => props.close(!props.show)}><div className="option">Cancel</div></div>
             </div>
         </div>
     )
