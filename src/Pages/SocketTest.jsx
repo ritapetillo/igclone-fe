@@ -5,6 +5,9 @@ const SocketTest = () => {
 
   useEffect(() => {
     socket.connect();
+    socket.emit("joinRoom", () => {
+      console.log("joined Rooms");
+    });
 
     return () => {
       console.log("return");
