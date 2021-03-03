@@ -6,7 +6,10 @@ export const userLoginApi = async (credentials) => {
   try {
     const login = await axios.post(
       `${REACT_APP_API_URI}/api/auth/login`,
-      credentials
+      credentials,
+      {
+        withCredentials: true,
+      }
     );
     return login.data;
   } catch (err) {
