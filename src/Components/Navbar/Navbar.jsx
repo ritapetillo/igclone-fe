@@ -48,7 +48,7 @@ const Navbar = () => {
                     <IoHomeOutline className="nav-icon" />
                     <IoPaperPlaneOutline className="nav-icon" />
                     <IoCompassOutline className="nav-icon" />
-                    <IoHeartOutline className="nav-icon" onClick={() => setShow(!show)} />
+                    <IoHeartOutline className="nav-icon margin-right-20px" onClick={() => setShow(!show)} />
                     <Dropdown setShow={() => setShow(!show)} show={show} size="notification" content={
                         <div className="navbar-dropdown-content">
                             <span className="dropdown-group-date">Today: </span>

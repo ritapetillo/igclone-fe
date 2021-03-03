@@ -7,7 +7,7 @@ import Login from "./Pages/Login";
 
 import SocketTest from "./Pages/SocketTest";
 import Feed from "./Pages/Feed/Feeds";
-import SinglePost from "./Components/SinglePost/SinglePost";
+import Profile from "./Pages/Profile/Profile"
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -20,6 +20,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <div>
           <Navbar />
+          <Route exact path="/profile" component={Profile}/>
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/socket" component={SocketTest} />
         </div>
