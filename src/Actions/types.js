@@ -5,3 +5,8 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const CHAT_ROOMS_SUCCESS = "CHAT_ROOMS_SUCCESS";
 export const CHAT_ROOMS_LOADING = "CHAT_ROOMS_LOADING";
 export const CHAT_ROOMS_ERROR = "CHAT_ROOMS_ERROR";
+
+
+export const POST_SUCCESS = "POST_SUCCESS";
+export const POST_LOADING = "POST_LOADING";
+export const POST_ERROR = "POST_ERROR";
