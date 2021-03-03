@@ -29,6 +29,7 @@ function App() {
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/socket" component={SocketTest} />
           <Route exact path="/inbox" component={Inbox} />
+          <Route exact path="/login2" component={Login} />
         </div>
       </Switch>
     </div>
