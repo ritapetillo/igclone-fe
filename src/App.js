@@ -5,7 +5,7 @@ import SinglePost from "./Components/SinglePost/SinglePost";
 // import Spinner from "./Components/Spinner/Spinner";
 import Login from "./Pages/Login";
 
-import Feed from "./Pages/feed/feed";
+import Feed from "./Pages/Feed/Feed.jsx";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
