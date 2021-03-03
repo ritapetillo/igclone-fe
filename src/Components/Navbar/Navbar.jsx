@@ -13,6 +13,7 @@ import {
 import { CgProfile, CgBookmark, } from "react-icons/cg"
 import { RiSettings2Line } from "react-icons/ri"
 import Dropdown from "../Dropdown/Dropdown"
+import { Link } from "react-router-dom"
 
 
 const Navbar = () => {
@@ -29,7 +30,7 @@ const Navbar = () => {
     return (
         <div className="nav-wrap">
             <div className="nav-bar-content">
-                <img src={Logo} className="nav-bar-logo" />
+                <Link to="/feed"> <img src={Logo} className="nav-bar-logo" /> </Link>
                 <input className="search-input" placeholder="🔎 Search" onKeyUp={(e) => searchResults(e)} />
                 <Dropdown show={searchRes} size="search" content={
                     <div className="navbar-search-dropdown">
@@ -41,11 +42,11 @@ const Navbar = () => {
                                 <span className="navbar-search-result-username">**username**</span>
                                 <span className="navbar-search-result-details">followed by **another user**</span>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 } />
                 <div className="profile-area">
-                    <IoHomeOutline className="nav-icon" />
+                    <Link to="/feed"> <IoHomeOutline className="nav-icon" style={{color: "black"}} /> </Link>
                     <IoPaperPlaneOutline className="nav-icon" />
                     <IoCompassOutline className="nav-icon" />
                     <IoHeartOutline className="nav-icon margin-right-20px" onClick={() => setShow(!show)} />
@@ -75,8 +76,10 @@ const Navbar = () => {
                         content={
                             <div className="navbar-profile-dropdown">
                                 <div className="navbar-profile-dropdown-option">
-                                    <CgProfile /> Profile
-                             </div>
+                                    <Link to="/profile">
+                                        <CgProfile /> Profile
+                                  </Link>
+                                </div>
                                 <div className="navbar-profile-dropdown-option">
                                     <CgBookmark /> Saved
                              </div>
