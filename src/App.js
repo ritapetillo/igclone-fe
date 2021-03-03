@@ -9,7 +9,6 @@ import SocketTest from "./Pages/SocketTest";
 import Feed from "./Pages/Feed/Feeds";
 import Profile from "./Pages/Profile/Profile";
 
-import SinglePost from "./Components/SinglePost/SinglePost";
 import SignIn from "./Components/AuthComponents/SignIn";
 import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";

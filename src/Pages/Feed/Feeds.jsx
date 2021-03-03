@@ -7,16 +7,18 @@ import "./Feed.scss";
 
 const Feed = () => {
   return (
-    <div className="Feed__container pt-4">
+    <div className="Feed__container pt-4 mx-auto">
       {/* //story */}
       {/*//core of the feed*/}
 
       {/*sidebar */}
       <Row className="justify-content-between">
-        <Col>
-          <SinglePost />
+        <Col md={12} xl={4}>
+          <div>
+            <SinglePost />
+          </div>
         </Col>
-        <Col>
+        <Col xs={0} md={0} lg={4}>
           <Sidebar />
         </Col>
       </Row>

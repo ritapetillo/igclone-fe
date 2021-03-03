@@ -1,13 +1,10 @@
 import React from "react";
 import Sidebar from "../../Components/Sidebar";
+import SinglePost from "./Components/SinglePost/SinglePost";
 
 const Feed = () => {
   return (
     <div>
-      {/* //story */}
-      {/*//core of the feed*/}
-
-      {/*sidebar */}
       <Sidebar />
     </div>
   );
