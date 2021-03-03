@@ -29,7 +29,7 @@ const chatReduer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        error_msg: "No conversations avaialble",
+        error_msg: "No conversations available",
       };
     default:
       return state;

@@ -7,7 +7,7 @@ const initialState = {
   error_msg: "",
 };
 
-const userReducer = (state = initialState, { type, payload }) => {
+const currentUserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOGIN_LOADING:
       return {
@@ -33,4 +33,4 @@ const userReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default userReducer;
+export default currentUserReducer;
