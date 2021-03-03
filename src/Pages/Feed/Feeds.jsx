@@ -1,11 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux"
 import { Row, Col } from "react-bootstrap";
 import Sidebar from "../../Components/Sidebar";
 import SinglePost from "../../Components/SinglePost/SinglePost";
+import {getFollowingUsersPostsAction} from "../../Actions/postActions";
+import {fetchAllUsers} from "../../Api/userApi"
 //*styles
 import "./Feed.scss";
 
+
+
 const Feed = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((state)=> state)
+  console.log("State", state)
+
+
+  useEffect(() =>{
+    dispatch(getFollowingUsersPostsAction())
+  }, []);
+
+ 
   return (
     <div className="Feed__container pt-4 mx-auto">
       {/* //story */}

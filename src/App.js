@@ -20,9 +20,9 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/login" component={SignIn} />
+        {/* <Route exact path="/login" component={SignIn} /> */}
         <Route exact path="/signup" component={SignUp} />
-        {/* <Route exact path="/login" component={Login} /> */}
+        <Route exact path="/login" component={Login} />
         <div>
           <Navbar />
           <Route exact path="/profile" component={Profile} />

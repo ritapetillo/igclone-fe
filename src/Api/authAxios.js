@@ -9,6 +9,6 @@ const refreshAuthLogic = (failedRequest) =>
       return Promise.resolve();
     });
 axios.defaults.withCredentials = true;
-createAuthRefreshInterceptor(axios, refreshAuthLogic);
+// createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 export default axios;
