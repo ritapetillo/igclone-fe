@@ -12,3 +12,13 @@ import {
   COMMENT_SUCCESS,
   COMMENT_LIKE_SUCCESS,
 } from "./types.js";
+
+// writing, editing, deleting, liking (not unliking)
+
+export const writeCommentAction = () => async dispatch => {
+try {
+    
+} catch (error) {
+    
+}
+};
