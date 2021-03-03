@@ -1,11 +1,12 @@
 @import "../../Styling/Variables";
+
 .nav-wrap {
     position: sticky;
     top: 0;
     width: 100%;
     height: 55px;
     border-bottom: .5px lightgrey solid;
-    
+
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -24,7 +25,9 @@
         .nav-bar-logo {
             width: 100px;
         }
+
         .search-input {
+            position: relative;
             width: 220px;
             height: 30px;
             align-self: center;
@@ -38,22 +41,147 @@
 
             margin-left: 60px;
         }
+
         .profile-area {
-            
+
             display: flex;
             flex-direction: row;
             align-items: center;
+
             .nav-icon {
                 margin-left: 15px;
 
                 width: 25px;
                 height: 25px;
-                
+
             }
+
+            .navbar-dropdown-content {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                font-size: 10pt;
+
+                .dropdown-group-date {
+                    padding-left: 20px;
+                    font-weight: bold;
+
+                    letter-spacing: 1.1;
+                }
+
+                .navbar-notification-core {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-left: 20px;
+                    padding-right: 20px;
+
+                    .navbar-notification-info {
+                        display: flex;
+                        flex-direction: row;
+
+                        .navbar-notification-text {
+                            padding-left: 20px;
+                            align-self: center;
+
+                            .navbar-notification-username {
+                                font-weight: bold;
+                            }
+
+                            .navbar-notification-time {
+                                color: grey
+                            }
+                        }
+                    }
+
+                    .navbar-notification-follow {
+                        .navbar-notification-follow-button {
+                            background-color: $instagram-blue;
+                            padding: 5px;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            color: white;
+                            font-weight: bold;
+                            border: none;
+                            border-radius: 5px;
+                        }
+
+                        .navbar-notification-unfollow-button {
+                            background-color: white;
+                            padding: 5px;
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            color: black;
+                            font-weight: bold;
+                            border: none;
+                            border-radius: 5px;
+                        }
+                    }
+                }
+
+
+            }
+
+            .navbar-profile-dropdown {
+                font-size: 12pt;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                height: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+
+                .navbar-profile-dropdown-option {
+                    margin-left: 20px;
+                }
+
+                .navbar-profile-dropdown-logout {
+                    margin-top: -10px;
+                    padding-left: 20px;
+                    justify-self: center;
+                }
+            }
+
+
+        }
+
+        .navbar-search-dropdown {
+            font-size: 11pt;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+
+            .navbar-search-result {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                margin-bottom: 10px;
+
+                .navbar-search-result-info {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+
+                    .navbar-search-result-username {
+                        font-weight: bold;
+                        padding-left: 20px;
+                    }
+                    .navbar-search-result-details {
+                        color: grey;
+                        padding-left: 20px;
+                    }
+                }
+
+
+            }
+
             img {
                 margin-left: 10px;
             }
         }
-        
+
     }
 }
