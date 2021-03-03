@@ -7,21 +7,19 @@ import SinglePost from "./Components/SinglePost/SinglePost";
 import Login from "./Pages/Login";
 import SocketTest from "./Pages/SocketTest";
 
-import Feed from "./Pages/Feed";
+import Feed from "./Pages/feed";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <div className="App">
-      <Route path="/" component={SinglePost} />
-
-      <Route path="/feed" component={Feed} />
+      <Route exact path="/feed" component={Feed} />
       <Route path="/" component={Navbar} />
-      <Route path="/" component={SinglePost}/>
-      <Route path="/login" component={Login} />
-      <Route path="/socket" component={SocketTest} />
+      <Route path="/" component={SinglePost} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/socket" component={SocketTest} />
     </div>
   );
 }
