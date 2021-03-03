@@ -39,7 +39,7 @@ const SignUp = () => {
               </span>
             </Button>
             <Button
-              className="SignUp__button py-2 px-4 mt-3 d-flex justify-content-center"
+              className="SignUp__button--OAuthGoogle py-2 px-4 mt-3 d-flex justify-content-center"
               type="submit"
             >
               <AiOutlineGoogle />
