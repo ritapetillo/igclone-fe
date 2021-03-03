@@ -116,9 +116,27 @@
                         }
                     }
                 }
+                
 
             }
-
+            .navbar-profile-dropdown {
+                font-size: 12pt;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                height: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: flex-start;
+                .navbar-profile-dropdown-option {
+                    margin-left: 20px;
+                }
+                .navbar-profile-dropdown-logout {
+                    margin-top: -10px;
+                    padding-left: 20px;
+                    justify-self: center;
+                }
+            }
             img {
                 margin-left: 10px;
             }

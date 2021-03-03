@@ -7,17 +7,17 @@ import {
     IoHomeOutline,
     IoCompassOutline,
     IoHeartOutline,
-    IoSearch,
     IoPaperPlaneOutline,
-    IoHeartSharp,
-    IoHappyOutline
+    IoRepeat
 } from "react-icons/io5"
-import { FaSearch } from "react-icons/fa"
+import {CgProfile, CgBookmark, } from "react-icons/cg"
+import {RiSettings2Line} from "react-icons/ri"
 import Dropdown from "../Dropdown/Dropdown"
 
 
 const Navbar = () => {
     const [show, setShow] = useState(false)
+    const [profileDD, setProfileDD] = useState(false)
 
     return (
         <div className="nav-wrap">
@@ -50,7 +50,28 @@ const Navbar = () => {
                         </div>
 
                     } />
-                    <img src="https://i.pravatar.cc/150" className="circle-sm" />
+                    <img src="https://i.pravatar.cc/150" className="circle-sm" onClick={()=>setProfileDD(!profileDD)} />
+                    <Dropdown size="profile" show={profileDD}
+                     content={
+                         <div className="navbar-profile-dropdown">
+                             <div className="navbar-profile-dropdown-option">
+                                <CgProfile/> Profile
+                             </div>
+                             <div className="navbar-profile-dropdown-option">
+                                <CgBookmark/> Saved
+                             </div>
+                             <div className="navbar-profile-dropdown-option">
+                                <RiSettings2Line/> Settings
+                             </div>
+                             <div className="navbar-profile-dropdown-option">
+                                <IoRepeat/> Switch Accounts
+                             </div>
+                             <div className="dropdown-divider"></div>
+                             <div className="navbar-profile-dropdown-logout">
+                                 Log out
+                             </div>
+                         </div>
+                     } />
                 </div>
             </div>
         </div>
