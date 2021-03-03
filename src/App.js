@@ -13,6 +13,7 @@ import SinglePost from "./Components/SinglePost/SinglePost";
 import SignIn from "./Components/AuthComponents/SignIn";
 import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Inbox from "./Pages/Inbox/Inbox";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/socket" component={SocketTest} />
+          <Route exact path="/inbox" component={Inbox} />
         </div>
       </Switch>
     </div>

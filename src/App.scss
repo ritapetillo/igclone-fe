@@ -1,4 +1,8 @@
 @import "./Styling/Variables";
+
 .App {
   background-color: $instagram-bg;
+}
+.arrow-icon {
+  transform: rotate(180deg);
 }
