@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./authAxios";
 const { REACT_APP_API_URI } = process.env;
 
 export const getAllChatRooms = async () => {
