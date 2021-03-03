@@ -4,22 +4,22 @@ import {
   makeNewPost,
   editMyPost,
   deleteMyPost,
-  likePost,
-  unlikePost,
   getPostsFromCurrentUser,
 } from "../Api/postApi.js";
 import {
   POST_LOADING,
   CURRENT_USER_POSTS_SUCCESS,
-  POST_LIKE_SUCCESS,
-  POST_ERROR,
   FOLLOWING_USERS_POSTS_SUCCESS,
+A_USERS_POSTS_SUCCESS,
+  POST_ERROR,
 } from "./types.js";
-// my post actions will be: creating, editing, deleting, getting, liking (not unliking)
-//
+
+// we are reusing the loading & error types. In the error, we are 
+// identify what the type of the post should be, and in the postReducer 
+//identify the type here in the actions & the error message
 
 //CURRENT USER POSTS
-export const getCurrentUserPostsAction = () => async (dispatch) => {
+export const getCurrentUserPostsAction = () => async dispatch => {
   try {
     dispatch({
       type: POST_LOADING,
@@ -42,7 +42,7 @@ export const getCurrentUserPostsAction = () => async (dispatch) => {
   }
 };
 
-export const createPostAction = () => async (dispatch) => {
+export const createPostAction = () => async dispatch => {
   try {
     dispatch({
       type: POST_LOADING,
@@ -55,83 +55,94 @@ export const createPostAction = () => async (dispatch) => {
     dispatch({
       type: POST_ERROR,
       payload: {
-        error_msg: "There was a problem posting",
+        error_msg: "There was a problem creating this post",
+        typePost: "currentUserPosts",
       },
     });
   }
 };
 
-export const editPostAction = () => async (dispatch) => {
+export const editPostAction = () => async dispatch => {
   try {
     dispatch({
       type: POST_LOADING,
     });
     const post = await editMyPost();
     if (post) {
-      dispatch({
-        type: POST_SUCCESS,
-        payload: post,
-      });
+      dispatch(getCurrentUserPostsAction());
     } else throw new Error();
   } catch (error) {
     dispatch({
-      type: POST_FAIL,
+      type: POST_ERROR,
+      payload: {
+        error_msg: "There was a problem editing this post",
+        typePost: "currentUserPosts",
+      },
     });
   }
 };
 
-export const deletePostAction = () => async (dispatch) => {
+export const deletePostAction = () => async dispatch => {
   try {
     dispatch({
       type: POST_LOADING,
     });
     const post = await deleteMyPost();
     if (post) {
-      dispatch({
-        type: POST_SUCCESS,
-        payload: post,
-      });
+      dispatch(getCurrentUserPostsAction());
     } else throw new Error();
   } catch (error) {
     dispatch({
-      type: POST_FAIL,
+      type: POST_ERROR,
+      error_msg: "There was a problem deleting this post",
+      typePost: "currentUserPosts",
     });
   }
 };
 
-// export const likePostAction = (post-id) => {
-//   try {
-  
-//     const post = await likePost();
-//     if (post) {
-      
-//     } else throw new Error();
-//   } catch (error) {
-//     dispatch({
-//       type: POST_FAIL,
-//     });
-//   }
-// };
-
 //FOLLOWING USERS POSTS
-export const getFollowingUsersPostsAction = () => async (dispatch) => {
+export const getFollowingUsersPostsAction = () => async dispatch => {
   try {
     dispatch({
       type: POST_LOADING,
     });
-    const followingUserPosts = await getPostsFromFollowers();
-    if (followingUserPosts) {
+    const posts = await getPostsFromFollowers();
+    if (posts) {
       dispatch({
         type: FOLLOWING_USERS_POSTS_SUCCESS,
-        payload: followingUserPosts,
+        payload: posts,
       });
     } else throw Error;
   } catch (err) {
     dispatch({
       type: POST_ERROR,
       payload: {
-        error_msg: "There are no posts from your followings",
+        error_msg: "There are no posts from those you follow",
         typePost: "followingUsersPosts",
+      },
+    });
+  }
+};
+
+//ALL OF A USER's POSTS
+export const getUsersPostAction = () => async dispatch => {
+  try {
+    dispatch({
+      type: POST_LOADING,
+    });
+    const posts = await getPostsFromUser();
+    if (posts) {
+      dispatch({
+        type: A_USERS_POSTS_SUCCESS,
+        payload: posts,
+      });
+    } else throw Error;
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        error_msg: "No posts from this user",
+        typePost: "userPosts",
       },
     });
   }

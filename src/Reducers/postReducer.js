@@ -3,6 +3,8 @@ import {
   POST_LOADING,
   CURRENT_USER_POSTS_SUCCESS,
   FOLLOWING_USERS_POSTS_SUCCESS,
+  COMMENT_ERROR,
+  COMMENT_LOADING,
 } from "../Actions/types";
 
 const initialState = {
@@ -20,6 +22,11 @@ const postReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: true,
       };
+    case COMMENT_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     case CURRENT_USER_POSTS_SUCCESS:
       return {
         ...state,
@@ -32,6 +39,13 @@ const postReducer = (state = initialState, { type, payload }) => {
         followingUsersPosts: payload,
         error_msg: "",
       };
+    case ALL_USERS_POSTS_SUCCESS:
+      return {
+        ...state,
+        userPosts: payload,
+        error_msg: "",
+      };
+
     case POST_ERROR:
       if (payload.typePost) {
         return {
@@ -45,6 +59,11 @@ const postReducer = (state = initialState, { type, payload }) => {
           error_msg: payload.error_msg,
         };
       }
+    case COMMENT_ERROR:
+      return {
+        ...state,
+        error_msg: payload.error_msg,
+      };
 
     default:
       return state;

@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import userReducer from "./userReducer";
+import currentUserReducer from "./userReducer";
 import chatReducer from "./chatReducer";
 import postReducer from "./postReducer";
 
 
 export default combineReducers({
-  user: userReducer,
+  currentUser: currentUserReducer,
   chat: chatReducer,
   post: postReducer
 });
