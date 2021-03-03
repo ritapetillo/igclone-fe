@@ -8,6 +8,7 @@ import SocketTest from "./Pages/SocketTest";
 import Feed from "./Pages/Feed/Feeds";
 import SinglePost from "./Components/SinglePost/SinglePost";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Inbox from "./Pages/Inbox/Inbox";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function App() {
           <Navbar />
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/socket" component={SocketTest} />
+          <Route exact path="/inbox" component={Inbox} />
         </div>
       </Switch>
     </div>
