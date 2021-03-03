@@ -1,14 +1,27 @@
 
 .dropdown-wrap {
-    display: flex;
-    flex-direction: column;
-    .dropdown-content-show {
-        display: none;
-        width: 400px;
+    .nav-icon {
+        position: relative;
+    }
+    .dropdown-content {
+        position: absolute;
+        bottom: -110px;
+        right: 16%;
+        width: 500px;
         height: 100px;
+        background-color: blueviolet;
+        z-index: 1;
     }
-    #notifications:checked {
-        display: none;
+    .dropdown-arrow {
+        position: absolute;
+        bottom: -90px;
+        right: 17.2%;
+        width: 0;
+        height: 0;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        border-bottom: 100px solid red;
+        z-index: 0;
+      
     }
-    
 }
