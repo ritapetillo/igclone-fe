@@ -3,6 +3,7 @@ import {
   POST_LOADING,
   CURRENT_USER_POSTS_SUCCESS,
   FOLLOWING_USERS_POSTS_SUCCESS,
+  A_USERS_POSTS_SUCCESS,
   COMMENT_ERROR,
   COMMENT_LOADING,
 } from "../Actions/types";
@@ -39,7 +40,7 @@ const postReducer = (state = initialState, { type, payload }) => {
         followingUsersPosts: payload,
         error_msg: "",
       };
-    case ALL_USERS_POSTS_SUCCESS:
+    case A_USERS_POSTS_SUCCESS:
       return {
         ...state,
         userPosts: payload,
