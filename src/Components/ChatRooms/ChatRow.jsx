@@ -1,7 +1,7 @@
 import React from "react";
 import "./ChatRow.scss";
 
-const ChatRow = () => {
+const ChatRow = ({ message, lastTime }) => {
   return (
     <div className="chat-row">
       <div className="chat-row__picture">
@@ -9,13 +9,11 @@ const ChatRow = () => {
       </div>
       <div className="chat-row__room-details">
         <h6>username</h6>
-        <span classNmae="chat-row__text">
-          somcsfsdsdfdsfsdfdsfdsfsdfdsfsdfdsfdsfsdfsdfdsfdsfdsfdsfdsfdsfsdfdsfsdfde
-          text here
-        </span>
+        <span classNmae="chat-row__text">{message && message}</span>
       </div>
       <div className="chat-row__time">
-        <span>Time</span>
+        <span>1hr</span>
+        {lastTime & lastTime}
       </div>
     </div>
   );
