@@ -7,7 +7,7 @@ import SinglePost from "./Components/SinglePost/SinglePost";
 import Login from "./Pages/Login";
 import SocketTest from "./Pages/SocketTest";
 
-import Feed from "./Pages/feed";
+import Feed from "./Pages/Feed/Feeds";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
