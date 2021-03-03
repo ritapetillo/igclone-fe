@@ -7,25 +7,28 @@ import Login from "./Pages/Login";
 
 import SocketTest from "./Pages/SocketTest";
 import Feed from "./Pages/Feed/Feeds";
-import Profile from "./Pages/Profile/Profile"
+import Profile from "./Pages/Profile/Profile";
 
+import SinglePost from "./Components/SinglePost/SinglePost";
+import SignIn from "./Components/AuthComponents/SignIn";
+import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const dispatch = useDispatch();
   return (
     <div className="App">
-
       <Switch>
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
+        {/* <Route exact path="/login" component={Login} /> */}
         <div>
           <Navbar />
-          <Route exact path="/profile" component={Profile}/>
+          <Route exact path="/profile" component={Profile} />
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/socket" component={SocketTest} />
         </div>
       </Switch>
-
     </div>
   );
 }
