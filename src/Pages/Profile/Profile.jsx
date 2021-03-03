@@ -3,6 +3,7 @@ import "./Profile.scss"
 import "../../Styling/Shapes.scss"
 
 import { IoSettingsOutline } from "react-icons/io5"
+import UserOptions from "../../Components/UserOptions/UserOptions"
 import {BsGrid3X3} from "react-icons/bs"
 import Igtv from "../../Assets/igtv.svg"
 import Reel from "../../Assets/reel.svg"
@@ -11,6 +12,7 @@ import Tagged from "../../Assets/tagged.svg"
 
 const Profile = () => {
     const [show, setShow] = useState("post")
+    const [showModal, setShowModal] = useState(false)
     return (
         <div className="profile-wrap">
             {/* -----------------------------HEADER----------------------------- */}
@@ -23,8 +25,9 @@ const Profile = () => {
                 <div className="profile-info">
                     <div className="profile-info-header">
                         <span className="profile-info-username">username</span>
-                        <input type="button" value="Edit Profile" className="profile-info-edit-user" />
-                        <IoSettingsOutline className="profile-info-edit-settings" />
+                        <input type="button" value="Edit Profile" className="profile-info-edit-user"  />
+                        <IoSettingsOutline className="profile-info-edit-settings" onClick={()=>setShowModal(!showModal)} />
+                        <UserOptions show={showModal} close={setShowModal}/>
                     </div>
                     <div className="profile-info-interaction">
                         <div className="profile-info-interaction-single">
