@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { Route } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./Components/Navbar/Navbar";
-import SinglePost from "./Components/SinglePost/SinglePost";
 // import Spinner from "./Components/Spinner/Spinner";
 import Login from "./Pages/Login";
 import SocketTest from "./Pages/SocketTest";
