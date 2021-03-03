@@ -12,6 +12,14 @@
       border-radius: 50%;
     }
 
+    .Sidebar__header__username {
+      font-size: 14px;
+    }
+
+    .Sidebar__header__description {
+      font-size: 14px;
+    }
+
     .Sidebar__header__button {
       color: $instagram-blue;
       font-size: 12px;
@@ -24,11 +32,31 @@
   }
 
   .Sidebar__suggestion {
+    .Sidebar__suggestion__title {
+      font-size: 14px;
+    }
+
     .Sidebar__suggestion__avatar {
       width: 32px;
       height: 32px;
       border-radius: 50%;
     }
+
+    .Sidebar__suggestion__content {
+      .Sidebar__suggestion__username {
+        color: $instagram-text-primary;
+        font-size: 14px;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+      .Sidebar__suggestion__description {
+        font-size: 12px;
+      }
+    }
+
     .Sidebar__suggestion__Suggestbutton {
       color: $instagram-text-primary !important;
     }
