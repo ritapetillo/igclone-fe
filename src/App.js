@@ -7,6 +7,8 @@ import Login from "./Pages/Login";
 import SocketTest from "./Pages/SocketTest";
 import Feed from "./Pages/Feed/Feeds";
 import SinglePost from "./Components/SinglePost/SinglePost";
+import SignIn from "./Components/AuthComponents/SignIn";
+import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -14,7 +16,9 @@ function App() {
   return (
     <div className="App">
       <Switch>
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
+        {/* <Route exact path="/login" component={Login} /> */}
         <div>
           <Navbar />
           <Route exact path="/feed" component={Feed} />
