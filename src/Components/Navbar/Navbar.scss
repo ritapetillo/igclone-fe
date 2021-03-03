@@ -27,6 +27,7 @@
         }
 
         .search-input {
+            position: relative;
             width: 220px;
             height: 30px;
             align-self: center;
@@ -93,6 +94,7 @@
                             }
                         }
                     }
+
                     .navbar-notification-follow {
                         .navbar-notification-follow-button {
                             background-color: $instagram-blue;
@@ -104,6 +106,7 @@
                             border: none;
                             border-radius: 5px;
                         }
+
                         .navbar-notification-unfollow-button {
                             background-color: white;
                             padding: 5px;
@@ -116,9 +119,10 @@
                         }
                     }
                 }
-                
+
 
             }
+
             .navbar-profile-dropdown {
                 font-size: 12pt;
                 padding-top: 10px;
@@ -128,15 +132,52 @@
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: flex-start;
+
                 .navbar-profile-dropdown-option {
                     margin-left: 20px;
                 }
+
                 .navbar-profile-dropdown-logout {
                     margin-top: -10px;
                     padding-left: 20px;
                     justify-self: center;
                 }
             }
+
+
+        }
+
+        .navbar-search-dropdown {
+            font-size: 11pt;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+
+            .navbar-search-result {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                margin-bottom: 10px;
+
+                .navbar-search-result-info {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: flex-start;
+
+                    .navbar-search-result-username {
+                        font-weight: bold;
+                        padding-left: 20px;
+                    }
+                    .navbar-search-result-details {
+                        color: grey;
+                        padding-left: 20px;
+                    }
+                }
+
+
+            }
+
             img {
                 margin-left: 10px;
             }
