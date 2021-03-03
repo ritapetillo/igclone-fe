@@ -1,7 +1,14 @@
-import { POST_FAIL, POST_LOADING, POST_SUCCESS } from "../Actions/types";
+import {
+  POST_ERROR,
+  POST_LOADING,
+  CURRENT_USER_POSTS_SUCCESS,
+  FOLLOWING_USERS_POSTS_SUCCESS,
+} from "../Actions/types";
 
 const initialState = {
-  posts: [],
+  currentUserPosts: [],
+  followingUsersPosts: [],
+  userPosts: [],
   loading: false,
   error_msg: "",
 };
@@ -13,18 +20,32 @@ const postReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: true,
       };
-    case POST_SUCCESS:
+    case CURRENT_USER_POSTS_SUCCESS:
       return {
         ...state,
-        posts: [...state.posts, payload],
+        currentUserPosts: payload,
         error_msg: "",
       };
-    case POST_FAIL:
+    case FOLLOWING_USERS_POSTS_SUCCESS:
       return {
         ...state,
-        posts: [],
-        error_msg: "Something went wrong posting",
+        followingUsersPosts: payload,
+        error_msg: "",
       };
+    case POST_ERROR:
+      if (payload.typePost) {
+        return {
+          ...state,
+          [payload.typePost]: [],
+          error_msg: payload.error_msg,
+        };
+      } else {
+        return {
+          ...state,
+          error_msg: payload.error_msg,
+        };
+      }
+
     default:
       return state;
   }

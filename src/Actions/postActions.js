@@ -6,35 +6,62 @@ import {
   deleteMyPost,
   likePost,
   unlikePost,
+  getPostsFromCurrentUser,
 } from "../Api/postApi.js";
 import {
-  POST_FAIL,
   POST_LOADING,
-  POST_SUCCESS,
+  CURRENT_USER_POSTS_SUCCESS,
   POST_LIKE_SUCCESS,
+  POST_ERROR,
+  FOLLOWING_USERS_POSTS_SUCCESS,
 } from "./types.js";
 // my post actions will be: creating, editing, deleting, getting, liking (not unliking)
+//
 
-export const createPostAction = () => async dispatch => {
+//CURRENT USER POSTS
+export const getCurrentUserPostsAction = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: POST_LOADING,
+    });
+    const userPosts = await getPostsFromCurrentUser();
+    if (userPosts) {
+      dispatch({
+        type: CURRENT_USER_POSTS_SUCCESS,
+        payload: userPosts,
+      });
+    } else throw Error;
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        error_msg: "There are no posts for this user",
+        typePost: "currentUserPosts",
+      },
+    });
+  }
+};
+
+export const createPostAction = () => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
     });
     const post = await makeNewPost();
     if (post) {
-      dispatch({
-        type: POST_SUCCESS,
-        payload: post,
-      });
+      dispatch(getCurrentUserPostsAction());
     } else throw new Error();
   } catch (error) {
     dispatch({
-      type: POST_FAIL,
+      type: POST_ERROR,
+      payload: {
+        error_msg: "There was a problem posting",
+      },
     });
   }
 };
 
-export const editPostAction = () => async dispatch => {
+export const editPostAction = () => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
@@ -53,7 +80,7 @@ export const editPostAction = () => async dispatch => {
   }
 };
 
-export const deletePostAction = () => async dispatch => {
+export const deletePostAction = () => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
@@ -72,21 +99,40 @@ export const deletePostAction = () => async dispatch => {
   }
 };
 
-export const likePostAction = () => async dispatch => {
+// export const likePostAction = (post-id) => {
+//   try {
+  
+//     const post = await likePost();
+//     if (post) {
+      
+//     } else throw new Error();
+//   } catch (error) {
+//     dispatch({
+//       type: POST_FAIL,
+//     });
+//   }
+// };
+
+//FOLLOWING USERS POSTS
+export const getFollowingUsersPostsAction = () => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
     });
-    const post = await likePost();
-    if (post) {
+    const followingUserPosts = await getPostsFromFollowers();
+    if (followingUserPosts) {
       dispatch({
-        type: POST_LIKE_SUCCESS,
-        payload: post,
+        type: FOLLOWING_USERS_POSTS_SUCCESS,
+        payload: followingUserPosts,
       });
-    } else throw new Error();
-  } catch (error) {
+    } else throw Error;
+  } catch (err) {
     dispatch({
-      type: POST_FAIL,
+      type: POST_ERROR,
+      payload: {
+        error_msg: "There are no posts from your followings",
+        typePost: "followingUsersPosts",
+      },
     });
   }
 };
