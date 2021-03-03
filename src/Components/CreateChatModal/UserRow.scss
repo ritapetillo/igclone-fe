@@ -1,0 +1,50 @@
+@import "../../Styling/Variables";
+
+.user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  width: 100%;
+  padding: 15px 20px;
+
+  .user-row__picture {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .user-row__room-details {
+    font-size: 14px;
+    overflow: hidden;
+    padding-right: 10px;
+
+    flex: 1;
+    h6 {
+      margin-bottom: -2px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+  .user-row__cirlce {
+    div {
+      display: block;
+      height: 25px;
+      width: 25px;
+      border: 1px solid lightgray;
+      border-radius: 50%;
+      z-index: 344;
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    background-color: rgba(211, 211, 211, 0.137);
+    cursor: pointer;
+  }
+}

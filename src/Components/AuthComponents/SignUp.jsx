@@ -6,6 +6,7 @@ import Logo from "../../Assets/ig-logo.png";
 
 //*STYLE
 import "./Authentication.scss";
+const { REACT_APP_API_URI } = process.env;
 
 const SignUp = () => {
   const props = useSpring({
@@ -40,7 +41,9 @@ const SignUp = () => {
             </Button>
             <Button
               className="SignUp__button py-2 px-4 mt-3 d-flex justify-content-center"
-              type="submit"
+              onClick={() => {
+                window.location.href = `${REACT_APP_API_URI}/api/auth/google`;
+              }}
             >
               <AiOutlineGoogle />
               <span className="font-weight-bold ml-3"> Log in with Google</span>
