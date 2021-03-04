@@ -34,28 +34,46 @@
       }
     }
   }
+
+  .chat-space__message-typing {
+    min-height: 30px;
+    margin-left: auto;
+    padding-right: 30px;
+  }
   .chat-space__body {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    height: 100%;
-    overflow: scroll;
+    overflow-y: hidden;
     padding: 10px 20px;
-    .chat-space__message {
-      height: fit-content;
-      width: fit-content;
-      max-width: 50%;
-      padding: 16px 16px;
-      border-radius: 22px;
-      word-wrap: break-word;
-      &.received {
-        background-color: white;
-        border: 1px solid lightgray;
+    .chat-space__body-message-space {
+      overflow-y: auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      .anchor {
+        overflow-anchor: auto;
+        height: 1px;
       }
-      &.sent {
-        background-color: $instagram-color-messages-gray;
-        align-self: flex-end;
+
+      .chat-space__message {
+        overflow-anchor: none;
+        height: fit-content;
+        width: fit-content;
+        max-width: 50%;
+        padding: 16px 16px;
+        border-radius: 22px;
+        word-wrap: break-word;
+
+        &.received {
+          background-color: white;
+          border: 1px solid lightgray;
+        }
+        &.sent {
+          background-color: $instagram-color-messages-gray;
+          align-self: flex-end;
+        }
       }
     }
   }
