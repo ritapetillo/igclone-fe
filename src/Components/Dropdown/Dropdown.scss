@@ -3,7 +3,7 @@
 
     .dropdown-content-notification {
         z-index: 2;
-        position: absolute;
+        position: fixed;
         top: 60px;
         right: 16%;
         width: 500px;
@@ -25,7 +25,7 @@
     .dropdown-content-profile {
         z-index: 2!important;
 
-        position: absolute;
+        position: fixed;
         top: 60px;
         right: 16%;
         width: 240px;
@@ -46,7 +46,7 @@
     .dropdown-content-search {
         z-index: 2!important;
 
-        position: absolute;
+        position: fixed;
         left: 34.5%;
         margin-top: 60px;;
         width: 400px;

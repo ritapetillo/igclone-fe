@@ -13,8 +13,10 @@ import Reel from "../../Assets/reel.svg"
 import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
 import {getCurrentUserPostsAction} from "../../Actions/postActions"
+
 import {editProfileAction, deleteProfileAction} from "../../Actions/userActions"
 const Profile = () => {
+
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
 
@@ -111,11 +113,15 @@ const Profile = () => {
                     </div>
             </div>
                 {/* -----------------------------POSTS----------------------------- */}
+            {state.post.currentUserPosts && state.post.currentUserPosts.map((post)=>
             <div className="profile-post">
-                    <img src="https://picsum.photos/600" className="profile-post-single" onClick={()=>setShowPost(!showPost)}/>
-                    <PostModal show={showPost} close={setShowPost} content={{img: "https://picsum.photos/600" }}/>
-                    
-            </div>
+            <img src="https://picsum.photos/600" className="profile-post-single" onClick={()=>setShowPost(!showPost)}/>
+            <PostModal show={showPost} close={setShowPost} content={{img: "https://picsum.photos/600" }}/>
+            
+    </div>
+            )}
+
+            
         </div>
     )
 }

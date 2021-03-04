@@ -42,12 +42,12 @@ export const getCurrentUserPostsAction = () => async dispatch => {
   }
 };
 
-export const createPostAction = () => async dispatch => {
+export const createPostAction = (data) => async dispatch => {
   try {
     dispatch({
       type: POST_LOADING,
     });
-    const post = await makeNewPost();
+    const post = await makeNewPost(data);
     if (post) {
       dispatch(getCurrentUserPostsAction());
     } else throw new Error();
