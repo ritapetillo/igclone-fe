@@ -7,9 +7,9 @@ const Login = () => {
   const username = useRef();
   const password = useRef();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(loginAction());
-    
   }, []);
 
   const handleLogin = () => {

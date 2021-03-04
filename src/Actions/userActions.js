@@ -1,8 +1,24 @@
 import { getCurrentUserApi, userLoginApi } from "../Api/authApi.js";
-import {editProfile, deleteProfile, uploadProfilePicture} from "../Api/userApi.js";
-import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, PROFILE_LOADING, PROFILE_SUCCESS, PROFILE_ERROR } from "./types.js";
 
-export const loginAction = (credentials = "") => async (dispatch) => {
+import {
+  editProfile,
+  deleteProfile,
+  uploadProfilePicture,
+  registerUser,
+} from "../Api/userApi.js";
+import {
+  LOGIN_FAIL,
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
+  PROFILE_LOADING,
+  PROFILE_SUCCESS,
+  PROFILE_ERROR,
+  REGISTER_FAIL,
+  REGISTER_LOADING,
+  REGISTER_SUCCESS,
+} from "./types.js";
+
+export const loginAction = (credentials = "") => async dispatch => {
   try {
     dispatch({
       type: LOGIN_LOADING,
@@ -34,7 +50,7 @@ export const loginAction = (credentials = "") => async (dispatch) => {
   }
 };
 
-export const editProfileAction = (data) => async dispatch => {
+export const editProfileAction = data => async dispatch => {
   try {
     dispatch({
       type: PROFILE_LOADING,
@@ -75,8 +91,7 @@ export const deleteProfileAction = () => async dispatch => {
   }
 };
 
-
-export const changeProfilePictureAction = (data) => async dispatch => {
+export const changeProfilePictureAction = data => async dispatch => {
   try {
     dispatch({
       type: PROFILE_LOADING,

@@ -1,11 +1,18 @@
 import axios from "axios";
 const { REACT_APP_API_URI } = process.env;
 
-export const registerUser = async () => {
+export const registerUser = async credentials => {
   try {
-    const user = await axios.post(`${REACT_APP_API_URI}/api/users/register`, {
-      withCredentials: true,
-    });
+    const user = await axios.post(
+      `${REACT_APP_API_URI}/api/users/register`,
+      credentials,
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log(user);
+
     return user.data;
   } catch (err) {
     console.log(err);
@@ -25,7 +32,7 @@ export const fetchAllUsers = async () => {
   }
 };
 
-export const fetchByUsername = async (username) => {
+export const fetchByUsername = async username => {
   try {
     const user = await axios.get(`${REACT_APP_API_URI}/api/users/${username}`, {
       withCredentials: true,
@@ -36,7 +43,7 @@ export const fetchByUsername = async (username) => {
     return null;
   }
 };
-export const searchUser = async (query) => {
+export const searchUser = async query => {
   try {
     const user = await axios.get(
       `${REACT_APP_API_URI}/api/users/search?q=${query}`,
@@ -51,7 +58,7 @@ export const searchUser = async (query) => {
   }
 };
 
-export const followUser = async (userId) => {
+export const followUser = async userId => {
   try {
     const user = await axios.post(
       `${REACT_APP_API_URI}/api/users/follow/${userId}`,
@@ -66,8 +73,7 @@ export const followUser = async (userId) => {
   }
 };
 
-
-export const unfollowUser = async (userId) => {
+export const unfollowUser = async userId => {
   try {
     const user = await axios.put(
       `${REACT_APP_API_URI}/api/users/unfollow/${userId}`,
@@ -82,10 +88,9 @@ export const unfollowUser = async (userId) => {
   }
 };
 
-
-export const editProfile = async (data) => {
+export const editProfile = async data => {
   try {
-    const user = await axios.put(`${REACT_APP_API_URI}/api/users/me`,data, {
+    const user = await axios.put(`${REACT_APP_API_URI}/api/users/me`, data, {
       withCredentials: true,
     });
     return user.data;
@@ -107,14 +112,15 @@ export const deleteProfile = async () => {
   }
 };
 
-
-export const uploadProfilePicture = async (file) => {
+export const uploadProfilePicture = async file => {
   try {
-    const post = await axios.post(`${REACT_APP_API_URI}/api/users/upload`,
-file,
-     {
-      withCredentials: true,
-    });
+    const post = await axios.post(
+      `${REACT_APP_API_URI}/api/users/upload`,
+      file,
+      {
+        withCredentials: true,
+      }
+    );
     return post.data;
   } catch (error) {
     console.log(error);
