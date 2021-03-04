@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo } from "react";
+import React, { useRef, useEffect, useState, useMemo, useContext } from "react";
 import "./ChatSpace.scss";
 import smily from "../../Assets/smile.svg";
 import media from "../../Assets/media.svg";
@@ -7,8 +7,9 @@ import info from "../../Assets/info.svg";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentChat } from "../../Actions/chatActions";
+import { socketContext } from "../../Context/SocketContext";
 const arrayMsg = [];
-const ChatSpace = ({ socket }) => {
+const ChatSpace = () => {
   const params = useParams();
   const disaptch = useDispatch();
   const currentRoom = useSelector((state) => state.chat.current_room);
@@ -19,14 +20,18 @@ const ChatSpace = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const messageSpace = useRef();
+  const { socket } = useContext(socketContext);
 
   useEffect(() => {
     disaptch(getCurrentChat(params.roomId));
     scrollDown();
   }, [params]);
+
+  useEffect(() => {
+    scrollDown();
+  }, [currentRoom]);
   const scrollDown = () => {
     messageSpace.current.scrollTop = messageSpace.current.scrollHeight;
-    console.log("ciao");
   };
 
   useEffect(() => {

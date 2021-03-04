@@ -15,6 +15,7 @@ import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Inbox from "./Pages/Inbox/Inbox";
 
+
 function App() {
   const dispatch = useDispatch();
   return (
@@ -22,7 +23,7 @@ function App() {
       <Switch>
         {/* <Route exact path="/login" component={SignIn} /> */}
         <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" component={SignIn} />
         <div>
           <Navbar />
           <Route exact path="/profile" component={Profile} />
