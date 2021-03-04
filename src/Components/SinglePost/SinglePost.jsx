@@ -14,7 +14,6 @@ import {
   IoBookmark,
   IoHappyOutline,
 } from "react-icons/io5";
-import { followUser, unFollowUser } from "../../Api/userApi";
 import { likePost, unlikePost } from "../../Api/postApi";
 import PostOptionsV from "../PostOptions-V/PostOptionV";
 import PostOptionsO from "../PostOptions-O/PostOptionO";
@@ -43,10 +42,10 @@ const SinglePost = ({ post }) => {
     setUsersLiked(post.likes);
     console.log(usersLiked);
   }, []);
-  useEffect(() => {
-    isLiked();
-    setUsersLiked(post.likes);
-  }, [post]);
+  // useEffect(() => {
+  //   isLiked();
+  //   setUsersLiked(post.likes);
+  // }, [post]);
 
   const isLiked = async () => {
     const like = post.likes.includes(currentUser.username);
@@ -69,7 +68,7 @@ const SinglePost = ({ post }) => {
 
   return (
     <>
-      <PostOptionsV show={showPopup} close={setPopup} />{" "}
+      <PostOptionsV post={post} show={showPopup} close={setPopup} />{" "}
       {/*this needs to be moved in the homepage*/}
       {/*IF user is the owner of the post, use <PostOptionsO/> instead */}
       <div className="post-wrap">

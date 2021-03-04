@@ -24,6 +24,7 @@ const Profile = () => {
 
     const dispatch = useDispatch();
     const state = useSelector((state) => state)
+    const user = useSelector((state) => state.currentUser.user)
     console.log("State", state)
 
 
@@ -45,7 +46,7 @@ const Profile = () => {
                 </div>
                 <div className="profile-info">
                     <div className="profile-info-header">
-                        <span className="profile-info-username">{!editMode ? (state.currentUser.user && state.currentUser.user.currentUser.username) : <input type="text" className="edit-mode__input" id="username" value={state.currentUser.user && state.currentUser.user.currentUser.username} />}</span>
+                        <span className="profile-info-username">{!editMode ? (user && user.currentUser?.username) : <input type="text" className="edit-mode__input" id="username" value={user && user.currentUser?.username} />}</span>
                         <input type="button" value={!editMode ? "Edit Profile" : "Save Profile"} className="profile-info-edit-user" onClick={!editMode ? () => setEditMode(true) : () => setEditMode(false)} />
                         <IoSettingsOutline className="profile-info-edit-settings" onClick={() => setShowModal(!showModal)} />
                         <UserOptions show={showModal} close={setShowModal} />
@@ -62,7 +63,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                {state.currentUser.user.currentUser.followers.length}
+                                {user.currentUser?.followers.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 followers
@@ -71,7 +72,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                {state.currentUser.user.currentUser.following.length}
+                                {user.currentUser?.following.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 following
@@ -80,10 +81,10 @@ const Profile = () => {
                     </div>
                     <div className="profile-info-bio">
                         <div className="profile-info-handle">
-                            {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.name) : <input type="text" value={state.currentUser.user.currentUser.name} className="edit-mode__input" id="name" />} {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.lastname) : <input type="text" value={state.currentUser.user.currentUser.lastname} className="edit-mode__input" id="lastname" />}
+                            {!editMode ? (user?.currentUser && user?.currentUser.name) : <input type="text" value={user?.currentUser.name} className="edit-mode__input" id="name" />} {!editMode ? (user.currentUser && user.currentUser?.lastname) : <input type="text" value={user.currentUser?.lastname} className="edit-mode__input" id="lastname" />}
                         </div>
                         <div className="profile-info-bio-text">
-                            {state.currentUser.user.currentUser.bio}
+                            {user.currentUser?.bio}
                         </div>
                     </div>
                 </div>
