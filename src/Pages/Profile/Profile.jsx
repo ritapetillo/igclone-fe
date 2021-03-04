@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 import "./Profile.scss"
 import "../../Styling/Shapes.scss"
@@ -7,30 +8,32 @@ import "../../Styling/Shapes.scss"
 import { IoSettingsOutline } from "react-icons/io5"
 import UserOptions from "../../Components/UserOptions/UserOptions"
 import PostModal from "../../Components/PostModal/PostModal"
-import {BsGrid3X3} from "react-icons/bs"
+import { BsGrid3X3 } from "react-icons/bs"
 import Igtv from "../../Assets/igtv.svg"
 import Reel from "../../Assets/reel.svg"
 import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
-import {getCurrentUserPostsAction} from "../../Actions/postActions"
+import { getCurrentUserPostsAction } from "../../Actions/postActions"
 
-import {editProfileAction, deleteProfileAction} from "../../Actions/userActions"
+import { editProfileAction, deleteProfileAction } from "../../Actions/userActions"
 const Profile = () => {
 
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
+    const [selected, setSelected] = useState()
 
     const dispatch = useDispatch();
-    const state = useSelector((state)=> state)
+    const state = useSelector((state) => state)
     console.log("State", state)
-  
-  
-    useEffect(() =>{
-      dispatch(getCurrentUserPostsAction())
+
+
+    useEffect(() => {
+        dispatch(getCurrentUserPostsAction())
     }, []);
 
-    
+
     const [showPost, setShowPost] = useState(false)
+    const [editMode, setEditMode] = useState(false)
     return (
         <div className="profile-wrap">
             {/* -----------------------------HEADER----------------------------- */}
@@ -42,10 +45,10 @@ const Profile = () => {
                 </div>
                 <div className="profile-info">
                     <div className="profile-info-header">
-                        <span className="profile-info-username">username</span>
-                        <input type="button" value="Edit Profile" className="profile-info-edit-user"  />
-                        <IoSettingsOutline className="profile-info-edit-settings" onClick={()=>setShowModal(!showModal)} />
-                        <UserOptions show={showModal} close={setShowModal}/>
+                        <span className="profile-info-username">{!editMode ? (state.currentUser.user && state.currentUser.user.currentUser.username) : <input type="text" className="edit-mode__input" id="username" value={state.currentUser.user && state.currentUser.user.currentUser.username} />}</span>
+                        <input type="button" value={!editMode ? "Edit Profile" : "Save Profile"} className="profile-info-edit-user" onClick={!editMode ? () => setEditMode(true) : () => setEditMode(false)} />
+                        <IoSettingsOutline className="profile-info-edit-settings" onClick={() => setShowModal(!showModal)} />
+                        <UserOptions show={showModal} close={setShowModal} />
                     </div>
                     <div className="profile-info-interaction">
                         <div className="profile-info-interaction-single">
@@ -59,7 +62,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                xxx
+                                {state.currentUser.user.currentUser.followers.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 followers
@@ -68,7 +71,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                xxx
+                                {state.currentUser.user.currentUser.following.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 following
@@ -77,51 +80,54 @@ const Profile = () => {
                     </div>
                     <div className="profile-info-bio">
                         <div className="profile-info-handle">
-                            complete name
+                            {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.name) : <input type="text" value={state.currentUser.user.currentUser.name} className="edit-mode__input" id="name" />} {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.lastname) : <input type="text" value={state.currentUser.user.currentUser.lastname} className="edit-mode__input" id="lastname" />}
                         </div>
                         <div className="profile-info-bio-text">
-                            this is an instagram biography, it's a couple of lines long. Right?
-                            It has a max length so there is no need for more and less buttons.
+                            {state.currentUser.user.currentUser.bio}
                         </div>
                     </div>
                 </div>
             </div>
             {/* -----------------------------STORY HIGHLIGHTS----------------------------- */}
             <div className="profile-story-highlights">
-                    <div className="profile-story-highlights-single">
-                        <img className="circle-md" src="https://i.pravatar.cc/250"/>
-                        <span>Friends!!</span>
-                    </div>
+                <div className="profile-story-highlights-single">
+                    <img className="circle-md" src="https://i.pravatar.cc/250" />
+                    <span>Friends!!</span>
+                </div>
 
-                    
+
             </div>
             <div className="profile-tabs">
-                    <div className={ show !== "post" ? "profile-tabs-item": "profile-tabs-item--selected"} onClick={()=>setShow("post")}>
-                        <BsGrid3X3 className="profile-tabs-item-logo"/> POSTS
+                <div className={show !== "post" ? "profile-tabs-item" : "profile-tabs-item--selected"} onClick={() => setShow("post")}>
+                    <BsGrid3X3 className="profile-tabs-item-logo" /> POSTS
                     </div>
-                    <div className={ show !== "IGTV" ? "profile-tabs-item": "profile-tabs-item--selected"} onClick={()=>setShow("IGTV")}>
-                        <img src={Igtv} className="profile-tabs-item-logo"/> IGTV
+                <div className={show !== "IGTV" ? "profile-tabs-item" : "profile-tabs-item--selected"} onClick={() => setShow("IGTV")}>
+                    <img src={Igtv} className="profile-tabs-item-logo" /> IGTV
                     </div>
-                    <div className={ show !=="reels" ? "profile-tabs-item": "profile-tabs-item--selected"} onClick={()=>setShow("reels")}>
-                        <img src={Reel} className="profile-tabs-item-logo"/> REELS
+                <div className={show !== "reels" ? "profile-tabs-item" : "profile-tabs-item--selected"} onClick={() => setShow("reels")}>
+                    <img src={Reel} className="profile-tabs-item-logo" /> REELS
                     </div>
-                    <div className={ show !== "saved" ? "profile-tabs-item": "profile-tabs-item--selected"} onClick={()=>setShow("saved")} >
-                        <img src={Save} className="profile-tabs-item-logo"/> SAVED
+                <div className={show !== "saved" ? "profile-tabs-item" : "profile-tabs-item--selected"} onClick={() => setShow("saved")} >
+                    <img src={Save} className="profile-tabs-item-logo" /> SAVED
                     </div>
-                    <div className={ show!=="tagged" ? "profile-tabs-item": "profile-tabs-item--selected"} onClick={()=>setShow("tagged")}>
-                        <img src={Tagged} className="profile-tabs-item-logo"/> TAGGED
+                <div className={show !== "tagged" ? "profile-tabs-item" : "profile-tabs-item--selected"} onClick={() => setShow("tagged")}>
+                    <img src={Tagged} className="profile-tabs-item-logo" /> TAGGED
                     </div>
             </div>
-                {/* -----------------------------POSTS----------------------------- */}
-            {state.post.currentUserPosts && state.post.currentUserPosts.map((post)=>
+            {/* -----------------------------POSTS----------------------------- */}
             <div className="profile-post">
-            <img src="https://picsum.photos/600" className="profile-post-single" onClick={()=>setShowPost(!showPost)}/>
-            <PostModal show={showPost} close={setShowPost} content={{img: "https://picsum.photos/600" }}/>
-            
-    </div>
-            )}
+                {state.post.currentUserPosts && state.post.currentUserPosts.map((post, index) =>
+                    <>
+                        <img src={post.image} className="profile-post-single" onClick={() => {
+                            setSelected(post);
+                            setShowPost(!showPost)
+                        }} />
+                    </>
+                )}
+                <PostModal show={showPost} close={setShowPost} content={selected} />
+            </div>
 
-            
+
         </div>
     )
 }

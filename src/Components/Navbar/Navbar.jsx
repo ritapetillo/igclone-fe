@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import "./Navbar.scss";
 
 import Logo from "../../Assets/ig-logo.png";
@@ -15,7 +15,7 @@ import { CgProfile, CgBookmark } from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
 import Dropdown from "../Dropdown/Dropdown";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../Actions/userActions";
 
 const Navbar = () => {
@@ -27,6 +27,11 @@ const Navbar = () => {
   useEffect(() => {
     dispatch(loginAction());
   }, []);
+
+ 
+    const state = useSelector((state) => state)
+
+    console.log("state", state)
 
   const searchResults = (e) => {
     if (e.target.value !== "") setShowSR(true);

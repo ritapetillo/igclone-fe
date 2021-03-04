@@ -166,9 +166,18 @@
         align-self: center;
 
         .profile-post-single {
-            width: 30%;
+            width: 21vw;
+            height: 21vw;
             margin: 10px;
+            object-fit: cover;
+            object-position: center;
         }
     }
 
+}
+
+.edit-mode__input {
+    width: 150px;
+    height: 30px;
+    border: grey;
 }

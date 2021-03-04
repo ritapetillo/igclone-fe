@@ -22,7 +22,7 @@ const PostModal = (props) => {
             <div className={props.show ? "wrapper-show-post" : "wrapper-hidden-post"} >
                 <div className="popup-inner" >
                     <div className="popup-photo">
-                        <img src={props.content.img} />
+                        <img src={props.content && props.content.image} style={{objectFit: "cover", objectPosition: "center"}} />
                     </div>
                     <div className="popup-description">
                         <div className="popup-description-infos">
@@ -30,21 +30,22 @@ const PostModal = (props) => {
                             <div className="popup-header">
                                 <div>
                                     <img src="https://picsum.photos/600" className="circle-sm" />
-                                    <span>username</span>
+                                    <span>{props.content && props.content.authorId}</span>
                                 </div>
                                 <GrFormClose className="post-header-options" onClick={() => props.close(!props.show)} />
                             </div>
                             <div className="popup-caption">
                                 <img src="https://picsum.photos/600" className="circle-sm" />
-                                <span>username</span> <span>this is a caption</span>
+                                <span>{props.content && props.content.authorId}</span> <span>{props.content && props.content.caption}</span>
                                 <div className="popup-caption-date">4 weeks</div>
                             </div>
                             <div className="popup-comment-wrap">
+                                {props.content && props.content.comments.map((comment)=>
                                 <div className="popup-comment-single">
                                     <img src="https://picsum.photos/600" className="circle-sm" />
                                     <div className="popup-comment-content">
                                         <div>
-                                            <span>username</span> comment comment comment
+                                            <span>{props.content && props.content.authorId}</span> {comment}
                                     </div>
                                         <div className="popup-comment-time">
                                             <span>21 weeks</span>
@@ -52,6 +53,7 @@ const PostModal = (props) => {
                                     </div>
                                     <BsHeart />
                                 </div>
+                                )}
                             </div>
                         </div>
                         <div style={{width : "100%"}}>
@@ -65,7 +67,7 @@ const PostModal = (props) => {
                                 <IoBookmarkOutline />
                             </div>
                             <div className="popup-like-count">
-                                <img src="https://picsum.photos/600" /> <span>username</span>  and <span>xx others</span> like this
+                                <img src="https://picsum.photos/600" /> <span>{props.content && props.content.authorId}</span>  and <span>xx others</span> like this
                         </div>
                         <div className="popup-time">
                             1 year
