@@ -83,12 +83,12 @@ export const editPostAction = () => async (dispatch) => {
   }
 };
 
-export const deletePostAction = () => async (dispatch) => {
+export const deletePostAction = (data) => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
     });
-    const post = await deleteMyPost();
+    const post = await deleteMyPost(data);
     if (post) {
       dispatch(getCurrentUserPostsAction());
     } else throw new Error();

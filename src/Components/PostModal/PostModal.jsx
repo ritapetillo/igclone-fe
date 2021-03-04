@@ -13,9 +13,12 @@ import {
 } from "react-icons/io5"
 import { GrFormClose } from "react-icons/gr"
 import Dropdown from "../Dropdown/Dropdown";
+import {deletePostAction} from "../../Actions/postActions"
+import { useDispatch } from "react-redux";
 
 const PostModal = (props) => {
     const [showOptions, setOptions] = useState({ options: false })
+    const dispatch = useDispatch()
     return (
         <>
             <Dropdown size="post_options" show={showOptions.options} content={
@@ -29,7 +32,14 @@ const PostModal = (props) => {
                     <div className="dropdown-divider"></div>
                     <div className="post-option_item"><div >Embed</div></div>
                     <div className="dropdown-divider"></div>
-                    <div className="post-option_item"><div className="red" >Delete</div></div>
+                    <div className="post-option_item"
+                    onClick={()=> {
+
+                        dispatch(deletePostAction(props.content._id))
+                        props.close(false)
+                        setOptions({options: false})
+                        }}
+                    ><div className="red" >Delete</div></div>
                     <div className="dropdown-divider"></div>
                     <div className="post-option_item" onClick={() => setOptions(false)}><div >Cancel</div></div>
                 </div>
