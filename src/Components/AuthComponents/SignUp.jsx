@@ -32,6 +32,9 @@ const SignUp = () => {
             <Button
               className="SignUp__button py-2 px-4 d-flex justify-content-center"
               type="submit"
+              onClick={() => {
+                window.location.href = `${REACT_APP_API_URI}/api/auth/facebook`;
+              }}
             >
               <AiFillFacebook />
               <span className="font-weight-bold ml-3">

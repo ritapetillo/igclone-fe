@@ -27,7 +27,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loginAction());
+    // dispatch(loginAction());
   }, []);
 
   const state = useSelector((state) => state);
