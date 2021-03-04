@@ -122,7 +122,7 @@ const Profile = () => {
                         <div className="profile-info-bio-text">
                             {!editMode
                                 ? (profile && profile.bio)
-                                : <textarea className="edit-mode__textarea"
+                                : <textarea className="edit-more__textarea"
                                     value={profile.bio}
                                     onChange={(e) => onChangeHandler(e)}
                                     id="bio"
