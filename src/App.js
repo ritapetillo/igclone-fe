@@ -34,11 +34,11 @@ function App() {
             <Navbar />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/add_post" component={AddPost} />
-            <Route exact path="/" component={Feed} />
             <Route exact path="/inbox/:roomId" component={Inbox} />
             <Route exact path="/inbox" component={Inbox} />
 
             <Route exact path="/login2" component={Login} />
+            <Route exact path="/" component={Feed} />
           </div>
         </AuthContext>
       </Switch>
