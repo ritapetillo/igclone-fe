@@ -6,7 +6,7 @@ import SinglePost from "../../Components/SinglePost/SinglePost";
 import { getFollowingUsersPostsAction } from "../../Actions/postActions";
 import { fetchAllUsers } from "../../Api/userApi";
 //*styles
-import "./Feed.scss";
+import "./feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
