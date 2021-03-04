@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import ChatSpace from "./ChatSpace";
 import { useParams } from "react-router-dom";
 
-const ChatConversation = ({ socket }) => {
+const ChatConversation = () => {
   const params = useParams();
   console.log(params);
   const chatSpace = useMemo(() => {
@@ -21,7 +21,7 @@ const ChatConversation = ({ socket }) => {
         </div>
       );
     } else {
-      return <ChatSpace socket={socket} />;
+      return <ChatSpace  />;
     }
   }, [params]);
   return <div className="chat-conversation">{chatSpace}</div>;

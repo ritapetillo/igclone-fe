@@ -14,7 +14,9 @@ import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
 import {getCurrentUserPostsAction} from "../../Actions/postActions"
 
-const Profile = (props) => {
+import {editProfileAction, deleteProfileAction} from "../../Actions/userActions"
+const Profile = () => {
+
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
 
@@ -26,6 +28,8 @@ const Profile = (props) => {
     useEffect(() =>{
       dispatch(getCurrentUserPostsAction())
     }, []);
+
+    
     const [showPost, setShowPost] = useState(false)
     return (
         <div className="profile-wrap">

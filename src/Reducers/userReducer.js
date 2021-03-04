@@ -1,4 +1,4 @@
-import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS } from "../Actions/types";
+import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, PROFILE_ERROR, PROFILE_LOADING, PROFILE_SUCCESS  } from "../Actions/types";
 
 const initialState = {
   user: {},
@@ -14,12 +14,29 @@ const currentUserReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: true,
       };
+      case PROFILE_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
         isAuth: true,
         user: payload,
         error_msg: "",
+      };
+      case PROFILE_SUCCESS:
+      return {
+        ...state,
+        isAuth: true,
+        user: payload,
+        error_msg: "",
+      };
+      case PROFILE_ERROR:
+      return {
+        ...state,
+        error_msg: "Error with editing/deleting profile",
       };
     case LOGIN_FAIL:
       return {

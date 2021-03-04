@@ -1,5 +1,6 @@
 import { getCurrentUserApi, userLoginApi } from "../Api/authApi.js";
-import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS } from "./types.js";
+import {editProfile, deleteProfile} from "../Api/userApi.js";
+import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, PROFILE_LOADING, PROFILE_SUCCESS, PROFILE_ERROR } from "./types.js";
 
 export const loginAction = (credentials = "") => async (dispatch) => {
   try {
@@ -29,6 +30,47 @@ export const loginAction = (credentials = "") => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
+    });
+  }
+};
+
+export const editProfileAction = () => async dispatch => {
+  try {
+    dispatch({
+      type: PROFILE_LOADING,
+    });
+    const profile = await editProfile();
+    if (profile) {
+      dispatch({
+        type: PROFILE_SUCCESS,
+        payload: profile,
+      });
+    } else throw new Error();
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+    });
+  }
+};
+
+export const deleteProfileAction = () => async dispatch => {
+  try {
+    dispatch({
+      type: PROFILE_LOADING,
+    });
+    const profile = await deleteProfile();
+    if (profile.status) {
+      dispatch({
+        type: PROFILE_SUCCESS,
+        payload: profile,
+      });
+    } else throw new Error();
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        error_msg: "There was a problem deleting this profile",
+      },
     });
   }
 };

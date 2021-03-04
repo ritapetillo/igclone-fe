@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SinglePost.scss";
 import "../../Styling/Shapes.scss";
+import { useDispatch, useSelector } from "react-redux";
+import Comment from "./Comment";
 //ICONS
 import { BsThreeDots, BsPersonFill } from "react-icons/bs";
 import {
@@ -12,19 +14,61 @@ import {
   IoBookmark,
   IoHappyOutline,
 } from "react-icons/io5";
+import { followUser, unFollowUser } from "../../Api/userApi";
+import { likePost, unlikePost } from "../../Api/postApi";
 import PostOptionsV from "../PostOptions-V/PostOptionV";
 import PostOptionsO from "../PostOptions-O/PostOptionO";
+import { likeAPost, unlikeAPost } from "../../Api/postApi";
 
-const SinglePost = ({post}) => {
+const SinglePost = ({ post }) => {
   const [user, setUser] = useState();
   const [show_more, setShow] = useState(false);
   const [showPopup, setPopup] = useState(false);
   const [saved, setSaved] = useState(false);
   const [like, setLike] = useState(false);
-  const [liked_comment, likeComment] = useState(false);
+  const [togglePostLike, setPostToggleLike] = useState(false);
+  const [username, setUsername] = useState("");
+  const [displayComment, setDisplayComments] = useState(false);
+  const [usersLiked, setUsersLiked] = useState([]);
+
+  const currentUser = useSelector(
+    (state) => state.currentUser?.user.currentUser
+  );
+
+  console.log("currentUser", currentUser);
+  const postId = post._id;
+
+  useEffect(() => {
+    isLiked();
+    setUsersLiked(post.likes);
+    console.log(usersLiked);
+  }, []);
+  useEffect(() => {
+    isLiked();
+    setUsersLiked(post.likes);
+  }, [post]);
+
+  const isLiked = async () => {
+    const like = post.likes.includes(currentUser.username);
+    setLike(like);
+  };
+
+  const handlePostLike = async () => {
+    if (like) {
+      await unlikeAPost(post._id);
+      const newArray = usersLiked.filter(
+        (user) => user !== currentUser.username
+      );
+      setUsersLiked(newArray);
+    } else {
+      await likeAPost(post._id);
+      setUsersLiked([...usersLiked, currentUser.username]);
+    }
+    setLike(!like);
+  };
+
   return (
     <>
-
       <PostOptionsV show={showPopup} close={setPopup} />{" "}
       {/*this needs to be moved in the homepage*/}
       {/*IF user is the owner of the post, use <PostOptionsO/> instead */}
@@ -33,21 +77,15 @@ const SinglePost = ({post}) => {
         <div className="post-header">
           <div className="post-header-info">
             <div className="story-sm">
-              {post &&
-              post.authorId?.imageUrl ? (
-                <img
-                  src={post.authorId.imageUrl}
-                  className="circle-sm"
-                />
+              {post && post.authorId?.imageUrl ? (
+                <img src={post.authorId.imageUrl} className="circle-sm" />
               ) : (
                 <img src="https://i.pravatar.cc/150" className="circle-sm" />
               )}
             </div>
             <div className="username">
               {/*<Link to={`/${user._id}`}>*/}
-              {post
-                ? post.authorId?.username
-                : "username"}
+              {post ? post.authorId?.username : "username"}
               {/*</Link>*/}
             </div>
           </div>
@@ -71,12 +109,12 @@ const SinglePost = ({post}) => {
             {!like ? (
               <IoHeartOutline
                 className="interaction-icon"
-                onClick={() => setLike(!like)}
+                onClick={() => handlePostLike()}
               />
             ) : (
               <IoHeartSharp
                 className="interaction-icon"
-                onClick={() => setLike(!like)}
+                onClick={() => handlePostLike()}
               />
             )}
             <IoChatbubbleOutline className="interaction-icon" />
@@ -100,13 +138,17 @@ const SinglePost = ({post}) => {
         <div className="post-likes">
           <img src="https://i.pravatar.cc/150" className="xs-img" />
           <div className="">
-            Liked by <span className="user-who-liked">{post.likes}</span> and
-            others
+            Liked by{" "}
+            <span className="user-who-liked">
+              {usersLiked && usersLiked.map((user) => user)}
+            </span>{" "}
+            and others
           </div>
         </div>
         <div className="post-caption">
           <div className={show_more ? "caption-whole" : "caption-cut"}>
-            <span className="post-author">{post.authorId?.username}</span> {post.caption}
+            <span className="post-author">{post.authorId?.username}</span>{" "}
+            {post.caption}
           </div>
           {!show_more && (
             <div className="show-more" onClick={() => setShow(true)}>
@@ -122,25 +164,8 @@ const SinglePost = ({post}) => {
         {/*---------------------POST COMMENTS---------------------*/}
         <div className="post-comments">
           <div className="view-comments">View all comments</div>
-          <div className="single-comment">
-            <div className="comment-infos">
-              <div className="comment-author">{post.comments && post.comments.map(comment=>comment.author)}</div>
-              <div className="comment-text">
-              {post.comments && post.comments.map(comment=>comment.text)}
-              </div>
-            </div>
-            {!liked_comment ? (
-              <IoHeartOutline
-                className="comment-add-like"
-                onClick={() => likeComment(!liked_comment)}
-              />
-            ) : (
-              <IoHeartSharp
-                className="comment-add-like"
-                onClick={() => likeComment(!liked_comment)}
-              />
-            )}
-          </div>
+          {post.comments &&
+            post.comments.map((comment) => <Comment comment={comment} />)}
         </div>
         <div className="post-time">1 hour ago</div>
         <div className="divider"></div>

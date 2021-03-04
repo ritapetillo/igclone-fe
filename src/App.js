@@ -16,14 +16,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Inbox from "./Pages/Inbox/Inbox";
 import AddPost from "./Pages/Add_Post/AddPost";
 
+
 function App() {
   const dispatch = useDispatch();
   return (
     <div className="App">
       <Switch>
-        {/* <Route exact path="/login" component={SignIn} /> */}
-        <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={SignUp} />
+        {/* <Route exact path="/login" component={SignIn} /> */}
         <div>
           <Navbar />
           <Route exact path="/profile" component={Profile} />
