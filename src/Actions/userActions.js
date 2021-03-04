@@ -34,12 +34,12 @@ export const loginAction = (credentials = "") => async (dispatch) => {
   }
 };
 
-export const editProfileAction = () => async dispatch => {
+export const editProfileAction = (data) => async dispatch => {
   try {
     dispatch({
       type: PROFILE_LOADING,
     });
-    const profile = await editProfile();
+    const profile = await editProfile(data);
     if (profile) {
       dispatch({
         type: PROFILE_SUCCESS,

@@ -13,6 +13,7 @@ import Igtv from "../../Assets/igtv.svg"
 import Reel from "../../Assets/reel.svg"
 import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
+import Placeholder from "../../Assets/placeholder.png"
 import { getCurrentUserPostsAction } from "../../Actions/postActions"
 
 import { editProfileAction, deleteProfileAction } from "../../Actions/userActions"
@@ -21,14 +22,38 @@ const Profile = () => {
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
     const [selected, setSelected] = useState()
+    const [profile, setProfile] = useState()
 
     const dispatch = useDispatch();
     const state = useSelector((state) => state)
-    console.log("State", state)
+    const saveNewProfile = async () => {
+        
+        dispatch(editProfileAction({
+            name: profile.name,
+            lastname: profile.lastname,
+            username: profile.username,
+            bio: profile.bio
+        }
+        ))
+        setEditMode(false)
+    }
 
-
+    const onChangeHandler = (e) => {
+        setProfile({ ...profile, [e.target.id]: e.target.value })
+    }
     useEffect(() => {
         dispatch(getCurrentUserPostsAction())
+        {
+            state.currentUser.user.currentUser && setProfile(
+                {
+                    username: state.currentUser.user.currentUser.username,
+                    name: state.currentUser.user.currentUser.name,
+                    lastname: state.currentUser.user.currentUser.lastname,
+                    bio: state.currentUser.user.currentUser.bio,
+                    followers: state.currentUser.user.currentUser.followers,
+                    following: state.currentUser.user.currentUser.following
+                })
+        }
     }, []);
 
 
@@ -40,20 +65,22 @@ const Profile = () => {
             <div className="profile-header">
                 <div className="profile-pic">
                     <div className="story-lg">
-                        <img className="circle-lg" src="https://i.pravatar.cc/250" />
+                        <img className="circle-lg" src={profile && profile.propic ? profile.propic : Placeholder} />
                     </div>
                 </div>
                 <div className="profile-info">
                     <div className="profile-info-header">
-                        <span className="profile-info-username">{!editMode ? (state.currentUser.user && state.currentUser.user.currentUser.username) : <input type="text" className="edit-mode__input" id="username" value={state.currentUser.user && state.currentUser.user.currentUser.username} />}</span>
-                        <input type="button" value={!editMode ? "Edit Profile" : "Save Profile"} className="profile-info-edit-user" onClick={!editMode ? () => setEditMode(true) : () => setEditMode(false)} />
+                        <span className="profile-info-username">{!editMode
+                            ? (profile && profile.username)
+                            : <input type="text" className="edit-mode__input" id="username" onChange={(e) => onChangeHandler(e)} value={profile && profile.username} />}</span>
+                        <input type="button" value={!editMode ? "Edit Profile" : "Save Profile"} className="profile-info-edit-user" onClick={!editMode ? () => setEditMode(true) : () => saveNewProfile()} />
                         <IoSettingsOutline className="profile-info-edit-settings" onClick={() => setShowModal(!showModal)} />
                         <UserOptions show={showModal} close={setShowModal} />
                     </div>
                     <div className="profile-info-interaction">
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                xx
+                                {state.post.currentUserPosts ? state.post.currentUserPosts.length : 0 }
                             </div>
                             <div className="profile-info-interaction-value">
                                 posts
@@ -62,7 +89,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                {state.currentUser.user.currentUser.followers.length}
+                                {profile && profile.followers.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 followers
@@ -71,7 +98,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                {state.currentUser.user.currentUser.following.length}
+                                {profile && profile.following.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 following
@@ -80,10 +107,26 @@ const Profile = () => {
                     </div>
                     <div className="profile-info-bio">
                         <div className="profile-info-handle">
-                            {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.name) : <input type="text" value={state.currentUser.user.currentUser.name} className="edit-mode__input" id="name" />} {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.lastname) : <input type="text" value={state.currentUser.user.currentUser.lastname} className="edit-mode__input" id="lastname" />}
+                            {!editMode
+                                ? (profile && profile.name + " ")
+                                : <input type="text" value={profile && profile.name}
+                                    onChange={(e) => onChangeHandler(e)}
+                                    className="edit-mode__input" id="name" />}
+                            
+                            {!editMode
+                                ? (profile && profile.lastname)
+                                : <input type="text" value={profile && profile.lastname}
+                                    onChange={(e) => onChangeHandler(e)}
+                                    className="edit-mode__input" id="lastname" />}
                         </div>
                         <div className="profile-info-bio-text">
-                            {state.currentUser.user.currentUser.bio}
+                            {!editMode
+                                ? (profile && profile.bio)
+                                : <textarea className="edit-more__textarea"
+                                    value={profile.bio}
+                                    onChange={(e) => onChangeHandler(e)}
+                                    id="bio"
+                                    rows={3} />}
                         </div>
                     </div>
                 </div>
@@ -116,7 +159,7 @@ const Profile = () => {
             </div>
             {/* -----------------------------POSTS----------------------------- */}
             <div className="profile-post">
-                {state.post.currentUserPosts && state.post.currentUserPosts.map((post, index) =>
+                {state.post.currentUserPosts && state.post.currentUserPosts.map((post) =>
                     <>
                         <img src={post.image} className="profile-post-single" onClick={() => {
                             setSelected(post);

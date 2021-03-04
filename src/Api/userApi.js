@@ -69,10 +69,11 @@ export const unfollowUser = async userId => {
   }
 };
 
-export const editProfile = async()  => {
+export const editProfile = async(data)  => {
   try {
     const user = await axios.put(
       `${REACT_APP_API_URI}/api/users/me`,
+      data,
       {
         withCredentials: true,
       }
