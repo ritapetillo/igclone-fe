@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import "./CreateChatModal.scss";
 import cross from "../../Assets/cross.svg";
 import ChatRow from "../ChatRooms/ChatRow";
@@ -6,6 +6,7 @@ import UserRow from "./UserRow";
 import { searchUser } from "../../Api/userApi";
 import { createChat } from "../../Actions/chatActions";
 import { useDispatch } from "react-redux";
+import { socketContext } from "../../Context/SocketContext";
 
 const CreateChatModal = ({ handleModal }) => {
   const userSearch = useRef();
@@ -13,6 +14,7 @@ const CreateChatModal = ({ handleModal }) => {
   const [chatUsers, setChatUsers] = useState([]);
   const [chatUserNames, setChatUserNames] = useState([]);
   const dispatch = useDispatch();
+  const { socket } = useContext(socketContext);
 
   const handleSearch = async () => {
     const { value } = userSearch.current;
@@ -45,6 +47,11 @@ const CreateChatModal = ({ handleModal }) => {
     try {
       const newChat = await dispatch(createChat(chatUsers));
       handleModal();
+      console.log(newChat.chat._id);
+      console.log(newChat);
+
+      socket.emit("addedChat", { roomId: newChat.chat._id });
+
       console.log(newChat);
     } catch (err) {
       console.log(err);

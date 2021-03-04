@@ -45,7 +45,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    overflow-y: hidden;
+    overflow: hidden;
     padding: 10px 20px;
     .chat-space__body-message-space {
       overflow-y: auto;
@@ -53,10 +53,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      .anchor {
-        overflow-anchor: auto;
-        height: 1px;
-      }
 
       .chat-space__message {
         overflow-anchor: none;
