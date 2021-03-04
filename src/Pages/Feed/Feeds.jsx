@@ -5,7 +5,7 @@ import Sidebar from "../../Components/Sidebar";
 import SinglePost from "../../Components/SinglePost/SinglePost";
 import { getFollowingUsersPostsAction } from "../../Actions/postActions";
 //*styles
-import "./feed.scss";
+import "./Feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
