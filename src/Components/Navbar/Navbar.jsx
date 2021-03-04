@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./Navbar.scss";
-
+import SearchResultRow from "../../Components/SearchResultRow/SearchResultRow";
 import Logo from "../../Assets/ig-logo.png";
 import Placeholder from "../../Assets/placeholder.png";
 //ICONS:
@@ -15,29 +15,42 @@ import {
 import { CgProfile, CgBookmark } from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
 import Dropdown from "../Dropdown/Dropdown";
+import { searchUser } from "../../Api/userApi";
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../Actions/userActions";
 
 const Navbar = () => {
+  const userSearch = useRef();
+  const [users, setUsers] = useState();
   const [show, setShow] = useState(false);
   const [profileDD, setProfileDD] = useState(false);
   const [searchRes, setShowSR] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loginAction());
   }, []);
 
-  const state = useSelector((state) => state);
+  const state = useSelector(state => state);
 
-  console.log("state", state);
-
-  const searchResults = (e) => {
-    if (e.target.value !== "") setShowSR(true);
-    else setShowSR(false);
+  const handleSearch = async () => {
+    const { value } = userSearch.current;
+    if (value.length > 1) {
+      const users = await searchUser(userSearch.current.value);
+      setUsers(users.users);
+    } else {
+      setUsers([]);
+    }
   };
+
+  // const searchResults = (e) => {
+  //   if (e.target.value !== "") setShowSR(true);
+  //   else setShowSR(false);
+  // };
+
   return (
     <>
       {/*--------------------- ALL OF THE DROPDOWNS ---------------------*/}
@@ -78,29 +91,18 @@ const Navbar = () => {
         }
       />
       <Dropdown
+        setShowSR={() => setShowSR(!searchRes)}
         show={searchRes}
         size="search"
         content={
-          <div className="navbar-search-dropdown">
-            <div className="navbar-search-result">
-              <div className="story-dropdown">
-                <img
-                  src="https://i.pravatar.cc/100"
-                  className="circle-dropdown"
-                />
-              </div>
-              <div className="navbar-search-result-info">
-                <span className="navbar-search-result-username">
-                  **username**
-                </span>
-                <span className="navbar-search-result-details">
-                  followed by **another user**
-                </span>
-              </div>
+          <div className="navbar-search-dropdown" style={{display:"contents"}}>
+            <div className="navbar-search-result" style={{display:"block"}}>
+              {users ? users.map(user => <SearchResultRow user={user}/>) : <SearchResultRow />}
             </div>
           </div>
         }
       />
+
       <Dropdown
         size="profile"
         show={profileDD}
@@ -136,7 +138,11 @@ const Navbar = () => {
           <input
             className="search-input"
             placeholder="🔎 Search"
-            onKeyUp={(e) => searchResults(e)}
+            // onKeyUp={(e) => searchResults(e)}
+            onChange={handleSearch}
+            ref={userSearch}
+            onClick={() => setShowSR(!searchRes)}
+
           />
 
           <div className="profile-area">
