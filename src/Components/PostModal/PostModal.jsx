@@ -2,23 +2,39 @@ import React, { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PostModal.scss"
 import "../../Styling/Shapes.scss"
+import {Link} from "react-router-dom"
 import { BsHeart, BsThreeDots } from "react-icons/bs"
 import {
     IoBookmarkOutline,
     IoChatbubbleOutline,
     IoHeartOutline,
     IoPaperPlaneOutline,
-    IoHeartSharp,
-    IoBookmark,
     IoHappyOutline
 } from "react-icons/io5"
 import { GrFormClose } from "react-icons/gr"
-import PostOptionsO from "../PostOptions-O/PostOptionO";
+import Dropdown from "../Dropdown/Dropdown";
 
 const PostModal = (props) => {
     const [showOptions, setOptions] = useState({ options: false })
     return (
         <>
+            <Dropdown size="post_options" show={showOptions.options} content={
+                
+                <div className="post-options_wrap">
+                    <div className="post-option_item"><div >Go to post</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><div >Share to...</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><Link to="/edit_post"><div style={{color: "black"}} >Edit</div></Link></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><div >Embed</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><div className="red" >Delete</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item" onClick={() => setOptions(false)}><div >Cancel</div></div>
+                </div>
+            
+            } />
             <div className={props.show ? "wrapper-show-post" : "wrapper-hidden-post"} >
                 <div className="popup-inner" >
                     <div className="popup-photo">
@@ -32,7 +48,10 @@ const PostModal = (props) => {
                                     <img src="https://picsum.photos/600" className="circle-sm" />
                                     <span>username</span>
                                 </div>
-                                <GrFormClose className="post-header-options" onClick={() => props.close(!props.show)} />
+                                <div>
+                                    <BsThreeDots className="post-header-options" onClick={() => setOptions({options: !showOptions.options})}/>
+                                    <GrFormClose className="post-header-options" onClick={() => props.close(!props.show)} />
+                                </div>
                             </div>
                             <div className="popup-caption">
                                 <img src="https://picsum.photos/600" className="circle-sm" />
@@ -54,7 +73,7 @@ const PostModal = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div style={{width : "100%"}}>
+                        <div style={{ width: "100%" }}>
 
                             <div className="popup-interactions">
                                 <div className="popup-interactions-g1">
@@ -67,14 +86,14 @@ const PostModal = (props) => {
                             <div className="popup-like-count">
                                 <img src="https://picsum.photos/600" /> <span>username</span>  and <span>xx others</span> like this
                         </div>
-                        <div className="popup-time">
-                            1 year
+                            <div className="popup-time">
+                                1 year
                         </div>
-                        <div className="popup-add-comment">
-                            <IoHappyOutline/> 
-                            <input type="text" placeholder="Add a comment..."/>
-                            <input type="button" value="Post"/>
-                        </div>
+                            <div className="popup-add-comment">
+                                <IoHappyOutline />
+                                <input type="text" placeholder="Add a comment..." />
+                                <input type="button" value="Post" />
+                            </div>
                         </div>
                     </div>
                 </div>
