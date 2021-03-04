@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux"
+
 import "./Profile.scss"
 import "../../Styling/Shapes.scss"
 
@@ -9,10 +11,20 @@ import Igtv from "../../Assets/igtv.svg"
 import Reel from "../../Assets/reel.svg"
 import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
+import {getCurrentUserPostsAction} from "../../Actions/postActions"
 
 const Profile = () => {
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
+
+    const dispatch = useDispatch();
+    const state = useSelector((state)=> state)
+    console.log("State", state)
+  
+  
+    useEffect(() =>{
+      dispatch(getCurrentUserPostsAction())
+    }, []);
     return (
         <div className="profile-wrap">
             {/* -----------------------------HEADER----------------------------- */}
