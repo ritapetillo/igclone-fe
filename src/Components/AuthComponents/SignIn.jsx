@@ -12,6 +12,7 @@ import "./Authentication.scss";
 
 const SignIn = () => {
   const { REACT_APP_API_URI } = process.env;
+
   const username = useRef();
   const password = useRef();
   const dispatch = useDispatch();

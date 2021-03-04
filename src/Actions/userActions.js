@@ -1,7 +1,9 @@
 import { getCurrentUserApi, userLoginApi } from "../Api/authApi.js";
+import { registerUser } from "../Api/userApi.js";
 import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS } from "./types.js";
+import { REGISTER_FAIL, REGISTER_LOADING, REGISTER_SUCCESS } from "./types.js";
 
-export const loginAction = (credentials = "") => async (dispatch) => {
+export const loginAction = (credentials = "") => async dispatch => {
   try {
     dispatch({
       type: LOGIN_LOADING,
@@ -31,4 +33,16 @@ export const loginAction = (credentials = "") => async (dispatch) => {
       type: LOGIN_FAIL,
     });
   }
+};
+
+export const registerAction = (credentials = "") => async dispatch => {
+  try {
+    dispatch({
+      type: REGISTER_LOADING,
+    });
+
+    if (credentials) {
+      const registration = await registerUser();
+    }
+  } catch (error) {}
 };
