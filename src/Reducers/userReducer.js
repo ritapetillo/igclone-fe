@@ -57,27 +57,27 @@ const currentUserReducer = (state = initialState, { type, payload }) => {
         user: {},
         error_msg: "Wrong Username and/or Password",
       };
-    case REGISTER_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
+    // case REGISTER_LOADING:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
 
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        isAuth: true,
-        user: payload,
-        error_msg: "",
-      };
+    // case REGISTER_SUCCESS:
+    //   return {
+    //     ...state,
+    //     isAuth: true,
+    //     user: payload,
+    //     error_msg: "",
+    //   };
 
-    case REGISTER_FAIL:
-      return {
-        ...state,
-        isAuth: false,
-        registerUser: {},
-        error_msg: "Not valid credentials",
-      };
+    // case REGISTER_FAIL:
+    //   return {
+    //     ...state,
+    //     isAuth: false,
+    //     registerUser: {},
+    //     error_msg: "Not valid credentials",
+    //   };
 
     default:
       return state;

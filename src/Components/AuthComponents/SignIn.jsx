@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { loginAction } from "../../Actions/userActions";
 import { useHistory, Link } from "react-router-dom";
 import { Form, Button, Container } from "react-bootstrap";
@@ -8,9 +7,7 @@ import { AiFillFacebook, AiFillGoogleCircle } from "react-icons/ai";
 import Logo from "../../Assets/ig-logo.png";
 //*STYLE
 import "./Authentication.scss";
-import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAction } from "../../Actions/userActions";
 import { IoFilterCircle } from "react-icons/io5";
 const { REACT_APP_API_URI } = process.env;
 
@@ -41,7 +38,7 @@ const SignIn = () => {
     from: { opacity: 0 },
     config: { duration: 1000 },
   });
-  const dispatch = useDispatch();
+
   const currentUser = useSelector(state => state.currentUser.user.currentUser);
   const history = useHistory();
   useEffect(() => {}, []);
@@ -78,7 +75,7 @@ const SignIn = () => {
               />
             </Form.Group>
 
-            <Link to="/feed">
+            <Link to="/feeds">
               <Button
                 className="SignIn__button py-2 px-4 justify-content-center"
                 type="submit"
