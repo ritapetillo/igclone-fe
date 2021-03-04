@@ -23,7 +23,7 @@ const Sidebar = () => {
       <Container>
         <div className="Sidebar__header d-inline">
           <Row>
-            { currentUsers && currentUsers?.imageUrl ? (
+            {currentUsers?.imageUrl ? (
               <img
                 className="Sidebar__header__avatar"
                 src={currentUsers?.imageUrl}
