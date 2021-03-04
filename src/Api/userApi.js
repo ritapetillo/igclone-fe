@@ -68,3 +68,31 @@ export const unfollowUser = async userId => {
     return null;
   }
 };
+
+export const editProfile = async()  => {
+  try {
+    const user = await axios.put(
+      `${REACT_APP_API_URI}/api/users/me`,
+      {
+        withCredentials: true,
+      }
+    );
+    return user.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+export const deleteProfile = async () => {
+  try {
+    const post = await axios.delete(`${REACT_APP_API_URI}/api/users/me`, {
+      withCredentials: true,
+    });
+    return post.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
