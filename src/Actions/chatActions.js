@@ -60,6 +60,7 @@ export const createChat = (users) => async (dispatch) => {
     console.log(chat);
     if (chat) {
       dispatch(getAllUserChats());
+      return chat;
     } else throw Error;
   } catch (err) {
     dispatch({
