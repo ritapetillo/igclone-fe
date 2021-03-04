@@ -67,6 +67,13 @@
                     margin-left: 10px;
                 }
 
+                .post-header-options {
+                    position: relative;
+                    width: 15px;
+                    height: 15px;
+                    margin-left: 5px;
+                }
+
             }
 
             .popup-caption {
@@ -131,6 +138,7 @@
 
                 border-top: .5px lightgray solid;
                 padding: 10px;
+                height: 50px;
 
                 svg {
                     width: 30px;
@@ -144,6 +152,7 @@
 
             .popup-like-count {
                 padding: 10px;
+                padding-top: 5px;
 
                 img {
                     width: 22px;
@@ -172,17 +181,21 @@
                 padding: 10px;
                 display: flex;
                 flex-direction: row;
+
                 svg {
                     width: 30px;
                     height: 30px;
                 }
+
                 input {
                     height: 100%;
+
                     &:first-of-type {
                         width: 100%;
                         padding-left: 20px;
                         border: none
                     }
+
                     &:last-of-type {
                         background-color: white;
                         border: none;
@@ -199,4 +212,25 @@
 
 .wrapper-hidden-post {
     display: none;
+}
+
+.post-options_wrap {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    div {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    width: 100%;
+    height: 300px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .red {
+        color: red;
+        font-weight: bold;
+    }
 }

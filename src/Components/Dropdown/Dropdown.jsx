@@ -6,7 +6,13 @@ import Spinner from "../Spinner/Spinner"
 const Dropdown = (props) => {
     return (
         <div className="dropdown-wrap">
-            <div className={props.show ? (props.size === "notification" ? "dropdown-content-notification" : props.size === "profile" ? "dropdown-content-profile" : props.size === "search" && "dropdown-content-search") : "dropdown-hidden"}>
+            <div className={props.show ? (props.size === "notification" 
+            ? "dropdown-content-notification" 
+            : props.size === "profile" 
+            ? "dropdown-content-profile" 
+            : props.size === "search" 
+            ? "dropdown-content-search"
+            : props.size ==="post_options" && "dropdown-content-options") : "dropdown-hidden"}>
                 {/*<Spinner className="dropdown-spinner"/>*/}
                 <div className="dropdown-core">
                     {props.content}
