@@ -37,6 +37,7 @@ export const getPostsFromCurrentUser = async () => {
         withCredentials: true,
       }
     );
+    return posts.data;
   } catch (error) {
     console.log(error);
     return null;
