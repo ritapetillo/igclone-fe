@@ -4,7 +4,6 @@ import { Row, Col } from "react-bootstrap";
 import Sidebar from "../../Components/Sidebar";
 import SinglePost from "../../Components/SinglePost/SinglePost";
 import {getFollowingUsersPostsAction} from "../../Actions/postActions";
-import {fetchAllUsers} from "../../Api/userApi"
 //*styles
 import "./Feed.scss";
 

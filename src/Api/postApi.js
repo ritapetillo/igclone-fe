@@ -100,7 +100,7 @@ export const likePost = async (postID) => {
 export const unlikePost = async (postID) => {
   try {
     const post = await axios.put(
-      `${REACT_APP_API_URI}/api/post/${postID}/unlik`,
+      `${REACT_APP_API_URI}/api/post/${postID}/unlike`,
       {
         withCredentials: true,
       }
