@@ -18,7 +18,7 @@ import { followUser, unFollowUser } from "../../Api/userApi";
 import { likePost, unlikePost } from "../../Api/postApi";
 import PostOptionsV from "../PostOptions-V/PostOptionV";
 import PostOptionsO from "../PostOptions-O/PostOptionO";
-import { likeAComment } from "../../Api/commentApi";
+import { likeAPost, unlikeAPost } from "../../Api/postApi";
 
 const SinglePost = ({ post }) => {
   const [user, setUser] = useState();
@@ -29,42 +29,42 @@ const SinglePost = ({ post }) => {
   const [togglePostLike, setPostToggleLike] = useState(false);
   const [username, setUsername] = useState("");
   const [displayComment, setDisplayComments] = useState(false);
+  const [usersLiked, setUsersLiked] = useState([]);
 
   const currentUser = useSelector(
     (state) => state.currentUser?.user.currentUser
   );
+
   console.log("currentUser", currentUser);
   const postId = post._id;
 
   useEffect(() => {
     isLiked();
+    setUsersLiked(post.likes);
+    console.log(usersLiked);
+  }, []);
+  useEffect(() => {
+    isLiked();
+    setUsersLiked(post.likes);
   }, [post]);
 
   const isLiked = async () => {
-    const toggle = currentUser?.likedPosts.some((liked) => liked == postId);
-    setPostToggleLike(toggle);
-    if (toggle) {
-      setUsername(currentUser?.username);
-    }
-    if (post.likes.length > -1) {
-      setDisplayComments(true);
-    }
+    const like = post.likes.includes(currentUser.username);
+    setLike(like);
   };
 
   const handlePostLike = async () => {
-    console.log("hello");
-    setPostToggleLike(!togglePostLike);
-    if (togglePostLike) {
-      await likePost(postId);
-      setUsername("");
+    if (like) {
+      await unlikeAPost(post._id);
+      const newArray = usersLiked.filter(
+        (user) => user !== currentUser.username
+      );
+      setUsersLiked(newArray);
     } else {
-      await unlikePost(postId);
-      setUsername(currentUser?.username);
+      await likeAPost(post._id);
+      setUsersLiked([...usersLiked, currentUser.username]);
     }
-  };
-
-  const handleCommentLike = async (id) => {
-    const like = likeAComment(id);
+    setLike(!like);
   };
 
   return (
@@ -138,8 +138,11 @@ const SinglePost = ({ post }) => {
         <div className="post-likes">
           <img src="https://i.pravatar.cc/150" className="xs-img" />
           <div className="">
-            Liked by <span className="user-who-liked">{post.likes}</span> and
-            others
+            Liked by{" "}
+            <span className="user-who-liked">
+              {usersLiked && usersLiked.map((user) => user)}
+            </span>{" "}
+            and others
           </div>
         </div>
         <div className="post-caption">
