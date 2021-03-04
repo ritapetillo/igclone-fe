@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SinglePost.scss";
 import "../../Styling/Shapes.scss";
 import { useDispatch, useSelector } from "react-redux";
-
+import Comment from "./Comment";
 //ICONS
 import { BsThreeDots, BsPersonFill } from "react-icons/bs";
 import {
@@ -18,19 +18,21 @@ import { followUser, unFollowUser } from "../../Api/userApi";
 import { likePost, unlikePost } from "../../Api/postApi";
 import PostOptionsV from "../PostOptions-V/PostOptionV";
 import PostOptionsO from "../PostOptions-O/PostOptionO";
+import { likeAComment } from "../../Api/commentApi";
 
 const SinglePost = ({ post }) => {
   const [user, setUser] = useState();
   const [show_more, setShow] = useState(false);
   const [showPopup, setPopup] = useState(false);
   const [saved, setSaved] = useState(false);
-    const [like, setLike] = useState(false);
-    const [liked_comment, likeComment] = useState(false);
+  const [like, setLike] = useState(false);
   const [togglePostLike, setPostToggleLike] = useState(false);
   const [username, setUsername] = useState("");
   const [displayComment, setDisplayComments] = useState(false);
 
-  const currentUser = useSelector(state => state.currentUser?.user.currentUser);
+  const currentUser = useSelector(
+    (state) => state.currentUser?.user.currentUser
+  );
   console.log("currentUser", currentUser);
   const postId = post._id;
 
@@ -39,7 +41,7 @@ const SinglePost = ({ post }) => {
   }, [post]);
 
   const isLiked = async () => {
-    const toggle = currentUser?.likedPosts.some(liked => liked == postId);
+    const toggle = currentUser?.likedPosts.some((liked) => liked == postId);
     setPostToggleLike(toggle);
     if (toggle) {
       setUsername(currentUser?.username);
@@ -50,7 +52,7 @@ const SinglePost = ({ post }) => {
   };
 
   const handlePostLike = async () => {
-      console.log("hello")
+    console.log("hello");
     setPostToggleLike(!togglePostLike);
     if (togglePostLike) {
       await likePost(postId);
@@ -59,6 +61,10 @@ const SinglePost = ({ post }) => {
       await unlikePost(postId);
       setUsername(currentUser?.username);
     }
+  };
+
+  const handleCommentLike = async (id) => {
+    const like = likeAComment(id);
   };
 
   return (
@@ -155,27 +161,8 @@ const SinglePost = ({ post }) => {
         {/*---------------------POST COMMENTS---------------------*/}
         <div className="post-comments">
           <div className="view-comments">View all comments</div>
-          <div className="single-comment">
-            <div className="comment-infos">
-              <div className="comment-author">
-                {post.comments && post.comments.map(comment => comment.author)}
-              </div>
-              <div className="comment-text">
-                {post.comments && post.comments.map(comment => comment.text)}
-              </div>
-            </div>
-            {!liked_comment ? (
-              <IoHeartOutline
-                className="comment-add-like"
-                onClick={() => likeComment(!liked_comment)}
-              />
-            ) : (
-              <IoHeartSharp
-                className="comment-add-like"
-                onClick={() => likeComment(!liked_comment)}
-              />
-            )}
-          </div>
+          {post.comments &&
+            post.comments.map((comment) => <Comment comment={comment} />)}
         </div>
         <div className="post-time">1 hour ago</div>
         <div className="divider"></div>
