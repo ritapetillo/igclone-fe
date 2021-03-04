@@ -19,6 +19,9 @@ import { useDispatch } from "react-redux";
 const PostModal = (props) => {
     const [showOptions, setOptions] = useState({ options: false })
     const dispatch = useDispatch()
+    const getUsername = (_id) => {
+
+    }
     return (
         <>
             <Dropdown size="post_options" show={showOptions.options} content={

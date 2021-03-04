@@ -1,5 +1,5 @@
 import { getCurrentUserApi, userLoginApi } from "../Api/authApi.js";
-import {editProfile, deleteProfile, uploadProfilePicture} from "../Api/userApi.js";
+import {editProfile, deleteProfile, uploadProfilePicture, fetchAllUsers} from "../Api/userApi.js";
 import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, PROFILE_LOADING, PROFILE_SUCCESS, PROFILE_ERROR } from "./types.js";
 
 export const loginAction = (credentials = "") => async (dispatch) => {
@@ -97,3 +97,14 @@ export const changeProfilePictureAction = (data) => async dispatch => {
     });
   }
 };
+
+export const getUsers = (data) => async dispatch => {
+  try {
+    dispatch({
+      type: PROFILE_LOADING
+    })
+    const users = dispatch(fetchAllUsers())
+  } catch (e) {
+    
+  }
+}
