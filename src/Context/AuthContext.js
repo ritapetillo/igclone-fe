@@ -40,7 +40,7 @@ export const AuthContext = ({ children }) => {
           color="#DA2E7A"
           height={100}
           width={100}
-          timeout={6000} //3 secs
+          timeout={3000} //3 secs
         />
       </div>
     );

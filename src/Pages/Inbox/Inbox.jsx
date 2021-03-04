@@ -3,7 +3,6 @@ import ChatConversation from "../../Components/ChatConversation/ChatConversation
 import ChatRooms from "../../Components/ChatRooms/ChatRooms";
 import "./Inbox.scss";
 import { useDispatch } from "react-redux";
-import useSocket from "use-socket.io-client";
 import { getAllUserChats } from "../../Actions/chatActions";
 
 const Inbox = () => {

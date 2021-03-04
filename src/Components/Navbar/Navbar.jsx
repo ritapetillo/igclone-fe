@@ -34,7 +34,7 @@ const Navbar = () => {
     // dispatch(loginAction());
   }, []);
 
-  const state = useSelector(state => state);
+  const state = useSelector((state) => state);
 
   const handleSearch = async () => {
     const { value } = userSearch.current;
@@ -95,9 +95,16 @@ const Navbar = () => {
         show={searchRes}
         size="search"
         content={
-          <div className="navbar-search-dropdown" style={{display:"contents"}}>
-            <div className="navbar-search-result" style={{display:"block"}}>
-              {users ? users.map(user => <SearchResultRow user={user}/>) : <SearchResultRow />}
+          <div
+            className="navbar-search-dropdown"
+            style={{ display: "contents" }}
+          >
+            <div className="navbar-search-result" style={{ display: "block" }}>
+              {users ? (
+                users.map((user) => <SearchResultRow user={user} />)
+              ) : (
+                <SearchResultRow />
+              )}
             </div>
           </div>
         }
@@ -142,7 +149,6 @@ const Navbar = () => {
             onChange={handleSearch}
             ref={userSearch}
             onClick={() => setShowSR(!searchRes)}
-
           />
 
           <div className="profile-area">
@@ -160,9 +166,12 @@ const Navbar = () => {
                 style={{ color: "black" }}
               />{" "}
             </Link>
-            <Link to="/inbox"></Link>
-            <IoPaperPlaneOutline className="nav-icon" />
-            <Link />
+            <Link to="/inbox">
+              <IoPaperPlaneOutline
+                className="nav-icon"
+                style={{ color: "black" }}
+              />
+            </Link>
             <IoCompassOutline className="nav-icon" />
             <IoHeartOutline
               className="nav-icon margin-right-20px"
