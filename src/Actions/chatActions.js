@@ -1,4 +1,8 @@
-import { getAllChatRooms, getIndividualChatDetails } from "../Api/chatApi";
+import {
+  getAllChatRooms,
+  getIndividualChatDetails,
+  createAChatApi,
+} from "../Api/chatApi";
 import {
   CHAT_ROOMS_ERROR,
   CHAT_ROOMS_LOADING,
@@ -39,6 +43,23 @@ export const getCurrentChat = (id) => async (dispatch) => {
         type: CURRENT_CHAT_ROOM_SUCCESS,
         payload: chat,
       });
+    } else throw Error;
+  } catch (err) {
+    dispatch({
+      type: CURRENT_CHAT_ROOM_ERROR,
+    });
+  }
+};
+
+export const createChat = (users) => async (dispatch) => {
+  try {
+    dispatch({
+      type: CHAT_ROOMS_LOADING,
+    });
+    const chat = await createAChatApi(users);
+    console.log(chat);
+    if (chat) {
+      dispatch(getAllUserChats());
     } else throw Error;
   } catch (err) {
     dispatch({
