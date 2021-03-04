@@ -106,3 +106,16 @@ export const deleteProfile = async () => {
     return null;
   }
 };
+
+
+export const uploadProfilePicture = async () => {
+  try {
+    const post = await axios.post(`${REACT_APP_API_URI}/api/users/upload`, {
+      withCredentials: true,
+    });
+    return post.data;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
