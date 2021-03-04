@@ -31,7 +31,7 @@ export const getPostsFromUser = async (username) => {
 export const getPostsFromCurrentUser = async () => {
   try {
     const posts = await axios.get(
-      `${REACT_APP_API_URI}/api/post/me}`,
+      `${REACT_APP_API_URI}/api/post/me`,
 
       {
         withCredentials: true,

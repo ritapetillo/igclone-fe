@@ -9,6 +9,7 @@ import {
   IoHeartOutline,
   IoPaperPlaneOutline,
   IoRepeat,
+  IoAddCircleOutline
 } from "react-icons/io5";
 import { CgProfile, CgBookmark } from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
@@ -100,6 +101,7 @@ const Navbar = () => {
                 
                 <div className="profile-area">
                     <Link to="/feed"> <IoHomeOutline className="nav-icon" style={{ color: "black" }} /> </Link>
+                    <Link to="/add_post"  > <IoAddCircleOutline className="nav-icon" style={{ color: "black" }} /> </Link>
                     <IoPaperPlaneOutline className="nav-icon" />
                     <IoCompassOutline className="nav-icon" />
                     <IoHeartOutline className="nav-icon margin-right-20px" onClick={() => setShow(!show)} />

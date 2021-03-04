@@ -14,6 +14,7 @@ import SignIn from "./Components/AuthComponents/SignIn";
 import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Inbox from "./Pages/Inbox/Inbox";
+import AddPost from "./Pages/Add_Post/AddPost";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function App() {
         <div>
           <Navbar />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/add_post" component={AddPost} />
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/socket" component={SocketTest} />
           <Route exact path="/inbox/:roomId" component={Inbox} />
