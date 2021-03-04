@@ -19,7 +19,7 @@ const SignIn = () => {
 
   useEffect(() => {
     dispatch(loginAction());
-  }, []);
+  }, [username, password]);
 
   const handleLogin = e => {
     e.preventDefault();
@@ -42,7 +42,7 @@ const SignIn = () => {
     <Container className="SignIn__container ">
       <div className="SignIn__wrapper">
         <animated.div style={props} className="SignIn__form">
-          <Form>
+          <Form onSubmit={() => handleLogin()}>
             <div className="d-flex justify-content-center">
               <img src={Logo} alt="Instagram logo" className="Auth__logo" />
             </div>
@@ -67,13 +67,14 @@ const SignIn = () => {
             {/* <Form.Group controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group> */}
-            <Button
-              onClick={e => handleLogin(e)}
-              className="SignIn__button py-2 px-4 justify-content-center"
-              type="submit"
-            >
-              SIGN IN
-            </Button>
+            <Link to="/feed">
+              <Button
+                className="SignIn__button py-2 px-4 justify-content-center"
+                type="submit"
+              >
+                SIGN IN
+              </Button>
+            </Link>
             <div className="Auth__divider">
               <div className="Auth__divider__line"></div>
               <div className="Auth__divider__or">OR</div>
