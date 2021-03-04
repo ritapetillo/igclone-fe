@@ -17,6 +17,7 @@
     background-color: white;
     z-index: 333;
     border-radius: 20px;
+
     .create-chat-modal__header {
       display: flex;
       justify-content: space-between;
@@ -48,19 +49,29 @@
     }
     .create-chat-modal__search {
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: flex-start;
       align-items: center;
-      height: 60px;
+      min-height: 60px;
       padding: 0px 20px;
       border-bottom: 1px solid lightgray;
+      overflow: visible;
       input {
         border: none;
         outline: none;
-        width: 30vw;
+        width: 10vw;
       }
       span {
         font-weight: 700;
         font-size: 16px;
+      }
+      .create-chat-userToAdd {
+        background-color: #e0f1ff;
+        padding: 5px 10px;
+        border: 0.5 solid darkblue;
+        border-radius: 4px;
+        margin: 4px;
       }
     }
   }

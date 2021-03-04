@@ -26,3 +26,16 @@ export const getIndividualChatDetails = async (roomId) => {
     return null;
   }
 };
+
+export const createAChatApi = async (users) => {
+  try {
+    console.log(users);
+    const rooms = await axios.post(`${REACT_APP_API_URI}/api/chat`, { users });
+    const chatRooms = await rooms.data;
+    console.log(chatRooms);
+    return chatRooms;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

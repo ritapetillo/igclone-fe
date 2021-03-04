@@ -21,6 +21,7 @@ const ChatSpace = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messageSpace = useRef();
   const { socket } = useContext(socketContext);
+  console.log(socket);
 
   useEffect(() => {
     disaptch(getCurrentChat(params.roomId));
@@ -36,28 +37,35 @@ const ChatSpace = () => {
 
   useEffect(() => {
     scrollDown();
-    socket.on("message", (message) => {
-      arrayMsg.push(message);
-      setMessages([]);
-      const newMessages = messages.push(message);
-      scrollDown();
-    });
-    socket.on("isTyping", (status) => {
-      console.log("typing");
+    console.log(socket);
+    if (socket) {
+      socket.on("message", (message) => {
+        console.log("dsfds");
+        console.log(message);
+        arrayMsg.push(message);
+        setMessages([]);
+        const newMessages = messages.push(message);
+        scrollDown();
+      });
+      socket.on("isTyping", (status) => {
+        console.log("typing");
 
-      setIsTyping(status);
-    });
+        setIsTyping(status);
+      });
+    }
   }, []);
 
   const handleSubmit = async (e) => {
-    socket.emit("typing", { roomId: params.roomId, status: true });
-    const message = {
-      text: text.current.value,
-      roomId: params.roomId,
-    };
-    if (e.key === "Enter") {
-      socket.emit("sendMessage", message);
-      text.current.value = "";
+    if (socket) {
+      socket.emit("typing", { roomId: params.roomId, status: true });
+      const message = {
+        text: text.current.value,
+        roomId: params.roomId,
+      };
+      if (e.key === "Enter") {
+        socket.emit("sendMessage", message);
+        text.current.value = "";
+      }
     }
   };
 
