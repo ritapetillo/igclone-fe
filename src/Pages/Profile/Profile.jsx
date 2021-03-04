@@ -15,11 +15,12 @@ import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
 import { getCurrentUserPostsAction } from "../../Actions/postActions"
 
-import {editProfileAction, deleteProfileAction} from "../../Actions/userActions"
+import { editProfileAction, deleteProfileAction } from "../../Actions/userActions"
 const Profile = () => {
 
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
+    const [selected, setSelected] = useState()
 
     const dispatch = useDispatch();
     const state = useSelector((state) => state)
@@ -30,7 +31,7 @@ const Profile = () => {
         dispatch(getCurrentUserPostsAction())
     }, []);
 
-    
+
     const [showPost, setShowPost] = useState(false)
     const [editMode, setEditMode] = useState(false)
     return (
@@ -44,8 +45,8 @@ const Profile = () => {
                 </div>
                 <div className="profile-info">
                     <div className="profile-info-header">
-                        <span className="profile-info-username">{!editMode ? state.currentUser.user.currentUser.username : <input type="text" className="edit-mode__input" id="username" value={state.currentUser.user.currentUser.username} />}</span>
-                        <input type="button" value={!editMode ? "Edit Profile" : "Save Profile"} className="profile-info-edit-user" onClick={!editMode ? ()=>setEditMode(true) : ()=> setEditMode(false)}/>
+                        <span className="profile-info-username">{!editMode ? (state.currentUser.user && state.currentUser.user.currentUser.username) : <input type="text" className="edit-mode__input" id="username" value={state.currentUser.user && state.currentUser.user.currentUser.username} />}</span>
+                        <input type="button" value={!editMode ? "Edit Profile" : "Save Profile"} className="profile-info-edit-user" onClick={!editMode ? () => setEditMode(true) : () => setEditMode(false)} />
                         <IoSettingsOutline className="profile-info-edit-settings" onClick={() => setShowModal(!showModal)} />
                         <UserOptions show={showModal} close={setShowModal} />
                     </div>
@@ -70,7 +71,7 @@ const Profile = () => {
 
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                            {state.currentUser.user.currentUser.following.length}
+                                {state.currentUser.user.currentUser.following.length}
                             </div>
                             <div className="profile-info-interaction-value">
                                 following
@@ -79,7 +80,7 @@ const Profile = () => {
                     </div>
                     <div className="profile-info-bio">
                         <div className="profile-info-handle">
-                            {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.name) : <input type="text" value={state.currentUser.user.currentUser.name} className="edit-mode__input" id="name"/>} {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.lastname) : <input type="text" value={state.currentUser.user.currentUser.lastname} className="edit-mode__input" id="lastname" />}
+                            {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.name) : <input type="text" value={state.currentUser.user.currentUser.name} className="edit-mode__input" id="name" />} {!editMode ? (state.currentUser.user.currentUser && state.currentUser.user.currentUser.lastname) : <input type="text" value={state.currentUser.user.currentUser.lastname} className="edit-mode__input" id="lastname" />}
                         </div>
                         <div className="profile-info-bio-text">
                             {state.currentUser.user.currentUser.bio}
@@ -114,13 +115,17 @@ const Profile = () => {
                     </div>
             </div>
             {/* -----------------------------POSTS----------------------------- */}
-            {state.post.currentUserPosts && state.post.currentUserPosts.map((post) =>
-                <div className="profile-post">
-                    <img src="https://picsum.photos/600" className="profile-post-single" onClick={() => setShowPost(!showPost)} />
-                    <PostModal show={showPost} close={setShowPost} content={{ img: "https://picsum.photos/600" }} />
-
-                </div>
-            )}
+            <div className="profile-post">
+                {state.post.currentUserPosts && state.post.currentUserPosts.map((post, index) =>
+                    <>
+                        <img src={post.image} className="profile-post-single" onClick={() => {
+                            setSelected(post);
+                            setShowPost(!showPost)
+                        }} />
+                    </>
+                )}
+                <PostModal show={showPost} close={setShowPost} content={selected} />
+            </div>
 
 
         </div>
