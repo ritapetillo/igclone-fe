@@ -50,6 +50,25 @@ export const loginAction = (credentials = "") => async dispatch => {
   }
 };
 
+export const registerUserAction = data => async dispatch => {
+  try {
+    dispatch({
+      type: REGISTER_LOADING,
+    });
+    const details = await registerUser(data);
+    if (details) {
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: details,
+      });
+    } else throw new Error();
+  } catch (error) {
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
+};
+
 export const editProfileAction = data => async dispatch => {
   try {
     dispatch({
