@@ -7,10 +7,11 @@
   max-width: 390px;
   width: 40%;
   height: 100%;
+
   .chat-rooms__head {
     height: 60px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: relative;
     border-bottom: 1px solid lightgray;
@@ -30,8 +31,9 @@
         height: 25px;
         width: 25px;
         position: absolute;
-        top: 18px;
-        right: 10px;
+        padding: 1px;
+        top: 10px;
+        right: 0px;
         cursor: pointer;
       }
     }

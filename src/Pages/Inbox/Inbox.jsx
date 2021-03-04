@@ -25,7 +25,7 @@ const Inbox = () => {
     <div className="inbox">
       <div className="inbox__box">
         <ChatRooms />
-        <ChatConversation />
+        <ChatConversation socket={socket} />
       </div>
 
       {/* All chats Component */}
