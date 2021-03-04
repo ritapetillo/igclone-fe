@@ -76,12 +76,12 @@ export const deleteProfileAction = () => async dispatch => {
 };
 
 
-export const changeProfilePictureAction = () => async dispatch => {
+export const changeProfilePictureAction = (data) => async dispatch => {
   try {
     dispatch({
       type: PROFILE_LOADING,
     });
-    const picture = await uploadProfilePicture();
+    const picture = await uploadProfilePicture(data);
     if (picture) {
       dispatch({
         type: PROFILE_SUCCESS,

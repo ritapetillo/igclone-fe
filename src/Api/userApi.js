@@ -108,9 +108,11 @@ export const deleteProfile = async () => {
 };
 
 
-export const uploadProfilePicture = async () => {
+export const uploadProfilePicture = async (file) => {
   try {
-    const post = await axios.post(`${REACT_APP_API_URI}/api/users/upload`, {
+    const post = await axios.post(`${REACT_APP_API_URI}/api/users/upload`,
+file,
+     {
       withCredentials: true,
     });
     return post.data;
