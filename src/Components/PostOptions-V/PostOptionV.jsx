@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { followUser, unfollowUser } from "../../Api/userApi";
 import { useDispatch, useSelector } from "react-redux";
+import { getFollowingUsersPostsAction } from "../../Actions/postActions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PostOptionV.scss";
 
 const PostOptionsV = (props) => {
+  const dispatch = useDispatch();
+
   const [follow, setFollow] = useState(false);
   const [usersFollow, setUsersFollow] = useState([]);
 
@@ -33,9 +36,11 @@ const PostOptionsV = (props) => {
       await unfollowUser(postAuthorId);
       const newArray = usersFollow.filter(user => user !== postAuthorId);
       setUsersFollow(newArray);
+      dispatch(getFollowingUsersPostsAction())
     } else {
       await followUser(postAuthorId);
       setUsersFollow([...usersFollow, postAuthorId]);
+      dispatch(getFollowingUsersPostsAction())
     }
     setFollow(!follow);
   };
