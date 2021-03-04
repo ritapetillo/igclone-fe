@@ -26,6 +26,8 @@ const Profile = () => {
     useEffect(() =>{
       dispatch(getCurrentUserPostsAction())
     }, []);
+
+    
     const [showPost, setShowPost] = useState(false)
     return (
         <div className="profile-wrap">

@@ -82,7 +82,7 @@ export const deleteMyPost = async (postID) => {
   }
 };
 
-export const likePost = async (postID) => {
+export const likeAPost = async (postID) => {
   try {
     const post = await axios.post(
       `${REACT_APP_API_URI}/api/post/${postID}/like`,
@@ -97,10 +97,10 @@ export const likePost = async (postID) => {
   }
 };
 
-export const unlikePost = async (postID) => {
+export const unlikeAPost = async (postID) => {
   try {
     const post = await axios.put(
-      `${REACT_APP_API_URI}/api/post/${postID}/unlik`,
+      `${REACT_APP_API_URI}/api/post/${postID}/unlike`,
       {
         withCredentials: true,
       }
