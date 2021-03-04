@@ -27,7 +27,10 @@ const Profile = () => {
     const [showModal, setShowModal] = useState(false)
     const [selected, setSelected] = useState()
     const [profile, setProfile] = useState()
-
+    const [showPost, setShowPost] = useState(false)
+    const [editMode, setEditMode] = useState(false)
+    const [file, setFile] = useState()
+    
     const dispatch = useDispatch();
     const state = useSelector((state) => state)
     const saveNewProfile = async () => {
@@ -55,15 +58,12 @@ const Profile = () => {
                     lastname: state.currentUser.user.currentUser.lastname,
                     bio: state.currentUser.user.currentUser.bio,
                     followers: state.currentUser.user.currentUser.followers,
-                    following: state.currentUser.user.currentUser.following
+                    following: state.currentUser.user.currentUser.following,
+                    imageUrl: state.currentUser.user.currentUser.imageUrl
                 })
         }
     }, []);
 
-
-    const [showPost, setShowPost] = useState(false)
-    const [editMode, setEditMode] = useState(false)
-    const [file, setFile] = useState()
     const propicInput = (file) => {
         setFile(file)
         const fd = new FormData
@@ -71,6 +71,7 @@ const Profile = () => {
         dispatch(changeProfilePictureAction(fd))
         
     } 
+
     return (
         <div className="profile-wrap">
             {/* -----------------------------HEADER----------------------------- */}
@@ -79,7 +80,7 @@ const Profile = () => {
                     <input type="file" style={{ display: "none" }} id="propic" onChange={(e)=>propicInput(e.target.files[0])} />
                     <label for="propic">
                         <div className="story-lg">
-                            <img className="circle-lg" src={profile && profile.propic ? profile.propic : Placeholder} />
+                            <img className="circle-lg" src={profile && profile.imageUrl ? profile.imageUrl : Placeholder} />
                         </div>
                     </label>
                 </div>
