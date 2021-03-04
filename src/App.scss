@@ -2,6 +2,7 @@
 
 .App {
   background-color: $instagram-bg;
+  min-height: 100vh;
 }
 .arrow-icon {
   transform: rotate(180deg);

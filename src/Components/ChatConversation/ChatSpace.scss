@@ -84,7 +84,24 @@
     width: 90%;
     align-self: center;
     border-radius: 20px;
+    position: relative;
+    img {
+      cursor: pointer;
+    }
   }
+  .emoji-picker-react {
+    position: absolute;
+    height: 200px;
+    bottom: 0;
+    left: 0;
+    input {
+      display: none;
+    }
+  }
+  .emoji-scroll-wrapper {
+    height: 150px;
+  }
+
   input {
     border: none;
     outline: none;
