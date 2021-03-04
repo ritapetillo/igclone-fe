@@ -5,29 +5,36 @@ import { Link } from "react-router-dom"
 import "./Profile.scss"
 import "../../Styling/Shapes.scss"
 
+import { BsGrid3X3 } from "react-icons/bs"
 import { IoSettingsOutline } from "react-icons/io5"
+
 import UserOptions from "../../Components/UserOptions/UserOptions"
 import PostModal from "../../Components/PostModal/PostModal"
-import { BsGrid3X3 } from "react-icons/bs"
+
 import Igtv from "../../Assets/igtv.svg"
 import Reel from "../../Assets/reel.svg"
 import Save from "../../Assets/save.svg"
 import Tagged from "../../Assets/tagged.svg"
 import Placeholder from "../../Assets/placeholder.png"
-import { getCurrentUserPostsAction } from "../../Actions/postActions"
 
+import { getCurrentUserPostsAction } from "../../Actions/postActions"
+import {changeProfilePictureAction} from "../../Actions/userActions"
 import { editProfileAction, deleteProfileAction } from "../../Actions/userActions"
+
 const Profile = () => {
 
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
     const [selected, setSelected] = useState()
     const [profile, setProfile] = useState()
-
+    const [showPost, setShowPost] = useState(false)
+    const [editMode, setEditMode] = useState(false)
+    const [file, setFile] = useState()
+    
     const dispatch = useDispatch();
     const state = useSelector((state) => state)
     const saveNewProfile = async () => {
-        
+
         dispatch(editProfileAction({
             name: profile.name,
             lastname: profile.lastname,
@@ -51,22 +58,31 @@ const Profile = () => {
                     lastname: state.currentUser.user.currentUser.lastname,
                     bio: state.currentUser.user.currentUser.bio,
                     followers: state.currentUser.user.currentUser.followers,
-                    following: state.currentUser.user.currentUser.following
+                    following: state.currentUser.user.currentUser.following,
+                    imageUrl: state.currentUser.user.currentUser.imageUrl
                 })
         }
     }, []);
 
+    const propicInput = (file) => {
+        setFile(file)
+        const fd = new FormData
+        fd.append("image", file)
+        dispatch(changeProfilePictureAction(fd))
+        
+    } 
 
-    const [showPost, setShowPost] = useState(false)
-    const [editMode, setEditMode] = useState(false)
     return (
         <div className="profile-wrap">
             {/* -----------------------------HEADER----------------------------- */}
             <div className="profile-header">
                 <div className="profile-pic">
-                    <div className="story-lg">
-                        <img className="circle-lg" src={profile && profile.propic ? profile.propic : Placeholder} />
-                    </div>
+                    <input type="file" style={{ display: "none" }} id="propic" onChange={(e)=>propicInput(e.target.files[0])} />
+                    <label for="propic">
+                        <div className="story-lg">
+                            <img className="circle-lg" src={profile && profile.imageUrl ? profile.imageUrl : Placeholder} />
+                        </div>
+                    </label>
                 </div>
                 <div className="profile-info">
                     <div className="profile-info-header">
@@ -80,7 +96,7 @@ const Profile = () => {
                     <div className="profile-info-interaction">
                         <div className="profile-info-interaction-single">
                             <div className="profile-info-interaction-number">
-                                {state.post.currentUserPosts ? state.post.currentUserPosts.length : 0 }
+                                {state.post.currentUserPosts ? state.post.currentUserPosts.length : 0}
                             </div>
                             <div className="profile-info-interaction-value">
                                 posts
@@ -112,7 +128,7 @@ const Profile = () => {
                                 : <input type="text" value={profile && profile.name}
                                     onChange={(e) => onChangeHandler(e)}
                                     className="edit-mode__input" id="name" />}
-                            
+
                             {!editMode
                                 ? (profile && profile.lastname)
                                 : <input type="text" value={profile && profile.lastname}
