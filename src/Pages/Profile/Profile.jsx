@@ -4,6 +4,7 @@ import "../../Styling/Shapes.scss"
 
 import { IoSettingsOutline } from "react-icons/io5"
 import UserOptions from "../../Components/UserOptions/UserOptions"
+import PostModal from "../../Components/PostModal/PostModal"
 import {BsGrid3X3} from "react-icons/bs"
 import Igtv from "../../Assets/igtv.svg"
 import Reel from "../../Assets/reel.svg"
@@ -13,6 +14,7 @@ import Tagged from "../../Assets/tagged.svg"
 const Profile = () => {
     const [show, setShow] = useState("post")
     const [showModal, setShowModal] = useState(false)
+    const [showPost, setShowPost] = useState(false)
     return (
         <div className="profile-wrap">
             {/* -----------------------------HEADER----------------------------- */}
@@ -96,14 +98,9 @@ const Profile = () => {
             </div>
                 {/* -----------------------------POSTS----------------------------- */}
             <div className="profile-post">
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
-                    <img src="https://picsum.photos/600" className="profile-post-single"/>
+                    <img src="https://picsum.photos/600" className="profile-post-single" onClick={()=>setShowPost(!showPost)}/>
+                    <PostModal show={showPost} close={setShowPost} content={{img: "https://picsum.photos/600" }}/>
+                    
             </div>
         </div>
     )

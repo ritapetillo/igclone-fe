@@ -5,7 +5,7 @@ import "./PostOptionO.scss"
 const PostOptionsO = (props) => {
 
     return (
-        <div className={props.show ? "wrapper-show" : "wrapper-hidden"} onClick={() => props.close(!props.show)}>
+        <div className={props.show ? "wrapper-show-owner" : "wrapper-hidden"} onClick={() => props.close(!props.show)}>
             <div className="popup-inner">
                 <div className="option-wrap"><div className="option">Go to post</div></div>
                 <div className="divider"></div>

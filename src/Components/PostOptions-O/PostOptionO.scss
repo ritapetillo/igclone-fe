@@ -4,7 +4,7 @@
     src : url("../../Fonts/Helvetica.ttf")
 }
 
-.wrapper-show {
+.wrapper-show-owner {
 
     width: 100vw;
     height: 100%;
@@ -12,7 +12,7 @@
     left: 0;
 
     position: fixed;
-    z-index: 1;
+    z-index: 2;
 
     background-color: rgba(0, 0, 0, 0.5);
 
