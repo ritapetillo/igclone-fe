@@ -8,6 +8,9 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentChat } from "../../Actions/chatActions";
 import { socketContext } from "../../Context/SocketContext";
+import Picker from "emoji-picker-react";
+import useClickOutside from "../../CustomHooks/useClickOutside";
+
 const arrayMsg = [];
 const ChatSpace = () => {
   const params = useParams();
@@ -19,8 +22,13 @@ const ChatSpace = () => {
   const text = useRef();
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [emojii, setEmojii] = useState(false);
   const messageSpace = useRef();
   const { socket } = useContext(socketContext);
+  const emjoiiBox = useRef();
+  const emjoiiIcon = useRef();
+
+  useClickOutside(emjoiiBox, emjoiiIcon, () => setEmojii(false));
   console.log(socket);
 
   useEffect(() => {
@@ -124,7 +132,12 @@ const ChatSpace = () => {
       </div>
       <div className="chat-space__footer">
         <span>
-          <img src={smily} alt="emoji" />
+          <img
+            src={smily}
+            alt="emoji"
+            onClick={() => setEmojii(!emojii)}
+            ref={emjoiiIcon}
+          />
         </span>
 
         <input
@@ -140,6 +153,16 @@ const ChatSpace = () => {
           <img src={media} alt="media" className="mr-3" />
           <img src={heart} alt="heart" />
         </div>
+        {emojii && (
+          <div className="emojii" ref={emjoiiBox}>
+            <Picker
+              onEmojiClick={(e, emojii) => {
+                text.current.value = text.current.value.concat(emojii.emoji);
+                setEmojii(!emojii);
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
