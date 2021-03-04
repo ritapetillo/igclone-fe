@@ -12,8 +12,8 @@ import "./Feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state)=> state)
-  console.log("State", state)
+  const posts = useSelector((state)=> state.post.followingUsersPosts)
+  console.log("posts", posts)
 
 
   useEffect(() =>{
@@ -30,7 +30,7 @@ const Feed = () => {
       <Row className="justify-content-between">
         <Col md={12} xl={4}>
           <div>
-            <SinglePost />
+          {posts && posts.map(post=> <SinglePost post={post} /> )}
           </div>
         </Col>
         <Col xs={0} md={0} lg={4}>
