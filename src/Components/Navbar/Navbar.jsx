@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import "./Navbar.scss";
 
 import Logo from "../../Assets/ig-logo.png";
+import Placeholder from "../../Assets/placeholder.png"
 //ICONS:
 import {
   IoHomeOutline,
@@ -14,6 +15,7 @@ import {
 import { CgProfile, CgBookmark } from "react-icons/cg";
 import { RiSettings2Line } from "react-icons/ri";
 import Dropdown from "../Dropdown/Dropdown";
+
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../Actions/userActions";
@@ -111,7 +113,10 @@ const Navbar = () => {
                     <IoCompassOutline className="nav-icon" />
                     <IoHeartOutline className="nav-icon margin-right-20px" onClick={() => setShow(!show)} />
                     
-                    <img src="https://i.pravatar.cc/150" className="circle-sm" onClick={() => setProfileDD(!profileDD)} />
+                    <img src={state.currentUser.user.currentUser
+                        && state.currentUser.user.currentUser.propic 
+                        ? state.currentUser.user.currentUser.propic 
+                        : Placeholder} className="circle-sm" onClick={() => setProfileDD(!profileDD)} />
                    
                 </div>
               </div>
