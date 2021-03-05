@@ -16,7 +16,7 @@ import {
 } from "react-icons/io5";
 import { GrFormClose } from "react-icons/gr";
 import Dropdown from "../Dropdown/Dropdown";
-import { deletePostAction, editPostAction } from "../../Actions/postActions";
+import { deletePostAction, editPostAction, getUsersPostAction } from "../../Actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPostCommentsAction,
@@ -79,12 +79,13 @@ const PostModal = props => {
     setEditPostMode(true)
     setNewCaption(props.content.caption)
   }
-  const sendNewCaption = (e) => {
+  const sendNewCaption = async (e) => {
     if (e.key === "Enter") {
       console.log(newCaption, props.content._id)
-      dispatch(editPostAction({"caption": newCaption}, props.content._id))
+      await dispatch(editPostAction({"caption": newCaption}, props.content._id))
       setEditPostMode(false)
-      props.show(false)
+      await dispatch(getUsersPostAction(props.content.authorId.username))
+      props.close(!props.show)
     }
   }
   const handleCaptionChange = (e) => {
