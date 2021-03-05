@@ -17,10 +17,12 @@ import { RiSettings2Line } from "react-icons/ri";
 import Dropdown from "../Dropdown/Dropdown";
 import { searchUser } from "../../Api/userApi";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../Actions/userActions";
 import { socketContext } from "../../Context/SocketContext";
+import { userLogout } from "../../Api/authApi";
+import { LOGIN_LOADING, LOGOUT } from "../../Actions/types";
 
 const Navbar = () => {
   const userSearch = useRef();
@@ -29,7 +31,7 @@ const Navbar = () => {
   const [profileDD, setProfileDD] = useState(false);
   const [searchRes, setShowSR] = useState(false);
   const { msgReceived, resetMsgNotification } = useContext(socketContext);
-
+  const history = useHistory();
   const dispatch = useDispatch();
   const handleCloseSearch = () => {
     setShowSR(!searchRes);
@@ -40,6 +42,17 @@ const Navbar = () => {
   }, [msgReceived]);
 
   const state = useSelector((state) => state);
+
+  const handleLogout = async () => {
+    try {
+      dispatch({
+        type: LOGIN_LOADING,
+      });
+      const logout = await userLogout();
+
+      window.location.reload(false);
+    } catch (err) {}
+  };
 
   const handleSearch = async () => {
     const { value } = userSearch.current;
@@ -140,7 +153,12 @@ const Navbar = () => {
               <IoRepeat /> Switch Accounts
             </div>
             <div className="dropdown-divider"></div>
-            <div className="navbar-profile-dropdown-logout">Log out</div>
+            <div
+              className="navbar-profile-dropdown-logout"
+              onClick={handleLogout}
+            >
+              Log out
+            </div>
           </div>
         }
       />
