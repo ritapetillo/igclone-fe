@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./SinglePost.scss";
 import "../../Styling/Shapes.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +14,15 @@ import {
   IoBookmark,
   IoHappyOutline,
 } from "react-icons/io5";
-import { likePost, unlikePost } from "../../Api/postApi";
 import PostOptionsV from "../PostOptions-V/PostOptionV";
 import PostOptionsO from "../PostOptions-O/PostOptionO";
 import { likeAPost, unlikeAPost } from "../../Api/postApi";
+import{writeCommentOnFeedsAction} from "../../Actions/commentActions";
+
+
 
 const SinglePost = ({ post }) => {
+  const dispatch = useDispatch()
   const [user, setUser] = useState();
   const [show_more, setShow] = useState(false);
   const [showPopup, setPopup] = useState(false);
@@ -29,23 +32,36 @@ const SinglePost = ({ post }) => {
   const [username, setUsername] = useState("");
   const [displayComment, setDisplayComments] = useState(false);
   const [usersLiked, setUsersLiked] = useState([]);
+  const [writeComment, setWriteComment] = useState([])
 
   const currentUser = useSelector(
     (state) => state.currentUser?.user.currentUser
   );
 
-  console.log("currentUser", currentUser);
+  const comment=useRef()
   const postId = post._id;
+  
+  const handleKeyDown = async (event) => {
+      if (event.key === 'Enter') {
+        const writtenComment = {
+            text: comment.current.value,
+            postId: postId
+        }
+        console.log("writtenComment", writtenComment)
+        dispatch(writeCommentOnFeedsAction(writtenComment, postId))
+      }
+    }
+
+  const handleChange= async (event) => {
+    setWriteComment({text: comment.current.value});
+  }
 
   useEffect(() => {
     isLiked();
     setUsersLiked(post.likes);
     console.log(usersLiked);
   }, []);
-  // useEffect(() => {
-  //   isLiked();
-  //   setUsersLiked(post.likes);
-  // }, [post]);
+
 
   const isLiked = async () => {
     const like = post.likes.includes(currentUser.username);
@@ -171,7 +187,13 @@ const SinglePost = ({ post }) => {
         {/*---------------------ADD COMMENT---------------------*/}
         <div className="post-add-comment">
           <IoHappyOutline className="add-emoji" />
-          <input className="comment-input" placeholder="Add a comment" />
+           <input 
+           className="comment-input"
+           type="text"
+           placeholder='Leave a comment'
+           onKeyDown={handleKeyDown} 
+           ref={comment}
+           onChange={handleChange}/>
           <div className="add-comment-button">Post</div>
         </div>
       </div>
