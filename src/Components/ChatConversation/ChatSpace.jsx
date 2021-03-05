@@ -49,6 +49,9 @@ const ChatSpace = () => {
   useEffect(() => {
     scrollDown();
     console.log(socket);
+    socket.emit("joinRoom", () => {
+      console.log("joined Rooms");
+    });
     if (socket) {
       socket.on("message", (message) => {
         console.log("dsfds");

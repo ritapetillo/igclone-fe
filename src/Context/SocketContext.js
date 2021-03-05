@@ -17,6 +17,7 @@ export const SocketContext = ({ children }) => {
       };
     });
     socket.on("notificationMsg", (username) => {
+      
       messagedReceived(username);
       const newArray = msgReceived.push(username);
       setMsgReceived(newArray);

@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { socketContext } from "../../Context/SocketContext";
 import "./ChatRow.scss";
 
 const ChatRow = ({ message, lastTime, users, active }) => {
   console.log(users);
   const param = useParams();
+  const { socket } = useContext(socketContext);
   console.log(param);
+
   return (
     <div className={"chat-row " + (active && "active")}>
       <div className="chat-row__picture">
