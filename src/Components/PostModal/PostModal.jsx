@@ -108,7 +108,7 @@ const PostModal = props => {
         show={showOptions.options}
         content={
           <div className="post-options_wrap">
-            {currentUser.username === props.content?.authorId?.username && <div className="post-option_item" onClick={editPost}>
+            {currentUser && currentUser.username === props.content?.authorId?.username && <div className="post-option_item" onClick={editPost}>
               <div>Edit post</div>
             </div>}
             <div className="dropdown-divider"></div>
@@ -259,7 +259,7 @@ const PostModal = props => {
                 <input
                   type="button"
                   value="Post"
-                  onClick={() => submitComment()}
+                  onClick={(e) => submitComment(e)}
                 />
               </div>
             </div>
