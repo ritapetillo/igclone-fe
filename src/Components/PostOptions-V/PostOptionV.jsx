@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { followUser, unfollowUser } from "../../Api/userApi";
 import { useDispatch, useSelector } from "react-redux";
 import { getFollowingUsersPostsAction } from "../../Actions/postActions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PostOptionV.scss";
+import { socketContext } from "../../Context/SocketContext";
 
 const PostOptionsV = (props) => {
   const dispatch = useDispatch();
-
+  const { socket } = useContext(socketContext);
   const [follow, setFollow] = useState(false);
   const [usersFollow, setUsersFollow] = useState([]);
 
   const currentUser = useSelector(
-    state => state.currentUser?.user?.currentUser
+    (state) => state.currentUser?.user?.currentUser
   );
   console.log("currentUser", currentUser);
 
-  const postAuthorId = props.post.authorId._id
+  const postAuthorId = props.post.authorId._id;
 
   console.log("postAuthor", postAuthorId);
 
@@ -34,13 +35,14 @@ const PostOptionsV = (props) => {
   const handleFollow = async () => {
     if (follow) {
       await unfollowUser(postAuthorId);
-      const newArray = usersFollow.filter(user => user !== postAuthorId);
+      const newArray = usersFollow.filter((user) => user !== postAuthorId);
       setUsersFollow(newArray);
-      dispatch(getFollowingUsersPostsAction())
+      dispatch(getFollowingUsersPostsAction());
     } else {
       await followUser(postAuthorId);
+      socket.emit("follow", { userId: postAuthorId });
       setUsersFollow([...usersFollow, postAuthorId]);
-      dispatch(getFollowingUsersPostsAction())
+      dispatch(getFollowingUsersPostsAction());
     }
     setFollow(!follow);
   };
@@ -55,8 +57,8 @@ const PostOptionsV = (props) => {
           <div className="option red">Report</div>
         </div>
         <div className="divider"></div>
-        <div className="option-wrap" onClick={()=> handleFollow()}>
-          <div className="option red">{isFollow ? ("Unfollow") : ("Follow")}</div>
+        <div className="option-wrap" onClick={() => handleFollow()}>
+          <div className="option red">{isFollow ? "Unfollow" : "Follow"}</div>
         </div>
         <div className="divider"></div>
         <div className="option-wrap">
