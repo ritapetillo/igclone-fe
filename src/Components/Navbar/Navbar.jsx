@@ -30,7 +30,12 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const [profileDD, setProfileDD] = useState(false);
   const [searchRes, setShowSR] = useState(false);
-  const { msgReceived, resetMsgNotification } = useContext(socketContext);
+  const {
+    msgReceived,
+    resetMsgNotification,
+    followReceived,
+    resetFollowNotification,
+  } = useContext(socketContext);
   const history = useHistory();
   const dispatch = useDispatch();
   const handleCloseSearch = () => {
@@ -210,11 +215,26 @@ const Navbar = () => {
                 )}
               </div>
             </Link>
+
             <IoCompassOutline className="nav-icon" />
-            <IoHeartOutline
-              className="nav-icon margin-right-20px"
-              onClick={() => setShow(!show)}
-            />
+            <div
+              className="navbar__link-container"
+              onClick={() => {
+                resetFollowNotification();
+                setShow(!show);
+              }}
+            >
+              <IoHeartOutline
+                className="nav-icon margin-right-20px"
+                onClick={() => setShow(!show)}
+                style={{ color: followReceived != 0 ? "pink" : "black" }}
+              />
+              {followReceived != 0 && (
+                <span class="badge badge-pill badge-primary">
+                  {followReceived}
+                </span>
+              )}
+            </div>
 
             <img
               src={
