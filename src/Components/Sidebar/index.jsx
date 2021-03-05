@@ -7,7 +7,7 @@ import uniqid from "uniqid";
 //*styles
 import "./Sidebar.scss";
 
-const Sidebar = props => {
+const Sidebar = (props) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [follow, setFollow] = useState(false);
@@ -15,16 +15,16 @@ const Sidebar = props => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const currentUser = useSelector(
-    state => state.currentUser?.user?.currentUser
+    (state) => state.currentUser?.user?.currentUser
   );
 
   const followingUsers = useSelector(
-    state => state.currentUser?.user?.currentUser?.following
+    (state) => state.currentUser?.user?.currentUser?.following
   );
-  console.log("followingUsers._id", followingUsers._id);
+  // console.log("followingUsers._id", followingUsers._id);
   useEffect(() => {
     isFollow();
-    setUsersFollow([...usersFollow, followingUsers._id]);
+    setUsersFollow([...usersFollow, followingUsers?._id]);
     console.log("usersFollow", usersFollow);
   }, []);
 
@@ -36,7 +36,9 @@ const Sidebar = props => {
   const handleFollow = async () => {
     if (follow) {
       await unfollowUser(followingUsers._id);
-      const newArray = usersFollow.filter(user => user !== followingUsers._id);
+      const newArray = usersFollow.filter(
+        (user) => user !== followingUsers._id
+      );
       setUsersFollow(newArray);
     } else {
       await followUser(followingUsers._id);
@@ -91,7 +93,7 @@ const Sidebar = props => {
           </Button>
         </Col>
         {followingUsers &&
-          followingUsers.slice(0, 4).map(following => (
+          followingUsers.slice(0, 4).map((following) => (
             <>
               <Row key={uniqid} className="mb-3 mt-2">
                 {following.imageUrl ? (

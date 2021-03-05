@@ -45,10 +45,8 @@ export const AuthContext = ({ children }) => {
       </div>
     );
   } else {
-    if (isAuth) {
+
       return <authContext.Provider>{children}</authContext.Provider>;
-    } else {
-      return history.push("/login");
-    }
+   
   }
 };
