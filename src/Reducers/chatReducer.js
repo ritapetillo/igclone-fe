@@ -14,7 +14,6 @@ const initialState = {
 };
 
 const chatReduer = (state = initialState, { type, payload }) => {
-  console.log(payload);
   switch (type) {
     case CHAT_ROOMS_LOADING:
       return {

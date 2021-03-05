@@ -2,6 +2,7 @@ import {
   getAllChatRooms,
   getIndividualChatDetails,
   createAChatApi,
+  unsubscribeFromChatApi,
 } from "../Api/chatApi";
 import {
   CHAT_ROOMS_ERROR,
@@ -60,6 +61,25 @@ export const createChat = (users) => async (dispatch) => {
     console.log(chat);
     if (chat) {
       dispatch(getAllUserChats());
+      return chat;
+    } else throw Error;
+  } catch (err) {
+    dispatch({
+      type: CURRENT_CHAT_ROOM_ERROR,
+    });
+  }
+};
+
+export const unsubscribeChat = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: CHAT_ROOMS_LOADING,
+    });
+    const chat = await unsubscribeFromChatApi(id);
+    console.log(chat);
+    if (chat) {
+      dispatch(getAllUserChats());
+      return chat;
     } else throw Error;
   } catch (err) {
     dispatch({

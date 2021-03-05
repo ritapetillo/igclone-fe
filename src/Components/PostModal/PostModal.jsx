@@ -1,17 +1,21 @@
+
 import React, { useEffect, useState } from "react"
+
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./PostModal.scss"
-import "../../Styling/Shapes.scss"
-import {Link} from "react-router-dom"
-import { BsHeart, BsThreeDots } from "react-icons/bs"
+import { useDispatch, useSelector } from "react-redux";
+
+import "./PostModal.scss";
+import "../../Styling/Shapes.scss";
+import { Link } from "react-router-dom";
+import { BsHeart, BsThreeDots } from "react-icons/bs";
 import {
-    IoBookmarkOutline,
-    IoChatbubbleOutline,
-    IoHeartOutline,
-    IoPaperPlaneOutline,
-    IoHappyOutline
-} from "react-icons/io5"
-import { GrFormClose } from "react-icons/gr"
+  IoBookmarkOutline,
+  IoChatbubbleOutline,
+  IoHeartOutline,
+  IoPaperPlaneOutline,
+  IoHappyOutline,
+} from "react-icons/io5";
+import { GrFormClose } from "react-icons/gr";
 import Dropdown from "../Dropdown/Dropdown";
 import {deletePostAction} from "../../Actions/postActions"
 import { useDispatch } from "react-redux";
@@ -46,15 +50,69 @@ const PostModal = (props) => {
                     <div className="post-option_item"
                     onClick={()=> {
 
-                        dispatch(deletePostAction(props.content._id))
-                        props.close(false)
-                        setOptions({options: false})
-                        }}
-                    ><div className="red" >Delete</div></div>
-                    <div className="dropdown-divider"></div>
-                    <div className="post-option_item" onClick={() => setOptions(false)}><div >Cancel</div></div>
+
+  const currentUserPost = useSelector(state => state.post.currentUserPosts.authorId);
+  const anotherUserPost = useSelector(state => state.post.userPosts.authorId);
+
+
+  const dispatch = useDispatch();
+  return (
+    <>
+      <Dropdown
+        size="post_options"
+        show={showOptions.options}
+        content={
+          <div className="post-options_wrap">
+            <div className="post-option_item">
+              <div>Go to post</div>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div className="post-option_item">
+              <div>Share to...</div>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div className="post-option_item">
+              <Link to="/edit_post">
+                <div style={{ color: "black" }}>Edit</div>
+              </Link>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div className="post-option_item">
+              <div>Embed</div>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div
+              className="post-option_item"
+              onClick={() => {
+                dispatch(deletePostAction(props.content._id));
+                props.close(false);
+                setOptions({ options: false });
+              }}
+            >
+              <div className="red">Delete</div>
+            </div>
+            <div className="dropdown-divider"></div>
+            <div className="post-option_item" onClick={() => setOptions(false)}>
+              <div>Cancel</div>
+            </div>
+          </div>
+        }
+      />
+      <div className={props.show ? "wrapper-show-post" : "wrapper-hidden-post"}>
+        <div className="popup-inner">
+          <div className="popup-photo">
+            <img
+              src={props.content && props.content.image}
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
+          </div>
+          <div className="popup-description">
+            <div className="popup-description-infos">
+              <div className="popup-header">
+                <div>
+                  <img src="https://picsum.photos/600" className="circle-sm" />
+                  <span>{props.content && props.content.authorId}</span>
                 </div>
-            
             } />
             <div className={props.show ? "wrapper-show-post" : "wrapper-hidden-post"} >
                 <div className="popup-inner" >
@@ -112,17 +170,41 @@ const PostModal = (props) => {
                             <div className="popup-time">
                                 1 year
                         </div>
-                            <div className="popup-add-comment">
-                                <IoHappyOutline />
-                                <input type="text" placeholder="Add a comment..." />
-                                <input type="button" value="Post" />
-                            </div>
+                        <div className="popup-comment-time">
+                          <span>21 weeks</span>
                         </div>
+                      </div>
+                      <BsHeart />
                     </div>
-                </div>
+                  ))}
+              </div>
             </div>
-        </>
-    )
-}
+            <div style={{ width: "100%" }}>
+              <div className="popup-interactions">
+                <div className="popup-interactions-g1">
+                  <IoHeartOutline />
+                  <IoChatbubbleOutline />
+                  <IoPaperPlaneOutline />
+                </div>
+                <IoBookmarkOutline />
+              </div>
+              <div className="popup-like-count">
+                <img src="https://picsum.photos/600" />{" "}
+                <span>{props.content && props.content.authorId}</span> and{" "}
+                <span>xx others</span> like this
+              </div>
+              <div className="popup-time">1 year</div>
+              <div className="popup-add-comment">
+                <IoHappyOutline />
+                <input type="text" placeholder="Add a comment..." />
+                <input type="button" value="Post" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default PostModal
+export default PostModal;

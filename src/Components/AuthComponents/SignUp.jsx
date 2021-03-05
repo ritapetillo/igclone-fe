@@ -3,6 +3,8 @@ import { Form, Button, Container } from "react-bootstrap";
 import { useSpring, animated } from "react-spring";
 import { AiFillFacebook, AiOutlineGoogle } from "react-icons/ai";
 import Logo from "../../Assets/ig-logo.png";
+import { useHistory, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 //*STYLE
 import "./Authentication.scss";
@@ -32,6 +34,9 @@ const SignUp = () => {
             <Button
               className="SignUp__button py-2 px-4 d-flex justify-content-center"
               type="submit"
+              onClick={() => {
+                window.location.href = `${REACT_APP_API_URI}/api/auth/facebook`;
+              }}
             >
               <AiFillFacebook />
               <span className="font-weight-bold ml-3">

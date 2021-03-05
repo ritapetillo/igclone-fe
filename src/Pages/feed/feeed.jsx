@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Sidebar from "../../Components/Sidebar";
 
 const Feed = () => {
+  
   return (
     <div>
       {/* //story */}

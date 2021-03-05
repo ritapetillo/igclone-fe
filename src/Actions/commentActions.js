@@ -8,7 +8,9 @@ import {
 import {getPostsFromCurrentUser, getPostsFromFollowers} from "../Api/postApi.js";
 import { COMMENT_ERROR, COMMENT_LOADING, COMMENT_SUCCESS } from "./types.js";
 
+
 export const getPostCommentsAction = (data) => async dispatch => {
+
   try {
     dispatch({
       type: COMMENT_LOADING,
@@ -31,12 +33,13 @@ export const getPostCommentsAction = (data) => async dispatch => {
   }
 };
 
-export const writeCommentOnFeedsAction = () => async dispatch => {
+export const writeCommentOnFeedsAction = (postId) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await newComment();
+    const comment = await newComment(postId);
+    console.log("commentXXXX", comment)
     if (comment) {
       dispatch(getPostsFromFollowers(getPostComments()));
     } else throw new Error();

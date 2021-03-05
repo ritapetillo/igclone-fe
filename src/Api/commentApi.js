@@ -24,7 +24,10 @@ export const newComment = async (postId) => {
         withCredentials: true,
       }
     );
+    console.log("comment.data API", comment.data)
+    console.log("postId API ", postId)
     return comment.data;
+    
   } catch (error) {
     console.log(error);
     return null;
