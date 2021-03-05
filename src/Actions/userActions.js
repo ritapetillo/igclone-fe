@@ -4,7 +4,8 @@ import {
   editProfile,
   deleteProfile,
   uploadProfilePicture,
-  registerUser,fetchByUsername
+  registerUser,
+  fetchByUsername,
 } from "../Api/userApi.js";
 import {
   LOGIN_FAIL,
@@ -18,7 +19,7 @@ import {
   REGISTER_SUCCESS,
   SELECTED_USER_SUCCESS,
   SELECTED_USER_ERROR,
-  SELECTED_USER_LOADING
+  SELECTED_USER_LOADING,
 } from "./types.js";
 
 export const loginAction = (credentials = "") => async dispatch => {
@@ -53,13 +54,13 @@ export const loginAction = (credentials = "") => async dispatch => {
   }
 };
 
-export const registerUserAction = data => async dispatch => {
+export const registerUserAction = (credentials = "") => async dispatch => {
   try {
     dispatch({
       type: REGISTER_LOADING,
     });
-    const details = await registerUser(data);
-    if (details) {
+    const details = await registerUser(credentials);
+    if (credentials) {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: details,
@@ -91,7 +92,7 @@ export const editProfileAction = data => async dispatch => {
   }
 };
 
-export const deleteProfileAction = () => async (dispatch) => {
+export const deleteProfileAction = () => async dispatch => {
   try {
     dispatch({
       type: PROFILE_LOADING,
@@ -113,7 +114,7 @@ export const deleteProfileAction = () => async (dispatch) => {
   }
 };
 
-export const changeProfilePictureAction = (data) => async (dispatch) => {
+export const changeProfilePictureAction = data => async dispatch => {
   try {
     dispatch({
       type: PROFILE_LOADING,
@@ -135,7 +136,7 @@ export const changeProfilePictureAction = (data) => async (dispatch) => {
   }
 };
 
-export const getSelectedUserProfile = (username) => async (dispatch) => {
+export const getSelectedUserProfile = username => async dispatch => {
   try {
     console.log("sfsd");
     dispatch({
@@ -157,4 +158,3 @@ export const getSelectedUserProfile = (username) => async (dispatch) => {
     });
   }
 };
-

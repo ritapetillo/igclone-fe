@@ -7,6 +7,7 @@ import { AiFillFacebook, AiFillGoogleCircle } from "react-icons/ai";
 import Logo from "../../Assets/ig-logo.png";
 //*STYLE
 import "./Authentication.scss";
+
 import { useDispatch, useSelector } from "react-redux";
 import { IoFilterCircle } from "react-icons/io5";
 const { REACT_APP_API_URI } = process.env;
@@ -75,7 +76,7 @@ const SignIn = () => {
               />
             </Form.Group>
 
-            <Link to="/feeds">
+            <Link to="/feed">
               <Button
                 className="SignIn__button py-2 px-4 justify-content-center"
                 type="submit"
@@ -125,9 +126,11 @@ const SignIn = () => {
           className="SignIn__form__noAccount mt-3  px-4"
         >
           <span className="ml-3">Don't have an account? </span>
-          <span className="mr-3 font-weight-bold SignIn__form__noAccount__signup">
-            Sign up
-          </span>
+          <Link to="/signup" className="text-decoration-none">
+            <span className="mr-3 font-weight-bold SignIn__form__noAccount__signup">
+              Sign up
+            </span>
+          </Link>
         </animated.div>
       </div>
     </Container>
