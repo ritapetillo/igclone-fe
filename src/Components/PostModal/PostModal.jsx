@@ -15,21 +15,28 @@ import { GrFormClose } from "react-icons/gr"
 import Dropdown from "../Dropdown/Dropdown";
 import {deletePostAction} from "../../Actions/postActions"
 import { useDispatch } from "react-redux";
-import { getPostCommentsAction } from "../../Actions/commentActions";
+import { getPostCommentsAction, writeCommentOnProfileAction } from "../../Actions/commentActions";
 
 const PostModal = (props) => {
     const [showOptions, setOptions] = useState({ options: false })
     const [comments, setComments] = useState()
+    const [newComment, setNewComment] = useState()
     const dispatch = useDispatch()
     const getComments = async() => {
         const post_comm = await dispatch(getPostCommentsAction(props.content._id))
         setComments(post_comm.comments)
     }
+    const handleChange = (e) => {
+      setNewComment({"text": e.target.value, "postId": props.content._id})
+      console.log(newComment)
+    }
+    const submitComment = () => {
+      dispatch(writeCommentOnProfileAction(newComment))
+    }
     useEffect(()=> {
         if (props.content && props.content._id) getComments()
         //console.log(comments)
     }, [props.content])
-    console.log(props.content)
     return (
         <>
             <Dropdown size="post_options" show={showOptions.options} content={
@@ -114,8 +121,8 @@ const PostModal = (props) => {
                         </div>
                             <div className="popup-add-comment">
                                 <IoHappyOutline />
-                                <input type="text" placeholder="Add a comment..." />
-                                <input type="button" value="Post" />
+                                <input type="text" placeholder="Add a comment..." onChange={(e)=> handleChange(e) } onKeyDown={()=>submitComment()}/>
+                                <input type="button" value="Post" onClick={()=>submitComment()} />
                             </div>
                         </div>
                     </div>
