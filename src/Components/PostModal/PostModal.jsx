@@ -4,10 +4,7 @@ import "./PostModal.scss";
 import "../../Styling/Shapes.scss";
 import { Link } from "react-router-dom";
 import { BsHeart, BsThreeDots } from "react-icons/bs";
-import {
-  editCommentAction,
-  deleteCommentAction,
-} from "../../Actions/commentActions";
+
 import {
   IoBookmarkOutline,
   IoChatbubbleOutline,
@@ -24,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getPostCommentsAction,
   writeCommentOnProfileAction,
+  deleteCommentAction,
+  editCommentAction,
 } from "../../Actions/commentActions";
 
 const PostModal = props => {
@@ -31,6 +30,13 @@ const PostModal = props => {
   const [comments, setComments] = useState();
   const [newComment, setNewComment] = useState();
   const dispatch = useDispatch();
+  const [editComment, setEditComment] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const [selectedComment, setSelectedComment] = useState()
+
+  const state = useSelector(state => state);
+  const currentUser = useSelector(state => state.currentUser?.user?.currentUser);
+
   const getComments = async () => {
     const post_comm = await dispatch(getPostCommentsAction(props.content._id));
     setComments(post_comm.comments);
@@ -44,12 +50,6 @@ const PostModal = props => {
         dispatch(writeCommentOnProfileAction(newComment))
     };
   };
-  const [editComment, setEditComment] = useState("");
-  const [editMode, setEditMode] = useState(false);
-  const [selectedComment, setSelectedComment] = useState()
-
-  const state = useSelector(state => state);
-  const currentUser = useSelector(state => state.currentUser?.user?.currentUser);
 
   const commentId =props.content && props.content.comments;
   console.log("comments", comments)
@@ -182,7 +182,10 @@ const PostModal = props => {
                         </div>
                       </div>
                       {currentUser.username === comment.author && (
+                        <>
                         <IoPencil onClick={() => setEditIndex(index)} />
+                        <IoTrashBinOutline onClick={()=> dispatch(deleteCommentAction(comment, props.content._id))}/>
+                        </>
                       )}
                       <div>
                         <BsHeart />
