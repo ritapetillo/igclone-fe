@@ -43,7 +43,7 @@ const Profile = () => {
   const [usersFollow, setUsersFollow] = useState([]);
 
   const currentUser = useSelector(
-    state => state.currentUser?.user?.currentUser
+    (state) => state.currentUser?.user?.currentUser
   );
 
   // const selectedProfile= useSelector(
@@ -53,12 +53,12 @@ const Profile = () => {
 
   const dispatch = useDispatch();
   const [change, setChange] = useState();
-  const state = useSelector(state => state);
+  const state = useSelector((state) => state);
   console.log("state", state);
 
   const params = useParams();
 
-  console.log("params", params)
+  console.log("params", params);
   const saveNewProfile = async () => {
     dispatch(
       editProfileAction({
@@ -107,9 +107,13 @@ const Profile = () => {
           imageUrl: state.currentUser.user.currentUser.imageUrl,
         });
     }
-  }, [params, state.currentUser.user?.currentUser?._id]);
+  }, [
+    params,
+    state.currentUser.user?.currentUser?._id,
+    state.currentUser.selectedUser?.user?._id,
+  ]);
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setProfile({ ...profile, [e.target.id]: e.target.value });
   };
   useEffect(() => {
@@ -142,26 +146,32 @@ const Profile = () => {
   }, []);
 
   const isFollow = async () => {
-    const follow = currentUser?.following.some(follow => follow.username === params.id);
+    const follow = currentUser?.following.some(
+      (follow) => follow.username === params.id
+    );
     setFollow(follow);
   };
 
   const handleFollow = async () => {
     if (follow) {
       await unfollowUser(state.currentUser.selectedUser?.user?._id);
-      const newArray = usersFollow.filter(user => user.username !== params.id);
+      const newArray = usersFollow.filter(
+        (user) => user.username !== params.id
+      );
       setUsersFollow(newArray);
       // dispatch(getSelectedProfile());
-
     } else {
       await followUser(state.currentUser.selectedUser?.user?._id);
-      setUsersFollow([...usersFollow, state.currentUser.selectedUser?.user?._id]);
+      setUsersFollow([
+        ...usersFollow,
+        state.currentUser.selectedUser?.user?._id,
+      ]);
       // dispatch(getSelectedProfile());
     }
     setFollow(!follow);
   };
 
-  const propicInput = file => {
+  const propicInput = (file) => {
     setFile(file);
     const fd = new FormData();
     fd.append("image", file);
@@ -169,7 +179,7 @@ const Profile = () => {
   };
   const posts = useMemo(() => {
     if (params.id == "me" && state.post.currentUserPosts) {
-      return state.post.currentUserPosts.map(post => (
+      return state.post.currentUserPosts.map((post) => (
         <>
           <img
             src={post.image}
@@ -182,7 +192,7 @@ const Profile = () => {
         </>
       ));
     } else {
-      return state.post.userPosts.map(post => (
+      return state.post.userPosts.map((post) => (
         <>
           <img
             src={post.image}
@@ -199,6 +209,8 @@ const Profile = () => {
     params,
     state.currentUser.selectedUser?.user?._id,
     state.currentUser.user?.currentUser?._id,
+    state.post.currentUserPosts,
+    state.post.userPosts,
   ]);
 
   return (
@@ -206,15 +218,28 @@ const Profile = () => {
       {/* -----------------------------HEADER----------------------------- */}
       <div className="profile-header">
         <div className="profile-pic">
-        {params.id === "me" ? (
-        <>
-        <input
-            type="file"
-            style={{ display: "none" }}
-            id="propic"
-            onChange={e => propicInput(e.target.files[0])}
-          />
-          <label for="propic">
+          {params.id === "me" ? (
+            <>
+              <input
+                type="file"
+                style={{ display: "none" }}
+                id="propic"
+                onChange={(e) => propicInput(e.target.files[0])}
+              />
+              <label for="propic">
+                <div className="story-lg">
+                  <img
+                    className="circle-lg"
+                    src={
+                      profile && profile.imageUrl
+                        ? profile.imageUrl
+                        : Placeholder
+                    }
+                  />
+                </div>
+              </label>
+            </>
+          ) : (
             <div className="story-lg">
               <img
                 className="circle-lg"
@@ -223,15 +248,7 @@ const Profile = () => {
                 }
               />
             </div>
-          </label>
-          </>) : (<div className="story-lg">
-              <img
-                className="circle-lg"
-                src={
-                  profile && profile.imageUrl ? profile.imageUrl : Placeholder
-                }
-              />
-            </div>) }
+          )}
         </div>
         <div className="profile-info">
           <div className="profile-info-header">
@@ -243,7 +260,7 @@ const Profile = () => {
                   type="text"
                   className="edit-mode__input"
                   id="username"
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   value={profile && profile.username}
                 />
               )}
@@ -308,7 +325,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={profile && profile.name}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   className="edit-mode__input"
                   id="name"
                 />
@@ -320,7 +337,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={profile && profile.lastname}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   className="edit-mode__input"
                   id="lastname"
                 />
@@ -333,7 +350,7 @@ const Profile = () => {
                 <textarea
                   className="edit-more__textarea"
                   value={profile.bio}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   id="bio"
                   rows={3}
                 />

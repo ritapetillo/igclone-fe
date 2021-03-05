@@ -8,7 +8,7 @@ import { fetchAllUsers } from "../../Api/userApi";
 import { socketContext } from "../../Context/SocketContext";
 
 //*styles
-import "./Feed.scss";
+import "./Feed2.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
