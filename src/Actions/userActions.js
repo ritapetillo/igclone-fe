@@ -4,7 +4,7 @@ import {
   editProfile,
   deleteProfile,
   uploadProfilePicture,
-  registerUser,
+  registerUser,fetchByUsername
 } from "../Api/userApi.js";
 import {
   LOGIN_FAIL,
@@ -16,6 +16,9 @@ import {
   REGISTER_FAIL,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
+  SELECTED_USER_SUCCESS,
+  SELECTED_USER_ERROR,
+  SELECTED_USER_LOADING
 } from "./types.js";
 
 export const loginAction = (credentials = "") => async dispatch => {
@@ -131,18 +134,6 @@ export const changeProfilePictureAction = (data) => async (dispatch) => {
     });
   }
 };
-
-
-export const getUsers = (data) => async dispatch => {
-  try {
-    dispatch({
-      type: PROFILE_LOADING
-    })
-    const users = dispatch(fetchAllUsers())
-  } catch (e) {
-    
-  }
-}
 
 export const getSelectedUserProfile = (username) => async (dispatch) => {
   try {
