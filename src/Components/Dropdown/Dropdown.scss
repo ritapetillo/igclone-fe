@@ -61,18 +61,7 @@
         overflow-y: auto;
 
     }
-    .dropdown-arrow-show {
-        position: absolute;
-        bottom: -90px;
-        right: 17.2%;
-        width: 0;
-        height: 0;
-        border-left: 50px solid transparent;
-        border-right: 50px solid transparent;
-        border-bottom: 100px solid white;
-        z-index: 0;
-    }
-
+   
     .dropdown-spinner {
         align-self: center;
     }

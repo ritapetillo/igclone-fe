@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PostModal.scss"
 import "../../Styling/Shapes.scss"
@@ -15,13 +15,21 @@ import { GrFormClose } from "react-icons/gr"
 import Dropdown from "../Dropdown/Dropdown";
 import {deletePostAction} from "../../Actions/postActions"
 import { useDispatch } from "react-redux";
+import { getPostCommentsAction } from "../../Actions/commentActions";
 
 const PostModal = (props) => {
     const [showOptions, setOptions] = useState({ options: false })
+    const [comments, setComments] = useState()
     const dispatch = useDispatch()
-    const getUsername = (_id) => {
-
+    const getComments = async() => {
+        const post_comm = await dispatch(getPostCommentsAction(props.content._id))
+        setComments(post_comm.comments)
     }
+    useEffect(()=> {
+        if (props.content && props.content._id) getComments()
+        //console.log(comments)
+    }, [props.content])
+    console.log(props.content)
     return (
         <>
             <Dropdown size="post_options" show={showOptions.options} content={
@@ -59,7 +67,7 @@ const PostModal = (props) => {
                             <div className="popup-header">
                                 <div>
                                     <img src="https://picsum.photos/600" className="circle-sm" />
-                                    <span>{props.content && props.content.authorId}</span>
+                                    <span>{props.content && props.content.authorId.username}</span>
                                 </div>
                                 <div>
                                     <BsThreeDots className="post-header-options" onClick={() => setOptions({options: !showOptions.options})}/>
@@ -68,16 +76,16 @@ const PostModal = (props) => {
                             </div>
                             <div className="popup-caption">
                                 <img src="https://picsum.photos/600" className="circle-sm" />
-                                <span>{props.content && props.content.authorId}</span> <span>{props.content && props.content.caption}</span>
+                                <span>{props.content && props.content.authorId.username}</span> <span>{props.content && props.content.caption}</span>
                                 <div className="popup-caption-date">4 weeks</div>
                             </div>
                             <div className="popup-comment-wrap">
-                                {props.content && props.content.comments.map((comment)=>
-                                <div className="popup-comment-single">
+                                {comments && comments.length > 0 && comments.map((comment, index)=>
+                                <div className="popup-comment-single" key={index}>
                                     <img src="https://picsum.photos/600" className="circle-sm" />
                                     <div className="popup-comment-content">
                                         <div>
-                                            <span>{props.content && props.content.authorId}</span> {comment}
+                                            <span>{props.content && props.content.authorId.username}</span> {comment.text}
                                     </div>
                                         <div className="popup-comment-time">
                                             <span>21 weeks</span>
@@ -99,7 +107,7 @@ const PostModal = (props) => {
                                 <IoBookmarkOutline />
                             </div>
                             <div className="popup-like-count">
-                                <img src="https://picsum.photos/600" /> <span>{props.content && props.content.authorId}</span>  and <span>xx others</span> like this
+                                <img src="https://picsum.photos/600" /> <span>{props.content && props.content.authorId.username}</span>  and <span>xx others</span> like this
                         </div>
                             <div className="popup-time">
                                 1 year

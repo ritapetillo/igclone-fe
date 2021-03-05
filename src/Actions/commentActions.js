@@ -8,17 +8,18 @@ import {
 import {getPostsFromCurrentUser, getPostsFromFollowers} from "../Api/postApi.js";
 import { COMMENT_ERROR, COMMENT_LOADING, COMMENT_SUCCESS } from "./types.js";
 
-export const getPostComments = () => async dispatch => {
+export const getPostCommentsAction = (data) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const postComments = await getPostComments();
+    const postComments = await getPostComments(data);
     if (postComments) {
       dispatch({
         type: COMMENT_SUCCESS,
         payload: postComments,
       });
+      return postComments
     } else throw Error;
   } catch (error) {
     dispatch({

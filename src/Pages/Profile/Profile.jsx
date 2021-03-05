@@ -175,9 +175,9 @@ const Profile = () => {
             </div>
             {/* -----------------------------POSTS----------------------------- */}
             <div className="profile-post">
-                { state.post.currentUserPosts.length > 0 && state.post.currentUserPosts.map((post) =>
+                { state.post.currentUserPosts.length > 0 && state.post.currentUserPosts.map((post,index) =>
                     <>
-                        <img src={post.image} className="profile-post-single" onClick={() => {
+                        <img key={index} src={post.image} className="profile-post-single" onClick={() => {
                             setSelected(post);
                             setShowPost(!showPost)
                         }} />
