@@ -21,7 +21,7 @@ const Sidebar = props => {
   const followingUsers = useSelector(
     state => state.currentUser?.user?.currentUser?.following
   );
-  console.log("followingUsers._id", followingUsers._id);
+  console.log("followingUsers", followingUsers);
   useEffect(() => {
     isFollow();
     setUsersFollow([...usersFollow, followingUsers._id]);
@@ -110,7 +110,7 @@ const Sidebar = props => {
 
                 <Col className="flex-grow-1 mr-3 Sidebar__suggestion__content justify-content-between">
                   <h6
-                    onClick={handleShow}
+                    // onClick={handleShow}
                     className="mb-0 Sidebar__suggestion__username bolder"
                   >
                     {following.username}
@@ -120,12 +120,12 @@ const Sidebar = props => {
                     Followed
                   </span>
                 </Col>
-                <div
+                <input
+                  type="Button"
+                  value={!follow ? "Follow" : "Unfollow"}
                   className=" ml-3 pl-3 Sidebar__suggestion__button"
                   onClick={() => handleFollow()}
-                >
-                  <div>{isFollow ? "Unfollow" : "Follow"}</div>
-                </div>
+                />
                 {/* <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
                     Unfollow
                   </Button> */}
