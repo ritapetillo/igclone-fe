@@ -49,21 +49,20 @@ const ChatSpace = () => {
   useEffect(() => {
     scrollDown();
     console.log(socket);
-    if (socket) {
-      socket.on("message", (message) => {
-        console.log("dsfds");
-        console.log(message);
-        arrayMsg.push(message);
-        setMessages([]);
-        const newMessages = messages.push(message);
-        scrollDown();
-      });
-      socket.on("isTyping", (status) => {
-        console.log("typing");
 
-        setIsTyping(status);
-      });
-    }
+    socket.on("message", (message) => {
+      console.log("dsfds");
+      console.log(message);
+      arrayMsg.push(message);
+      setMessages([]);
+      const newMessages = messages.push(message);
+      scrollDown();
+    });
+    socket.on("isTyping", (status) => {
+      console.log("typing");
+
+      setIsTyping(status);
+    });
   }, []);
 
   const handleSubmit = async (e) => {
