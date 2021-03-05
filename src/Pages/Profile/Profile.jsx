@@ -1,7 +1,14 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useContext,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { followUser, unfollowUser } from "../../Api/userApi";
+import { socketContext } from "../../Context/SocketContext";
 
 import "./Profile.scss";
 import "../../Styling/Shapes.scss";
@@ -41,10 +48,12 @@ const Profile = () => {
   const [file, setFile] = useState();
   const [follow, setFollow] = useState(false);
   const [usersFollow, setUsersFollow] = useState([]);
+  const [numberFollow, setNumberFollow] = useState(0);
 
   const currentUser = useSelector(
     (state) => state.currentUser?.user?.currentUser
   );
+  const { socket } = useContext(socketContext);
 
   // const selectedProfile= useSelector(
   //   state => state.post?.followingUsersPosts?.authorId._id
@@ -122,7 +131,7 @@ const Profile = () => {
     } else {
       getSelectedProfile();
     }
-  }, [params.id]);
+  }, [params.id, follow]);
 
   useEffect(() => {
     if (params.id == "me") {
@@ -131,7 +140,7 @@ const Profile = () => {
       console.log(params.id);
       getSelectedProfile();
     }
-  }, [getSelectedProfile]);
+  }, [getSelectedProfile, follow]);
 
   useEffect(() => {
     if (params.id == "me") {
@@ -159,16 +168,28 @@ const Profile = () => {
         (user) => user.username !== params.id
       );
       setUsersFollow(newArray);
+      setFollow(!follow);
+      setNumberFollow(-1);
+
+      console.log(numberFollow);
+
       // dispatch(getSelectedProfile());
     } else {
       await followUser(state.currentUser.selectedUser?.user?._id);
+      socket.emit("follow", {
+        userId: state.currentUser.selectedUser?.user?._id,
+      });
+
       setUsersFollow([
         ...usersFollow,
         state.currentUser.selectedUser?.user?._id,
       ]);
+
       // dispatch(getSelectedProfile());
     }
+
     setFollow(!follow);
+    setNumberFollow(1);
   };
 
   const propicInput = (file) => {
@@ -305,7 +326,7 @@ const Profile = () => {
 
             <div className="profile-info-interaction-single">
               <div className="profile-info-interaction-number">
-                {profile && profile.followers.length}
+                {profile && profile.followers.length + numberFollow}
               </div>
               <div className="profile-info-interaction-value">followers</div>
             </div>
