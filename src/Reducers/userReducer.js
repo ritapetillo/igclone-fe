@@ -11,6 +11,7 @@ import {
   SELECTED_USER_LOADING,
   SELECTED_USER_SUCCESS,
   SELECTED_USER_ERROR,
+  LOGOUT,
 } from "../Actions/types";
 
 const initialState = {
@@ -42,6 +43,15 @@ const currentUserReducer = (state = initialState, { type, payload }) => {
         user: payload,
         error_msg: "",
       };
+
+    case LOGOUT:
+      return {
+        ...state,
+        isAuth: false,
+        user: {},
+        error_msg: "",
+        loading: false,
+      };
     case PROFILE_SUCCESS:
       return {
         ...state,
@@ -62,7 +72,7 @@ const currentUserReducer = (state = initialState, { type, payload }) => {
         error_msg: "Wrong Username and/or Password",
       };
     case REGISTER_LOADING:
-       return {
+      return {
         ...state,
         loading: true,
       };
