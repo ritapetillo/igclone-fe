@@ -44,17 +44,19 @@ const PostModal = props => {
         dispatch(writeCommentOnProfileAction(newComment))
     };
   };
-
   const [editComment, setEditComment] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [selectedComment, setSelectedComment] = useState()
 
   const state = useSelector(state => state);
-  const currentUser = useSelector(state => state.currentUser.user.currentUser);
+  const currentUser = useSelector(state => state.currentUser?.user?.currentUser);
 
-  console.log("STATEXXX", state);
+  const commentId =props.content && props.content.comments;
+
+  console.log("props.content", props.content);
 
   const handleEdit = async event => {
-    setEditComment({ ...editComment, text: event.target.value });
+    setEditComment({ ...editComment, text: event.target.value, _id: selectedComment  });
     console.log("editComment", editComment);
   };
 
@@ -66,6 +68,10 @@ const PostModal = props => {
     console.log(event);
   };
 
+  const setEditIndex = (index) =>{
+      setEditMode(true)
+      setSelectedComment(commentId[index])
+  }
   useEffect(() => {
     if (props.content && props.content._id) getComments();
     //console.log(comments)
@@ -175,7 +181,7 @@ const PostModal = props => {
                         </div>
                       </div>
                       {currentUser.username === comment.author && (
-                        <IoPencil onClick={() => setEditMode(true)} />
+                        <IoPencil onClick={() => setEditIndex(index)} />
                       )}
                       <div>
                         <BsHeart />
@@ -187,8 +193,8 @@ const PostModal = props => {
                     type="text"
                     id="text"
                     value={editComment && editComment.text}
-                    onChange={handleEdit}
-                    onKeyDown={submitEditComment}
+                    onChange={(event)=> handleEdit(event)}
+                    onKeyDown={(event)=>submitEditComment(event)}
                   />
                 )}
               </div>
@@ -213,8 +219,8 @@ const PostModal = props => {
                 <input
                   type="text"
                   placeholder="Add a comment..."
-                  onChange={e => handleChange(e)}
-                  onKeyDown={(event) => submitComment(event)}
+                  onChange={handleChange}
+                  onKeyDown={submitComment}
                 />
                 <input
                   type="button"
