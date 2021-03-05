@@ -33,15 +33,15 @@ export const getPostCommentsAction = (data) => async dispatch => {
   }
 };
 
-export const writeCommentOnFeedsAction = (postId) => async dispatch => {
+export const writeCommentOnFeedsAction = (data) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await newComment(postId);
+    const comment = await newComment(data);
     console.log("commentXXXX", comment)
     if (comment) {
-      dispatch(getPostsFromFollowers(getPostComments()));
+      dispatch(getPostsFromFollowers(getPostComments(data.postId)));
     } else throw new Error();
   } catch (error) {
     dispatch({
@@ -53,14 +53,14 @@ export const writeCommentOnFeedsAction = (postId) => async dispatch => {
   }
 };
 
-export const writeCommentOnProfileAction = () => async dispatch => {
+export const writeCommentOnProfileAction = (data) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await newComment();
+    const comment = await newComment(data);
     if (comment) {
-      dispatch(getPostsFromCurrentUser(getPostComments()));
+      dispatch(getPostsFromCurrentUser(getPostComments(data.postId)));
     } else throw new Error();
   } catch (error) {
     dispatch({
@@ -73,14 +73,14 @@ export const writeCommentOnProfileAction = () => async dispatch => {
 };
 
 
-export const editCommentAction = () => async dispatch => {
+export const editCommentAction = (data) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await editComment();
+    const comment = await editComment(data);
     if (comment) {
-      dispatch(getPostComments());
+      dispatch(getPostComments(data.postId));
     } else throw new Error();
   } catch (error) {
     dispatch({
@@ -92,14 +92,14 @@ export const editCommentAction = () => async dispatch => {
   }
 };
 
-export const deleteCommentAction = () => async dispatch => {
+export const deleteCommentAction = (data) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await deleteComment();
+    const comment = await deleteComment(data);
     if (comment) {
-      dispatch(getPostComments());
+      dispatch(getPostComments(data.postId));
     } else throw new Error();
   } catch (error) {
     dispatch({

@@ -16,16 +16,19 @@ export const getPostComments = async (postID) => {
   }
 };
 
-export const newComment = async (postId) => {
+export const newComment = async (data) => {
   try {
+    console.log("data api", data.text)
+    console.log("postId api", data.postId)
+
     const comment = await axios.post(
-      `${REACT_APP_API_URI}/api/post/comments/${postId}`,
+      `${REACT_APP_API_URI}/api/post/comments/${data.postId}`,
+      {text: data.text},
       {
         withCredentials: true,
       }
     );
-    console.log("comment.data API", comment.data)
-    console.log("postId API ", postId)
+  console.log("did this go through", comment)
     return comment.data;
     
   } catch (error) {
@@ -34,10 +37,11 @@ export const newComment = async (postId) => {
   }
 };
 
-export const editComment = async (commentId) => {
+export const editComment = async (data) => {
   try {
     const comment = await axios.put(
-      `${REACT_APP_API_URI}/api/post/comments/${commentId}`,
+      `${REACT_APP_API_URI}/api/post/comments/${data.commentId}`,
+      {text: data.text, postId: data.postId},
       {
         withCredentials: true,
       }
