@@ -98,13 +98,4 @@ export const changeProfilePictureAction = (data) => async dispatch => {
   }
 };
 
-export const getUsers = (data) => async dispatch => {
-  try {
-    dispatch({
-      type: PROFILE_LOADING
-    })
-    const users = dispatch(fetchAllUsers())
-  } catch (e) {
-    
-  }
-}
+

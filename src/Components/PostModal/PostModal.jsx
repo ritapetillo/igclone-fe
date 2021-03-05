@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PostModal.scss"
 import "../../Styling/Shapes.scss"
@@ -15,14 +15,22 @@ import { GrFormClose } from "react-icons/gr"
 import Dropdown from "../Dropdown/Dropdown";
 import {deletePostAction} from "../../Actions/postActions"
 import { useDispatch } from "react-redux";
+import { getPostCommentsAction } from "../../Actions/commentActions";
+
 
 const PostModal = (props) => {
     const [showOptions, setOptions] = useState({ options: false })
     const dispatch = useDispatch()
-    const getUsername = (_id) => {
-
+    const username = (_id) => {
+        const user = props.users.filter((us)=> us._id === _id)
+       return user[0].username
     }
-    return (
+    const comments = (_id) => {
+        const commentArr = dispatch(getPostCommentsAction(_id))
+        return commentArr
+    }
+   
+return (
         <>
             <Dropdown size="post_options" show={showOptions.options} content={
                 
@@ -59,7 +67,7 @@ const PostModal = (props) => {
                             <div className="popup-header">
                                 <div>
                                     <img src="https://picsum.photos/600" className="circle-sm" />
-                                    <span>{props.content && props.content.authorId}</span>
+                                    <span>{props.content && username(props.content.authorId)}</span>
                                 </div>
                                 <div>
                                     <BsThreeDots className="post-header-options" onClick={() => setOptions({options: !showOptions.options})}/>
@@ -68,23 +76,24 @@ const PostModal = (props) => {
                             </div>
                             <div className="popup-caption">
                                 <img src="https://picsum.photos/600" className="circle-sm" />
-                                <span>{props.content && props.content.authorId}</span> <span>{props.content && props.content.caption}</span>
+                                <span>{props.content && username(props.content.authorId)}</span> <span>{props.content && props.content.caption}</span>
                                 <div className="popup-caption-date">4 weeks</div>
                             </div>
                             <div className="popup-comment-wrap">
                                 {props.content && props.content.comments.map((comment)=>
-                                <div className="popup-comment-single">
+                                comment(comment._id)
+                                (<div className="popup-comment-single">
                                     <img src="https://picsum.photos/600" className="circle-sm" />
                                     <div className="popup-comment-content">
                                         <div>
-                                            <span>{props.content && props.content.authorId}</span> {comment}
+                                            <span>{"user"}</span> {comment}
                                     </div>
                                         <div className="popup-comment-time">
                                             <span>21 weeks</span>
                                         </div>
                                     </div>
                                     <BsHeart />
-                                </div>
+                                </div>)
                                 )}
                             </div>
                         </div>
