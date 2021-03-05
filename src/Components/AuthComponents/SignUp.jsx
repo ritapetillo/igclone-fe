@@ -41,14 +41,14 @@ const SignUp = () => {
     dispatch(registerUserAction(credentials));
   };
 
-  // const currentUser = useSelector(state => state.currentUser.user.currentUser);
-  // const history = useHistory();
-  // useEffect(() => {}, []);
-  // useEffect(() => {
-  //   if (currentUser?.email) {
-  //     history.push("/");
-  //   }
-  // }, []);
+  const currentUser = useSelector(state => state.currentUser.user.currentUser);
+  const history = useHistory();
+  useEffect(() => {}, []);
+  useEffect(() => {
+    if (currentUser?.email) {
+      history.push("/");
+    }
+  }, []);
 
   const props = useSpring({
     opacity: 1,
