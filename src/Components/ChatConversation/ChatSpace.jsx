@@ -51,9 +51,6 @@ const ChatSpace = () => {
     console.log(socket);
     socket.emit("joinRoom", () => {
       console.log("joined Rooms");
-      return () => {
-        socket.emit("disconnect");
-      };
     });
     if (socket) {
       socket.on("message", (message) => {
@@ -69,6 +66,9 @@ const ChatSpace = () => {
         setIsTyping(status);
       });
     }
+    return () => {
+      socket.emit("disconnect");
+    };
   }, []);
 
   const handleSubmit = async (e) => {
