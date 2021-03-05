@@ -40,21 +40,6 @@ const SinglePost = ({ post }) => {
     (state) => state.currentUser?.user.currentUser
   );
   const postId = post._id;
-  
-  const handleKeyDown = async (event) => {
-      if (event.key === 'Enter') {
-        const writtenComment = {
-            text: comment.current.value,
-            postId: postId
-        }
-        console.log("writtenComment", writtenComment)
-        dispatch(writeCommentOnFeedsAction(writtenComment, postId))
-      }
-    }
-
-  const handleChange= async (event) => {
-    setWrittenComment({text: comment.current.value});
-  }
 
   useEffect(() => {
     isLiked();
