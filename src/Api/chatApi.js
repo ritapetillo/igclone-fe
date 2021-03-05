@@ -39,3 +39,18 @@ export const createAChatApi = async (users) => {
     return null;
   }
 };
+
+export const unsubscribeFromChatApi = async (id) => {
+  try {
+    const room = await axios.put(
+      `${REACT_APP_API_URI}/api/chat/${id}/unsubscribe`
+    );
+    console.log(room);
+    const chatRoom = await room.data;
+
+    return chatRoom;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};

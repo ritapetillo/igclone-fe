@@ -6,13 +6,17 @@ import heart from "../../Assets/heart.svg";
 import info from "../../Assets/info.svg";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentChat } from "../../Actions/chatActions";
+import { getCurrentChat, unsubscribeChat } from "../../Actions/chatActions";
 import { socketContext } from "../../Context/SocketContext";
 import Picker from "emoji-picker-react";
 import useClickOutside from "../../CustomHooks/useClickOutside";
-
+import DeleteIcon from "@material-ui/icons/Delete";
+import { InvertColorsOff } from "@material-ui/icons";
+import { Modal, Button } from "react-bootstrap";
 const arrayMsg = [];
+
 const ChatSpace = () => {
+  const [showDelete, setShowDelete] = useState(false);
   const params = useParams();
   const disaptch = useDispatch();
   const currentRoom = useSelector((state) => state.chat.current_room);
@@ -77,11 +81,18 @@ const ChatSpace = () => {
     }
   };
 
+  const handleDelete = async () => {
+    disaptch(unsubscribeChat(params.roomId));
+  };
+
   const notTheCurrentUser = useMemo(() => {
     if (currentRoom.users)
       return currentRoom?.users?.filter((user) => user._id !== currentUser._id);
     else return [];
   }, [currentUser, currentRoom]);
+  const handleClose = () => {
+    setShowDelete(!showDelete);
+  };
 
   return (
     <div className="chat-space">
@@ -98,7 +109,10 @@ const ChatSpace = () => {
             <span>{user.username}</span>
           ))}
         </div>
-        <img src={info} alt="" />
+        <div>
+          <img src={info} alt="" />
+          <DeleteIcon onClick={handleClose} />
+        </div>
       </div>
       <div className="chat-space__body">
         <div className="chat-space__body-message-space" ref={messageSpace}>
@@ -164,6 +178,25 @@ const ChatSpace = () => {
           </div>
         )}
       </div>
+      <>
+        {" "}
+        <Modal show={showDelete} onHide={handleClose} size={"sm"}>
+          <Modal.Dialog>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                Are you sure you want to delete this converation?
+              </Modal.Title>
+            </Modal.Header>
+
+            <Modal.Footer>
+              <Button variant="secondary">Close</Button>
+              <Button variant="primary" onClick={handleDelete}>
+                Yes
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal>
+      </>
     </div>
   );
 };

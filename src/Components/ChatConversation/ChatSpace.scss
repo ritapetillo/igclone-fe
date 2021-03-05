@@ -5,6 +5,11 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  svg {
+    font-size: 28px;
+    margin-left: 5px;
+  }
+
   .chat-space__header {
     min-height: 60px;
     display: flex;
@@ -13,6 +18,9 @@
     position: relative;
     border-bottom: 1px solid lightgray;
     padding: 2px 20px;
+    svg {
+      cursor: pointer;
+    }
     div {
       display: flex;
       span {
@@ -106,5 +114,24 @@
     border: none;
     outline: none;
     width: 30vw;
+  }
+}
+
+.modal {
+  .modal-dialog {
+    .modal-content {
+      border-bottom: white;
+      border-radius: 0;
+      border: none;
+      .modal-header {
+        .h4.modal-title {
+          font-size: 18px;
+        }
+      }
+      .modal-footer {
+        justify-content: center;
+        border-top: none;
+      }
+    }
   }
 }
