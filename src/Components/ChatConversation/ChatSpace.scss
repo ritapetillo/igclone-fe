@@ -1,0 +1,137 @@
+@import "../../Styling/Variables";
+
+.chat-space {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  svg {
+    font-size: 28px;
+    margin-left: 5px;
+  }
+
+  .chat-space__header {
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid lightgray;
+    padding: 2px 20px;
+    svg {
+      cursor: pointer;
+    }
+    div {
+      display: flex;
+      span {
+        color: $instagram-color-black;
+        font-weight: 500;
+        font-weight: 16px;
+      }
+    }
+    .chat-space__header-photo {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 15px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .chat-space__message-typing {
+    min-height: 30px;
+    margin-left: auto;
+    padding-right: 30px;
+  }
+  .chat-space__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    padding: 10px 20px;
+    height: 600px;
+    .chat-space__body-message-space {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex-grow: 1;
+      overflow: auto;
+
+      .chat-space__message {
+        overflow-anchor: none;
+        height: fit-content;
+        width: fit-content;
+        max-width: 50%;
+        padding: 16px 16px;
+        border-radius: 22px;
+        word-wrap: break-word;
+
+        &.received {
+          background-color: white;
+          border: 1px solid lightgray;
+        }
+        &.sent {
+          background-color: $instagram-color-messages-gray;
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+  .chat-space__footer {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    margin-bottom: 10px;
+    border: 1px solid lightgray;
+    padding: 5px 15px;
+    width: 90%;
+    align-self: center;
+    border-radius: 20px;
+    position: relative;
+    img {
+      cursor: pointer;
+    }
+  }
+  .emoji-picker-react {
+    position: absolute;
+    height: 200px;
+    bottom: 0;
+    left: 0;
+    input {
+      display: none;
+    }
+  }
+  .emoji-scroll-wrapper {
+    height: 150px;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    width: 30vw;
+  }
+}
+
+.modal {
+  .modal-dialog {
+    .modal-content {
+      border-bottom: white;
+      border-radius: 0;
+      border: none;
+      .modal-header {
+        .h4.modal-title {
+          font-size: 18px;
+        }
+      }
+      .modal-footer {
+        justify-content: center;
+        border-top: none;
+      }
+    }
+  }
+}
