@@ -218,12 +218,25 @@ const Profile = () => {
               </div>
               <div className="profile-info-interaction-value">posts</div>
             </div>
+            {/* -----------------------------POSTS----------------------------- */}
+            <div className="profile-post">
+                { state.post.currentUserPosts.length > 0 && state.post.currentUserPosts.map((post,index) =>
+                    <>
+                        <img key={index} src={post.image} className="profile-post-single" onClick={() => {
+                            setSelected(post);
+                            setShowPost(!showPost)
+                        }} />
+                    </>
+                )}
+                <PostModal show={showPost} close={setShowPost} content={selected} />
+
 
             <div className="profile-info-interaction-single">
               <div className="profile-info-interaction-number">
                 {profile && profile.followers.length}
               </div>
               <div className="profile-info-interaction-value">followers</div>
+
             </div>
 
             <div className="profile-info-interaction-single">

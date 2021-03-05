@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+
+import React, { useEffect, useState } from "react"
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -15,12 +17,43 @@ import {
 } from "react-icons/io5";
 import { GrFormClose } from "react-icons/gr";
 import Dropdown from "../Dropdown/Dropdown";
-import { deletePostAction } from "../../Actions/postActions";
+import {deletePostAction} from "../../Actions/postActions"
+import { useDispatch } from "react-redux";
+import { getPostCommentsAction } from "../../Actions/commentActions";
 
-const PostModal = props => {
-  const [showOptions, setOptions] = useState({ options: false });
+const PostModal = (props) => {
+    const [showOptions, setOptions] = useState({ options: false })
+    const [comments, setComments] = useState()
+    const dispatch = useDispatch()
+    const getComments = async() => {
+        const post_comm = await dispatch(getPostCommentsAction(props.content._id))
+        setComments(post_comm.comments)
+    }
+    useEffect(()=> {
+        if (props.content && props.content._id) getComments()
+        //console.log(comments)
+    }, [props.content])
+    console.log(props.content)
+    return (
+        <>
+            <Dropdown size="post_options" show={showOptions.options} content={
+                
+                <div className="post-options_wrap">
+                    <div className="post-option_item"><div >Go to post</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><div >Share to...</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><Link to="/edit_post"><div style={{color: "black"}} >Edit</div></Link></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"><div >Embed</div></div>
+                    <div className="dropdown-divider"></div>
+                    <div className="post-option_item"
+                    onClick={()=> {
+
+
   const currentUserPost = useSelector(state => state.post.currentUserPosts.authorId);
   const anotherUserPost = useSelector(state => state.post.userPosts.authorId);
+
 
   const dispatch = useDispatch();
   return (
@@ -80,37 +113,62 @@ const PostModal = props => {
                   <img src="https://picsum.photos/600" className="circle-sm" />
                   <span>{props.content && props.content.authorId}</span>
                 </div>
-                <div>
-                  <BsThreeDots
-                    className="post-header-options"
-                    onClick={() =>
-                      setOptions({ options: !showOptions.options })
-                    }
-                  />
-                  <GrFormClose
-                    className="post-header-options"
-                    onClick={() => props.close(!props.show)}
-                  />
-                </div>
-              </div>
-              <div className="popup-caption">
-                <img src="https://picsum.photos/600" className="circle-sm" />
-                <span>{props.content && props.content.authorId}</span>{" "}
-                <span>{props.content && props.content.caption}</span>
-                <div className="popup-caption-date">4 weeks</div>
-              </div>
-              <div className="popup-comment-wrap">
-                {props.content &&
-                  props.content.comments.map(comment => (
-                    <div className="popup-comment-single">
-                      <img
-                        src="https://picsum.photos/600"
-                        className="circle-sm"
-                      />
-                      <div className="popup-comment-content">
-                        <div>
-                          <span>{props.content && props.content.authorId}</span>{" "}
-                          {comment}
+            } />
+            <div className={props.show ? "wrapper-show-post" : "wrapper-hidden-post"} >
+                <div className="popup-inner" >
+                    <div className="popup-photo">
+                        <img src={props.content && props.content.image} style={{objectFit: "cover", objectPosition: "center"}} />
+                    </div>
+                    <div className="popup-description">
+                        <div className="popup-description-infos">
+
+                            <div className="popup-header">
+                                <div>
+                                    <img src="https://picsum.photos/600" className="circle-sm" />
+                                    <span>{props.content && props.content.authorId.username}</span>
+                                </div>
+                                <div>
+                                    <BsThreeDots className="post-header-options" onClick={() => setOptions({options: !showOptions.options})}/>
+                                    <GrFormClose className="post-header-options" onClick={() => props.close(!props.show)} />
+                                </div>
+                            </div>
+                            <div className="popup-caption">
+                                <img src="https://picsum.photos/600" className="circle-sm" />
+                                <span>{props.content && props.content.authorId.username}</span> <span>{props.content && props.content.caption}</span>
+                                <div className="popup-caption-date">4 weeks</div>
+                            </div>
+                            <div className="popup-comment-wrap">
+                                {comments && comments.length > 0 && comments.map((comment, index)=>
+                                <div className="popup-comment-single" key={index}>
+                                    <img src="https://picsum.photos/600" className="circle-sm" />
+                                    <div className="popup-comment-content">
+                                        <div>
+                                            <span>{props.content && props.content.authorId.username}</span> {comment.text}
+                                    </div>
+                                        <div className="popup-comment-time">
+                                            <span>21 weeks</span>
+                                        </div>
+                                    </div>
+                                    <BsHeart />
+                                </div>
+                                )}
+                            </div>
+                        </div>
+                        <div style={{ width: "100%" }}>
+
+                            <div className="popup-interactions">
+                                <div className="popup-interactions-g1">
+                                    <IoHeartOutline />
+                                    <IoChatbubbleOutline />
+                                    <IoPaperPlaneOutline />
+                                </div>
+                                <IoBookmarkOutline />
+                            </div>
+                            <div className="popup-like-count">
+                                <img src="https://picsum.photos/600" /> <span>{props.content && props.content.authorId.username}</span>  and <span>xx others</span> like this
+                        </div>
+                            <div className="popup-time">
+                                1 year
                         </div>
                         <div className="popup-comment-time">
                           <span>21 weeks</span>
