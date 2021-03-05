@@ -54,13 +54,12 @@
     justify-content: flex-end;
     overflow: hidden;
     padding: 10px 20px;
-    height: 600px;
     .chat-space__body-message-space {
+      overflow-y: auto;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      flex-grow: 1;
-      overflow: auto;
 
       .chat-space__message {
         overflow-anchor: none;

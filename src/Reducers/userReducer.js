@@ -18,14 +18,14 @@ const initialState = {
   error_msg: "",
 };
 
-const userReducer = (state = initialState, { type, payload }) => {
+const currentUserReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case LOGIN_LOADING:
       return {
         ...state,
         loading: true,
       };
-    case PROFILE_LOADING:
+      case PROFILE_LOADING:
       return {
         ...state,
         loading: true,
@@ -37,14 +37,14 @@ const userReducer = (state = initialState, { type, payload }) => {
         user: payload,
         error_msg: "",
       };
-    case PROFILE_SUCCESS:
+      case PROFILE_SUCCESS:
       return {
         ...state,
         isAuth: true,
         user: payload,
         error_msg: "",
       };
-    case PROFILE_ERROR:
+      case PROFILE_ERROR:
       return {
         ...state,
         error_msg: "Error with editing/deleting profile",
@@ -80,4 +80,4 @@ const userReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default userReducer;
+export default currentUserReducer;

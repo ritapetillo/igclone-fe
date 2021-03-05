@@ -1,0 +1,41 @@
+@import "../../Styling/Variables";
+@import "../../Styling/Icons.scss";
+
+.chat-rooms {
+  border-right: 1px solid lightgray;
+  min-width: 200px;
+  max-width: 390px;
+  width: 40%;
+  height: 100%;
+
+  .chat-rooms__head {
+    height: 60px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid lightgray;
+    h4 {
+      padding: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      justify-self: center;
+    }
+    img {
+      height: 20px;
+      width: 20px;
+      color: black;
+      justify-self: self-end;
+      margin-right: 10px;
+      &.chat-rooms__new-message {
+        height: 25px;
+        width: 25px;
+        position: absolute;
+        padding: 1px;
+        top: 10px;
+        right: 0px;
+        cursor: pointer;
+      }
+    }
+  }
+}

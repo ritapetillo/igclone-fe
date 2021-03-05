@@ -8,6 +8,7 @@ export const userLoginApi = async (credentials) => {
       `${REACT_APP_API_URI}/api/auth/login`,
       credentials
     );
+    console.log(login);
     return login.data;
   } catch (err) {
     console.log(err);

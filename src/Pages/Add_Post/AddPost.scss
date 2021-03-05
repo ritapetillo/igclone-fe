@@ -1,0 +1,71 @@
+@import "../../Styling/Variables";
+@font-face {
+    font-family: "Helvetica";
+    src: url(../../Fonts/Helvetica.ttf);
+    src: url("../../Fonts/helvetica-light-587ebe5a59211.ttf")
+}
+
+.add-post__wrap {
+    overflow-x: hidden;
+
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .add-post__body {
+        display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+        #image {
+            display: none;
+        }
+        .add-post__input--file {
+            margin-top: 20px;
+                width: 400px;
+                height: 400px;
+
+                background-color: lightgrey;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                font-weight: lighter;
+                font-family: Helvetica;
+                font-size: 20pt;
+
+                color: grey;
+
+                svg {
+                    width: 150px;
+                    height: 150px;
+                }
+
+        }
+        .add-post__selected {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+        }
+        .add-post__input--caption {
+            width: 400px;
+            height: 200px;
+
+            border: none;
+
+        }
+
+        .add-post__input--submit {
+            width: 100px;
+            height: 30px;
+            background: lightgray;
+            border: none;
+            margin: 10px;
+
+        }
+    }
+}

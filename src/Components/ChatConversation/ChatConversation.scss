@@ -1,0 +1,40 @@
+@import "../../Styling/Variables";
+
+.chat-conversation {
+  height: 100%;
+  width: 60%;
+  .chat-conversation__empty {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .MuiSvgIcon-root {
+      height: 100px;
+      width: 100px;
+      transform: rotate(-30deg);
+      color: $instagram-text-messages-color;
+      border: 1px solid $instagram-text-messages-color;
+      border-radius: 50%;
+      padding: 18px;
+    }
+    h5 {
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: 500;
+      color: $instagram-color-black;
+    }
+    span {
+      &:first-of-type {
+        font-weight: 600;
+        color: $instagram-color-black;
+      }
+    }
+    button {
+      font-weight: 600;
+      padding: 5px 9px;
+      font-size: 14px;
+    }
+  }
+ 
+}
