@@ -30,7 +30,7 @@ const AddPost = () => {
         new_post.append("image", post.image)
         new_post.append("caption", post.caption)
         dispatch(createPostAction(new_post))
-        history.push("/profile/me")
+        history.push("/profile")
     }
     return (
         <div className="add-post__wrap">

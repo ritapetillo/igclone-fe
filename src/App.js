@@ -15,14 +15,7 @@ import SignUp from "./Components/AuthComponents/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Inbox from "./Pages/Inbox/Inbox";
 import AddPost from "./Pages/Add_Post/AddPost";
-//import PrivateRoute from "./Context/PrivateRoutes";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { useEffect } from "react";
-import { getCurrentChat } from "./Actions/chatActions";
-import { loginAction } from "./Actions/userActions";
-//import { AuthContext } from "./Context/AuthContext";
-import "react-toastify/dist/ReactToastify.css";
-import Feeds from "./Pages/Feed/Feeds";
+
 
 function App() {
   const dispatch = useDispatch();
