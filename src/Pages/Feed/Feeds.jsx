@@ -12,7 +12,7 @@ import "./feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.post.followingUsersPosts);
+  const posts = useSelector(state => state.post.followingUsersPosts);
   const { socket } = useContext(socketContext);
   useEffect(() => {
     dispatch(getFollowingUsersPostsAction());

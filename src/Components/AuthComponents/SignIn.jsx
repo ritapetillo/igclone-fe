@@ -7,6 +7,7 @@ import { AiFillFacebook, AiFillGoogleCircle } from "react-icons/ai";
 import Logo from "../../Assets/ig-logo.png";
 //*STYLE
 import "./Authentication.scss";
+
 import { useDispatch, useSelector } from "react-redux";
 import { IoFilterCircle } from "react-icons/io5";
 const { REACT_APP_API_URI } = process.env;

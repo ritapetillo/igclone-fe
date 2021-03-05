@@ -1,16 +1,55 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useSpring, animated } from "react-spring";
 import { AiFillFacebook, AiOutlineGoogle } from "react-icons/ai";
 import Logo from "../../Assets/ig-logo.png";
 import { useHistory, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+//*userAction
+import { registerUserAction } from "../../Actions/userActions";
 
 //*STYLE
 import "./Authentication.scss";
-const { REACT_APP_API_URI } = process.env;
 
 const SignUp = () => {
+  const fullname = useRef();
+  const email = useRef();
+  const username = useRef();
+  const password = useRef();
+
+  const dispatch = useDispatch();
+
+  const { REACT_APP_API_URI } = process.env;
+
+  useEffect(() => {
+    dispatch(registerUserAction());
+  }, [username, fullname, email, password]);
+
+  const handleRegister = e => {
+    e.preventDefault();
+
+    const credentials = {
+      name: fullname.current.value.split(" ")[0],
+      lastname: fullname.current.value.split(" ")[1],
+      username: username.current.value,
+      email: email.current.value,
+      password: password.current.value,
+    };
+
+    console.log(credentials.name);
+    dispatch(registerUserAction(credentials));
+  };
+
+  // const currentUser = useSelector(state => state.currentUser.user.currentUser);
+  // const history = useHistory();
+  // useEffect(() => {}, []);
+  // useEffect(() => {
+  //   if (currentUser?.email) {
+  //     history.push("/");
+  //   }
+  // }, []);
+
   const props = useSpring({
     opacity: 1,
 
@@ -22,7 +61,7 @@ const SignUp = () => {
     <Container className="SignUp__container ">
       <div className="SignUp__wrapper">
         <animated.div style={props} className="SignUp__form">
-          <Form>
+          <Form onSubmit={handleRegister}>
             <div className="d-flex justify-content-center">
               <img src={Logo} alt="Instagram logo" className="Auth__logo" />
             </div>
@@ -31,28 +70,43 @@ const SignUp = () => {
                 Sign up to see photos and videos from your friends.
               </h2>
             </div>
-            <Button
-              className="SignUp__button py-2 px-4 d-flex justify-content-center"
-              type="submit"
-              onClick={() => {
-                window.location.href = `${REACT_APP_API_URI}/api/auth/facebook`;
-              }}
+
+            <a
+              href={`${REACT_APP_API_URI}/api/auth/facebook`}
+              className="text-decoration-none"
             >
-              <AiFillFacebook />
-              <span className="font-weight-bold ml-3">
-                {" "}
-                Log in with Facebook
-              </span>
-            </Button>
-            <Button
-              className="SignUp__button py-2 px-4 mt-3 d-flex justify-content-center"
-              onClick={() => {
-                window.location.href = `${REACT_APP_API_URI}/api/auth/google`;
-              }}
+              <Button
+                className="SignUp__button py-2 px-4 d-flex justify-content-center"
+                type="submit"
+                onClick={() => {
+                  window.location.href = `${REACT_APP_API_URI}/api/auth/facebook`;
+                }}
+              >
+                <AiFillFacebook />
+                <span className="font-weight-bold ml-3">
+                  {" "}
+                  Log in with Facebook
+                </span>
+              </Button>
+            </a>
+
+            <a
+              href={`${REACT_APP_API_URI}/api/auth/google`}
+              className="text-decoration-none"
             >
-              <AiOutlineGoogle />
-              <span className="font-weight-bold ml-3"> Log in with Google</span>
-            </Button>
+              <Button
+                className="SignUp__button py-2 px-4 mt-3 d-flex justify-content-center"
+                onClick={() => {
+                  window.location.href = `${REACT_APP_API_URI}/api/auth/google`;
+                }}
+              >
+                <AiOutlineGoogle />
+                <span className="font-weight-bold ml-3">
+                  {" "}
+                  Log in with Google
+                </span>
+              </Button>
+            </a>
 
             <div className="Auth__divider">
               <div className="Auth__divider__line"></div>
@@ -64,6 +118,7 @@ const SignUp = () => {
               <Form.Control
                 className="py-3 Auth__formControl"
                 type="text"
+                ref={fullname}
                 placeholder="Full Name"
               />
             </Form.Group>
@@ -72,6 +127,7 @@ const SignUp = () => {
               <Form.Control
                 className="py-3 Auth__formControl"
                 type="email"
+                ref={email}
                 placeholder="Email"
               />
             </Form.Group>
@@ -80,6 +136,7 @@ const SignUp = () => {
               <Form.Control
                 className="py-3 Auth__formControl"
                 type="text"
+                ref={username}
                 placeholder="Username"
               />
             </Form.Group>
@@ -88,6 +145,7 @@ const SignUp = () => {
               <Form.Control
                 className="py-3 Auth__formControl"
                 type="password"
+                ref={password}
                 placeholder="Password"
               />
             </Form.Group>
