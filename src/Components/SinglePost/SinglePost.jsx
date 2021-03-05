@@ -3,6 +3,7 @@ import "./SinglePost.scss";
 import "../../Styling/Shapes.scss";
 import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
+import uniqid from "uniqid"
 //ICONS
 import { BsThreeDots, BsPersonFill } from "react-icons/bs";
 import {
@@ -17,36 +18,48 @@ import {
 import PostOptionsV from "../PostOptions-V/PostOptionV";
 import PostOptionsO from "../PostOptions-O/PostOptionO";
 import { likeAPost, unlikeAPost } from "../../Api/postApi";
-import{writeCommentOnFeedsAction} from "../../Actions/commentActions";
-
-
+import {
+  writeCommentOnFeedsAction,
+  editCommentAction,
+} from "../../Actions/commentActions";
 
 const SinglePost = ({ post }) => {
-  const dispatch = useDispatch()
-  const [user, setUser] = useState();
+  const dispatch = useDispatch();
+  // const [user, setUser] = useState();
   const [show_more, setShow] = useState(false);
   const [showPopup, setPopup] = useState(false);
   const [saved, setSaved] = useState(false);
   const [like, setLike] = useState(false);
-  const [togglePostLike, setPostToggleLike] = useState(false);
-  const [username, setUsername] = useState("");
-  const [displayComment, setDisplayComments] = useState(false);
+  // const [togglePostLike, setPostToggleLike] = useState(false);
+  // const [username, setUsername] = useState("");
+  // const [displayComment, setDisplayComments] = useState(false);
   const [usersLiked, setUsersLiked] = useState([]);
-  const [writtenComment, setWrittenComment] = useState([])
+  const [writtenComment, setWrittenComment] = useState([]);
+  const [editMode, setEditMode] = useState(false);
 
-  const comment=useRef()
-
-  const currentUser = useSelector(
-    (state) => state.currentUser?.user.currentUser
-  );
+  const comment = useRef();
   const postId = post._id;
+
+  const handleEdit = async event => {
+    const editedComment = {
+      text: comment.current.value,
+      postId: postId,
+    };
+    if (event.key === "Enter") {
+      console.log("editedComment", editedComment);
+      dispatch(editCommentAction(editedComment, postId));
+    }
+    setEditMode(false);
+
+  };
+
+  const currentUser = useSelector(state => state.currentUser?.user.currentUser);
 
   useEffect(() => {
     isLiked();
     setUsersLiked(post.likes);
     console.log(usersLiked);
   }, []);
-
 
   const isLiked = async () => {
     const like = post.likes.includes(currentUser.username);
@@ -56,9 +69,7 @@ const SinglePost = ({ post }) => {
   const handlePostLike = async () => {
     if (like) {
       await unlikeAPost(post._id);
-      const newArray = usersLiked.filter(
-        (user) => user !== currentUser.username
-      );
+      const newArray = usersLiked.filter(user => user !== currentUser.username);
       setUsersLiked(newArray);
     } else {
       await likeAPost(post._id);
@@ -67,20 +78,20 @@ const SinglePost = ({ post }) => {
     setLike(!like);
   };
 
-
-const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
+  const handleKeyDown = async event => {
+    if (event.key === "Enter") {
       const writtenComment = {
-          text: comment.current.value,
-          postId: postId
-      }
-      console.log("writtenComment", writtenComment)
-      dispatch(writeCommentOnFeedsAction(postId, comment.current.value))    }
-  }
+        text: comment.current.value,
+        postId: postId,
+      };
+      console.log("writtenComment", writtenComment);
+      dispatch(writeCommentOnFeedsAction(writtenComment, postId));
+    }
+  };
 
-  const handleChange= async (event) => {
-    setWrittenComment({text: comment.current.value,});
-  }
+  const handleChange = async event => {
+    setWrittenComment({ text: comment.current.value });
+  };
   return (
     <>
       <PostOptionsV post={post} show={showPopup} close={setPopup} />{" "}
@@ -154,7 +165,7 @@ const handleKeyDown = async (event) => {
           <div className="">
             Liked by{" "}
             <span className="user-who-liked">
-              {usersLiked && usersLiked.map((user) => user)}
+              {usersLiked && usersLiked.map(user => user)}
             </span>{" "}
             and others
           </div>
@@ -179,20 +190,21 @@ const handleKeyDown = async (event) => {
         <div className="post-comments">
           <div className="view-comments">View all comments</div>
           {post.comments &&
-            post.comments.map((comment) => <Comment comment={comment} />)}
+            post.comments.map(comment => <Comment key={uniqid} comment={comment} postId={postId} />)}
         </div>
         <div className="post-time">1 hour ago</div>
         <div className="divider"></div>
         {/*---------------------ADD COMMENT---------------------*/}
         <div className="post-add-comment">
           <IoHappyOutline className="add-emoji" />
-           <input 
-           className="comment-input"
-           type="text"
-           placeholder='Leave a comment'
-           onKeyDown={handleKeyDown} 
-           ref={comment}
-           onChange={handleChange}/>
+          <input
+            className="comment-input"
+            type="text"
+            placeholder="Leave a comment"
+            onKeyDown={handleKeyDown}
+            ref={comment}
+            onChange={handleChange}
+          />
           <div className="add-comment-button">Post</div>
         </div>
       </div>
