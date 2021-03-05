@@ -19,18 +19,18 @@ const SignIn = () => {
   const password = useRef();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loginAction());
-  }, [username, password]);
+  // useEffect(() => {
+  //   dispatch(loginAction());
+  // }, [username, password]);
 
-  const handleLogin = e => {
-    e.preventDefault();
+  const handleLogin = () => {
     const credentials = {
       username: username.current.value,
       password: password.current.value,
     };
     console.log(credentials + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     dispatch(loginAction(credentials));
+    history.push('/')
   };
 
   const props = useSpring({
@@ -40,7 +40,9 @@ const SignIn = () => {
     config: { duration: 1000 },
   });
 
-  const currentUser = useSelector(state => state.currentUser.user.currentUser);
+  const currentUser = useSelector(
+    (state) => state.currentUser.user.currentUser
+  );
   const history = useHistory();
   useEffect(() => {}, []);
   useEffect(() => {
@@ -53,7 +55,7 @@ const SignIn = () => {
     <Container className="SignIn__container ">
       <div className="SignIn__wrapper">
         <animated.div style={props} className="SignIn__form">
-          <Form onSubmit={() => handleLogin()}>
+          <Form>
             <div className="d-flex justify-content-center">
               <img src={Logo} alt="Instagram logo" className="Auth__logo" />
             </div>
@@ -76,14 +78,13 @@ const SignIn = () => {
               />
             </Form.Group>
 
-            <Link to="/feed">
-              <Button
-                className="SignIn__button py-2 px-4 justify-content-center"
-                type="submit"
-              >
-                SIGN IN
-              </Button>
-            </Link>
+            <Button
+              className="SignIn__button py-2 px-4 justify-content-center"
+              onClick={handleLogin}
+            >
+              SIGN IN
+            </Button>
+
             <div className="Auth__divider">
               <div className="Auth__divider__line"></div>
               <div className="Auth__divider__or">OR</div>
@@ -94,9 +95,7 @@ const SignIn = () => {
               href={`${REACT_APP_API_URI}/api/auth/facebook`}
               className="text-decoration-none"
             >
-              <Button
-                className="SignIn__button--OAuthFacebook py-2 mt-3 px-4 justify-content-center"
-              >
+              <Button className="SignIn__button--OAuthFacebook py-2 mt-3 px-4 justify-content-center">
                 <AiFillFacebook className="mr-3" />
                 <span className="font-weight-bold">Log in with Facebook</span>
               </Button>
@@ -106,9 +105,7 @@ const SignIn = () => {
               href={`${REACT_APP_API_URI}/api/auth/google`}
               className="text-decoration-none"
             >
-              <Button
-                className="SignIn__button--OAuthGoogle pt-1  mb-4 px-4 justify-content-center"
-              >
+              <Button className="SignIn__button--OAuthGoogle pt-1  mb-4 px-4 justify-content-center">
                 <AiFillGoogleCircle className="mr-3 " />
                 <span className="font-weight-bold">Log in with Google</span>
               </Button>
