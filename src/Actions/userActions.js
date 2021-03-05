@@ -1,7 +1,4 @@
 import { getCurrentUserApi, userLoginApi } from "../Api/authApi.js";
-<<<<<<< Updated upstream
-import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS } from "./types.js";
-=======
 import {
   editProfile,
   deleteProfile,
@@ -19,7 +16,6 @@ import {
   SELECTED_USER_LOADING,
   SELECTED_USER_SUCCESS,
 } from "./types.js";
->>>>>>> Stashed changes
 
 export const loginAction = (credentials = "") => async (dispatch) => {
   try {
@@ -42,8 +38,6 @@ export const loginAction = (credentials = "") => async (dispatch) => {
     });
   }
 };
-<<<<<<< Updated upstream
-=======
 
 export const editProfileAction = (data) => async (dispatch) => {
   try {
@@ -130,4 +124,3 @@ export const getSelectedUserProfile = (username) => async (dispatch) => {
     });
   }
 };
->>>>>>> Stashed changes

@@ -2,12 +2,6 @@ import { Route } from "react-router-dom";
 import "./App.scss";
 import Login from "./Pages/Login";
 
-<<<<<<< Updated upstream
-function App() {
-  return (
-    <div className="App">
-      <Route path="/login" component={Login} />
-=======
 import SocketTest from "./Pages/SocketTest";
 import Feed from "./Pages/Feed/Feeds";
 import Profile from "./Pages/Profile/Profile";
@@ -47,7 +41,6 @@ function App() {
           </div>
         </AuthContext>
       </Switch>
->>>>>>> Stashed changes
     </div>
   );
 }

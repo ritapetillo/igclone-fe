@@ -2,8 +2,6 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_LOADING = "LOGIN_LOADING";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 
-<<<<<<< Updated upstream
-=======
 export const CHAT_ROOMS_SUCCESS = "CHAT_ROOMS_SUCCESS";
 export const CHAT_ROOMS_LOADING = "CHAT_ROOMS_LOADING";
 export const CHAT_ROOMS_ERROR = "CHAT_ROOMS_ERROR";
@@ -29,4 +27,3 @@ export const COMMENT_LIKE_SUCCESS = "COMMENT_LIKE_SUCCESS";
 export const SELECTED_USER_LOADING = "SELECTED_USER_LOADING";
 export const SELECTED_USER_SUCCESS = "SELECTED_USER_SUCCESS";
 export const SELECTED_USER_ERROR = "SELECTED_USER_ERROR";
->>>>>>> Stashed changes

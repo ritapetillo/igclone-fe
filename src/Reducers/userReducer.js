@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS } from "../Actions/types";
-=======
 import {
   LOGIN_FAIL,
   LOGIN_LOADING,
@@ -12,7 +9,6 @@ import {
   SELECTED_USER_SUCCESS,
   SELECTED_USER_ERROR,
 } from "../Actions/types";
->>>>>>> Stashed changes
 
 const initialState = {
   user: {},
@@ -29,14 +25,11 @@ const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: true,
       };
-<<<<<<< Updated upstream
-=======
     case PROFILE_LOADING:
       return {
         ...state,
         loading: true,
       };
->>>>>>> Stashed changes
     case LOGIN_SUCCESS:
       return {
         ...state,
@@ -44,8 +37,6 @@ const userReducer = (state = initialState, { type, payload }) => {
         user: payload,
         error_msg: "",
       };
-<<<<<<< Updated upstream
-=======
     case PROFILE_SUCCESS:
       return {
         ...state,
@@ -58,7 +49,6 @@ const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         error_msg: "Error with editing/deleting profile",
       };
->>>>>>> Stashed changes
     case LOGIN_FAIL:
       return {
         ...state,
