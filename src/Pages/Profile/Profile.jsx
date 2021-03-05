@@ -158,7 +158,9 @@ const Profile = () => {
       {/* -----------------------------HEADER----------------------------- */}
       <div className="profile-header">
         <div className="profile-pic">
-          <input
+        {params.id === "me" ? (
+        <>
+        <input
             type="file"
             style={{ display: "none" }}
             id="propic"
@@ -174,6 +176,14 @@ const Profile = () => {
               />
             </div>
           </label>
+          </>) : (<div className="story-lg">
+              <img
+                className="circle-lg"
+                src={
+                  profile && profile.imageUrl ? profile.imageUrl : Placeholder
+                }
+              />
+            </div>) }
         </div>
         <div className="profile-info">
           <div className="profile-info-header">
