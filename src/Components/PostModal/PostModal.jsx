@@ -16,7 +16,7 @@ import {
 } from "react-icons/io5";
 import { GrFormClose } from "react-icons/gr";
 import Dropdown from "../Dropdown/Dropdown";
-import { deletePostAction } from "../../Actions/postActions";
+import { deletePostAction, editPostAction } from "../../Actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPostCommentsAction,
@@ -33,6 +33,8 @@ const PostModal = props => {
   const [editComment, setEditComment] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [selectedComment, setSelectedComment] = useState()
+  const [editPostMode, setEditPostMode] = useState()
+  const [newCaption, setNewCaption] = useState()
 
   const state = useSelector(state => state);
   const currentUser = useSelector(state => state.currentUser?.user?.currentUser);
@@ -72,6 +74,23 @@ const PostModal = props => {
       setEditMode(true)
       setSelectedComment(commentId[index])
   }
+  const editPost = () => {
+    setOptions(false)
+    setEditPostMode(true)
+    setNewCaption(props.content.caption)
+  }
+  const sendNewCaption = (e) => {
+    if (e.key === "Enter") {
+      console.log(newCaption, props.content._id)
+      dispatch(editPostAction({"caption": newCaption}, props.content._id))
+      setEditPostMode(false)
+      props.show(false)
+    }
+  }
+  const handleCaptionChange = (e) => {
+    setNewCaption(e.target.value)
+    
+  }
   useEffect(() => {
     if (props.content && props.content._id) getComments();
     //console.log(comments)
@@ -84,9 +103,9 @@ const PostModal = props => {
         show={showOptions.options}
         content={
           <div className="post-options_wrap">
-            <div className="post-option_item">
-              <div>Go to post</div>
-            </div>
+            {currentUser.username === props.content?.authorId?.username && <div className="post-option_item" onClick={editPost}>
+              <div>Edit post</div>
+            </div>}
             <div className="dropdown-divider"></div>
             <div className="post-option_item">
               <div>Share to...</div>
@@ -150,13 +169,18 @@ const PostModal = props => {
                 </div>
               </div>
               <div className="popup-caption">
+              
                 <img src="https://picsum.photos/600" className="circle-sm" />
                 <span>
                   {props.content && props.content.authorId.username}
                 </span>{" "}
+                {!editPostMode ? 
+              <>
                 <span>{props.content && props.content.caption}</span>
                 <div className="popup-caption-date">4 weeks</div>
-              </div>
+                </>
+                : <input type="text" value={newCaption} onChange={(e)=>handleCaptionChange(e)} onKeyDown={(e)=> sendNewCaption(e)} /> }
+              </div> 
               <div className="popup-comment-wrap">
                 {comments && !editMode ? (
                   comments.length > 0 &&

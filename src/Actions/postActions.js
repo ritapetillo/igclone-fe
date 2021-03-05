@@ -63,12 +63,12 @@ export const createPostAction = (data) => async (dispatch) => {
   }
 };
 
-export const editPostAction = () => async (dispatch) => {
+export const editPostAction = (data, postId) => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
     });
-    const post = await editMyPost();
+    const post = await editMyPost(data, postId);
     if (post) {
       dispatch(getCurrentUserPostsAction());
     } else throw new Error();
