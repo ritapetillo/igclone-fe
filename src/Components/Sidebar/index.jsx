@@ -1,32 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row, Button, Container, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { getFollowingUsersPostsAction } from "../../Actions/postActions";
+import { followUser, unfollowUser } from "../../Api/userApi";
 import uniqid from "uniqid";
 //*styles
 import "./Sidebar.scss";
 
-const Sidebar = () => {
+const Sidebar = props => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [follow, setFollow] = useState(false);
+  const [usersFollow, setUsersFollow] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const currentUsers = useSelector(
+  const currentUser = useSelector(
     state => state.currentUser?.user?.currentUser
   );
 
   const followingUsers = useSelector(
     state => state.currentUser?.user?.currentUser?.following
   );
-  console.log("followingUsers", followingUsers);
+console.log("followingUsers._id", followingUsers._id)
+  useEffect(() => {
+    isFollow();
+    setUsersFollow([...usersFollow, followingUsers._id]);
+    console.log("usersFollow", usersFollow);
+  }, []);
+
+  const isFollow = async () => {
+    const follow = await currentUser?.following.includes(followingUsers._id);
+    setFollow(follow);
+  };
+
+  const handleFollow = async ()  => {
+    if (follow) {
+      await unfollowUser(followingUsers._id);
+      const newArray = usersFollow.filter(user => user !== followingUsers._id);
+      setUsersFollow(newArray);
+    } else {
+      await followUser(followingUsers._id);
+      setUsersFollow([...usersFollow, followingUsers._id]);
+    }
+    setFollow(!follow);
+  };
 
   return (
     <div className="Sidebar__cointainer d-inline-blok  pt-5">
       <Container>
         <div className="Sidebar__header d-inline">
           <Row>
-            {currentUsers?.imageUrl ? (
+{currentUser && currentUser?.imageUrl ? (
+
               <img
                 className="Sidebar__header__avatar"
-                src={currentUsers?.imageUrl}
+                src={currentUser?.imageUrl}
                 alt="avatar placeholder"
               />
             ) : (
@@ -39,11 +67,11 @@ const Sidebar = () => {
 
             <Col className="Sidebar__header__content">
               <h5 className="Sidebar__header__username">
-                {currentUsers?.username}
+                {currentUser?.username}
               </h5>
               <p className="text-muted d-flex flex-grow-1 Sidebar__header__description">
-                {currentUsers?.name}
-                {currentUsers?.lastname}
+                {currentUser?.name}
+                {currentUser?.lastname}
               </p>
             </Col>
             <Col className="p-0 text-right">
@@ -94,10 +122,15 @@ const Sidebar = () => {
                       Followed
                     </span>
                   </Col>
-
-                  <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
+                  <div
+                    className=" ml-3 pl-3 Sidebar__suggestion__button"
+                    onClick={() => handleFollow()}
+                  >
+                    <div>{isFollow ? "Unfollow" : "Follow"}</div>
+                  </div>
+                  {/* <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
                     Unfollow
-                  </Button>
+                  </Button> */}
                 </Row>
               </>
             ))}
