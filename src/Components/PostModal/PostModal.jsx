@@ -52,7 +52,7 @@ const PostModal = props => {
   const currentUser = useSelector(state => state.currentUser?.user?.currentUser);
 
   const commentId =props.content && props.content.comments;
-
+  console.log("comments", comments)
   console.log("props.content", props.content);
 
   const handleEdit = async event => {
@@ -161,6 +161,7 @@ const PostModal = props => {
                 {comments && !editMode ? (
                   comments.length > 0 &&
                   comments.map((comment, index) => (
+                      
                     <>
                       <div className="popup-comment-single" key={index}>
                         <img
@@ -170,7 +171,7 @@ const PostModal = props => {
                         <div className="popup-comment-content">
                           <div>
                             <span>
-                              {props.content && props.content.authorId.username}
+                              {comment.author}
                             </span>{" "}
                             {comment.text}
                           </div>
