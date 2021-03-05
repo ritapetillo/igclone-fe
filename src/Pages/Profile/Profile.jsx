@@ -20,7 +20,6 @@ import Placeholder from "../../Assets/placeholder.png"
 import { getCurrentUserPostsAction } from "../../Actions/postActions"
 import {changeProfilePictureAction} from "../../Actions/userActions"
 import { editProfileAction, deleteProfileAction } from "../../Actions/userActions"
-import { fetchAllUsers } from "../../Api/userApi";
 
 const Profile = () => {
 
@@ -31,13 +30,6 @@ const Profile = () => {
     const [showPost, setShowPost] = useState(false)
     const [editMode, setEditMode] = useState(false)
     const [file, setFile] = useState()
-    const [users, setUser] = useState()
-
-    const getUsername = async() => {
-        const user = await fetchAllUsers()
-        
-        setUser(user)
-    }
     
     const dispatch = useDispatch();
     const state = useSelector((state) => state)
@@ -70,7 +62,6 @@ const Profile = () => {
                     imageUrl: state.currentUser.user.currentUser.imageUrl
                 })
         }
-        getUsername()
     }, []);
 
     const propicInput = (file) => {
@@ -192,7 +183,7 @@ const Profile = () => {
                         }} />
                     </>
                 )}
-                <PostModal show={showPost} close={setShowPost} content={selected} users={users} />
+                <PostModal show={showPost} close={setShowPost} content={selected} />
             </div>
 
 
