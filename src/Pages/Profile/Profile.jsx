@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { followUser, unfollowUser } from "../../Api/userApi";
 
 import "./Profile.scss";
 import "../../Styling/Shapes.scss";
@@ -38,11 +39,26 @@ const Profile = () => {
   const [showPost, setShowPost] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [file, setFile] = useState();
+  const [follow, setFollow] = useState(false);
+  const [usersFollow, setUsersFollow] = useState([]);
+
+  const currentUser = useSelector(
+    state => state.currentUser?.user?.currentUser
+  );
+
+  // const selectedProfile= useSelector(
+  //   state => state.post?.followingUsersPosts?.authorId._id
+  // );
+  // console.log("selectedProfile", selectedProfile);
 
   const dispatch = useDispatch();
   const [change, setChange] = useState();
-  const state = useSelector((state) => state);
+  const state = useSelector(state => state);
+  console.log("state", state);
+
   const params = useParams();
+
+  console.log("params", params)
   const saveNewProfile = async () => {
     dispatch(
       editProfileAction({
@@ -93,7 +109,7 @@ const Profile = () => {
     }
   }, [params, state.currentUser.user?.currentUser?._id]);
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = e => {
     setProfile({ ...profile, [e.target.id]: e.target.value });
   };
   useEffect(() => {
@@ -113,7 +129,39 @@ const Profile = () => {
     }
   }, [getSelectedProfile]);
 
-  const propicInput = (file) => {
+  useEffect(() => {
+    if (params.id == "me") {
+      getCurrentUserProfile();
+    } else {
+      console.log(params.id);
+      isFollow();
+      getSelectedProfile();
+      setUsersFollow([...usersFollow, params.id]);
+      console.log("usersFollow", usersFollow);
+    }
+  }, []);
+
+  const isFollow = async () => {
+    const follow = currentUser?.following.some(follow => follow.username === params.id);
+    setFollow(follow);
+  };
+
+  const handleFollow = async () => {
+    if (follow) {
+      await unfollowUser(state.currentUser.selectedUser?.user?._id);
+      const newArray = usersFollow.filter(user => user.username !== params.id);
+      setUsersFollow(newArray);
+      // dispatch(getSelectedProfile());
+
+    } else {
+      await followUser(state.currentUser.selectedUser?.user?._id);
+      setUsersFollow([...usersFollow, state.currentUser.selectedUser?.user?._id]);
+      // dispatch(getSelectedProfile());
+    }
+    setFollow(!follow);
+  };
+
+  const propicInput = file => {
     setFile(file);
     const fd = new FormData();
     fd.append("image", file);
@@ -121,7 +169,7 @@ const Profile = () => {
   };
   const posts = useMemo(() => {
     if (params.id == "me" && state.post.currentUserPosts) {
-      return state.post.currentUserPosts.map((post) => (
+      return state.post.currentUserPosts.map(post => (
         <>
           <img
             src={post.image}
@@ -134,7 +182,7 @@ const Profile = () => {
         </>
       ));
     } else {
-      return state.post.userPosts.map((post) => (
+      return state.post.userPosts.map(post => (
         <>
           <img
             src={post.image}
@@ -164,7 +212,7 @@ const Profile = () => {
             type="file"
             style={{ display: "none" }}
             id="propic"
-            onChange={(e) => propicInput(e.target.files[0])}
+            onChange={e => propicInput(e.target.files[0])}
           />
           <label for="propic">
             <div className="story-lg">
@@ -195,12 +243,12 @@ const Profile = () => {
                   type="text"
                   className="edit-mode__input"
                   id="username"
-                  onChange={(e) => onChangeHandler(e)}
+                  onChange={e => onChangeHandler(e)}
                   value={profile && profile.username}
                 />
               )}
             </span>
-            {params.id === "me" && (
+            {params.id === "me" ? (
               <>
                 <input
                   type="button"
@@ -216,6 +264,15 @@ const Profile = () => {
                   onClick={() => setShowModal(!showModal)}
                 />
                 <UserOptions show={showModal} close={setShowModal} />
+              </>
+            ) : (
+              <>
+                <input
+                  type="button"
+                  value={!follow ? "Follow" : "Unfollow"}
+                  className="profile-info-edit-user"
+                  onClick={() => handleFollow()}
+                />{" "}
               </>
             )}
           </div>
@@ -251,7 +308,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={profile && profile.name}
-                  onChange={(e) => onChangeHandler(e)}
+                  onChange={e => onChangeHandler(e)}
                   className="edit-mode__input"
                   id="name"
                 />
@@ -263,7 +320,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={profile && profile.lastname}
-                  onChange={(e) => onChangeHandler(e)}
+                  onChange={e => onChangeHandler(e)}
                   className="edit-mode__input"
                   id="lastname"
                 />
@@ -276,7 +333,7 @@ const Profile = () => {
                 <textarea
                   className="edit-more__textarea"
                   value={profile.bio}
-                  onChange={(e) => onChangeHandler(e)}
+                  onChange={e => onChangeHandler(e)}
                   id="bio"
                   rows={3}
                 />
