@@ -59,7 +59,7 @@
       height: 600px;
       display: flex;
       flex-direction: column;
-      justify-content: end;
+      justify-content: flex-end;
 
       .chat-space__message {
         overflow-anchor: none;
