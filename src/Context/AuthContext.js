@@ -8,8 +8,8 @@ export const authContext = createContext();
 
 export const AuthContext = ({ children }) => {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.currentUser.isAuth);
-  const isLoading = useSelector((state) => state.currentUser.isLoading);
+  const isAuth = useSelector(state => state.currentUser.isAuth);
+  const isLoading = useSelector(state => state.currentUser.isLoading);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   useEffect(() => {

@@ -28,7 +28,7 @@ function App() {
       <Switch>
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={SignIn} />
-        {/* <AuthContext>
+        <AuthContext>
           <div>
             <Navbar />
             <Route exact path="/profile" component={Profile} />
@@ -39,7 +39,7 @@ function App() {
             <Route exact path="/login2" component={Login} />
             <Route exact path="/" component={Feed} />
           </div>
-        </AuthContext> */}
+        </AuthContext>
       </Switch>
     </div>
   );

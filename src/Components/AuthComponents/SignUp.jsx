@@ -95,7 +95,7 @@ const SignUp = () => {
               className="text-decoration-none"
             >
               <Button
-                className="SignUp__button py-2 px-4 mt-3 d-flex justify-content-center"
+                className="SignUp__button--OAuthGoogle py-2 px-4 mt-3 d-flex justify-content-center"
                 onClick={() => {
                   window.location.href = `${REACT_APP_API_URI}/api/auth/google`;
                 }}
@@ -156,6 +156,7 @@ const SignUp = () => {
             >
               NEXT
             </Button>
+
             <div className="d-flex justify-content-center mt-4">
               <p className="SignUp__CookiesPolicy ">
                 By signing up, you agree to our Terms . Learn how we collect,
@@ -170,7 +171,11 @@ const SignUp = () => {
           className="SignUp__form__noAccount mt-3  px-4 text-center"
         >
           <span className="ml-3">Have an account?</span>
-          <span className="mr-3  SignUp__form__noAccount__signup"> Log in</span>
+          <Link to="/login">
+            <span className="mr-3  SignUp__form__noAccount__signup">
+              Log in
+            </span>
+          </Link>
         </animated.div>
       </div>
     </Container>
