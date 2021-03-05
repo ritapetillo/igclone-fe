@@ -11,15 +11,14 @@ export const SocketContext = ({ children }) => {
 
   useEffect(() => {
     socket.connect();
-    socket.emit("joinRoom", () => {
-      console.log("joined Rooms");
-    });
+    // socket.emit("joinRoom", () => {
+    //   console.log("joined Rooms");
+    // });
     socket.on("notificationMsg", (username) => {
       messagedReceived(username);
       const newArray = msgReceived.push(username);
       setMsgReceived(newArray);
     });
-  
 
     socket.on("newFollower", (username) => {
       followReceivedMessage(username);
@@ -74,7 +73,13 @@ export const SocketContext = ({ children }) => {
 
   return (
     <socketContext.Provider
-      value={{ socket, msgReceived, resetMsgNotification, followReceived,resetFollowNotification }}
+      value={{
+        socket,
+        msgReceived,
+        resetMsgNotification,
+        followReceived,
+        resetFollowNotification,
+      }}
     >
       <ToastContainer
         position="top-right"
