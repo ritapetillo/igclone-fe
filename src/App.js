@@ -32,7 +32,7 @@ function App() {
         <AuthContext>
           <div>
             <Navbar />
-            <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/:id" component={Profile} />
             <Route exact path="/add_post" component={AddPost} />
             <Route exact path="/inbox/:roomId" component={Inbox} />
             <Route exact path="/inbox" component={Inbox} />

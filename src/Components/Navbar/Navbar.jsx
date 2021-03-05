@@ -201,8 +201,8 @@ const Navbar = () => {
             <img
               src={
                 state.currentUser.user.currentUser &&
-                state.currentUser.user.currentUser.propic
-                  ? state.currentUser.user.currentUser.propic
+                state.currentUser.user.currentUser.imageUrl
+                  ? state.currentUser.user.currentUser.imageUrl
                   : Placeholder
               }
               className="circle-sm"
