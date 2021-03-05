@@ -162,7 +162,7 @@ const Navbar = () => {
           />
 
           <div className="profile-area">
-            <Link to="/feed">
+            <Link to="/">
               {" "}
               <IoHomeOutline
                 className="nav-icon"

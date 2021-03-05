@@ -96,7 +96,6 @@ const SignIn = () => {
             >
               <Button
                 className="SignIn__button--OAuthFacebook py-2 mt-3 px-4 justify-content-center"
-                type="submit"
               >
                 <AiFillFacebook className="mr-3" />
                 <span className="font-weight-bold">Log in with Facebook</span>
@@ -109,7 +108,6 @@ const SignIn = () => {
             >
               <Button
                 className="SignIn__button--OAuthGoogle pt-1  mb-4 px-4 justify-content-center"
-                type="submit"
               >
                 <AiFillGoogleCircle className="mr-3 " />
                 <span className="font-weight-bold">Log in with Google</span>
