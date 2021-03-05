@@ -39,8 +39,6 @@ const SinglePost = ({ post }) => {
   const currentUser = useSelector(
     (state) => state.currentUser?.user.currentUser
   );
-
-  const comment=useRef()
   const postId = post._id;
   
   const handleKeyDown = async (event) => {
