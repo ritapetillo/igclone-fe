@@ -15,60 +15,61 @@ import {
   IoPaperPlaneOutline,
   IoHappyOutline,
   IoPencil,
-  IoTrashBinOutline
+  IoTrashBinOutline,
 } from "react-icons/io5";
 import { GrFormClose } from "react-icons/gr";
 import Dropdown from "../Dropdown/Dropdown";
-import {deletePostAction} from "../../Actions/postActions"
-import { useDispatch } from "react-redux";
-import { getPostCommentsAction, writeCommentOnProfileAction } from "../../Actions/commentActions";
+import { deletePostAction } from "../../Actions/postActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPostCommentsAction,
+  writeCommentOnProfileAction,
+} from "../../Actions/commentActions";
 
-const PostModal = (props) => {
-    const [showOptions, setOptions] = useState({ options: false })
-    const [comments, setComments] = useState()
-    const [newComment, setNewComment] = useState()
-    const dispatch = useDispatch()
-    const getComments = async() => {
-        const post_comm = await dispatch(getPostCommentsAction(props.content._id))
-        setComments(post_comm.comments)
-    }
-    const handleChange = (e) => {
-      setNewComment({"text": e.target.value, "postId": props.content._id})
-      console.log(newComment)
-    }
-    const submitComment = () => {
-      dispatch(writeCommentOnProfileAction(newComment))
-    }
+const PostModal = props => {
+  const [showOptions, setOptions] = useState({ options: false });
+  const [comments, setComments] = useState();
+  const [newComment, setNewComment] = useState();
+  const dispatch = useDispatch();
+  const getComments = async () => {
+    const post_comm = await dispatch(getPostCommentsAction(props.content._id));
+    setComments(post_comm.comments);
+  };
+  const handleChange = e => {
+    setNewComment({ text: e.target.value, postId: props.content._id });
+    console.log(newComment);
+  };
+  const submitComment = (event) => {
+    if (event.key === "Enter") {
+        dispatch(writeCommentOnProfileAction(newComment))
+    };
+  };
 
-    const [editComment, setEditComment] = useState("");
-    const [editMode, setEditMode] = useState(false);
-  
-    const state = useSelector(state => state);
-    const currentUser = useSelector(state => state.currentUser.user.currentUser);
-  
-    console.log("STATEXXX", state);
-    const getComments = async () => {
-      const post_comm = await dispatch(getPostCommentsAction(props.content._id));
-      setComments(post_comm.comments);
-    };
-  
-    const handleEdit = async event => {
-      setEditComment({ ...editComment, text: event.target.value });
-      console.log("editComment", editComment);
-    };
-  
-    const submitEditComment = async event => {
-      if (event.key === "Enter") {
-        await dispatch(editCommentAction(editComment, props.content._id));
-        setEditMode(false);
-      }
-      console.log(event);
-    };
+  const [editComment, setEditComment] = useState("");
+  const [editMode, setEditMode] = useState(false);
 
-    useEffect(()=> {
-        if (props.content && props.content._id) getComments()
-        //console.log(comments)
-    }, [props.content])
+  const state = useSelector(state => state);
+  const currentUser = useSelector(state => state.currentUser.user.currentUser);
+
+  console.log("STATEXXX", state);
+
+  const handleEdit = async event => {
+    setEditComment({ ...editComment, text: event.target.value });
+    console.log("editComment", editComment);
+  };
+
+  const submitEditComment = async event => {
+    if (event.key === "Enter") {
+      await dispatch(editCommentAction(editComment, props.content._id));
+      setEditMode(false);
+    }
+    console.log(event);
+  };
+
+  useEffect(() => {
+    if (props.content && props.content._id) getComments();
+    //console.log(comments)
+  }, [props.content]);
 
   return (
     <>
@@ -172,17 +173,11 @@ const PostModal = (props) => {
                             <span>21 weeks</span>
                           </div>
                         </div>
-
-                            <div className="popup-add-comment">
-                                <IoHappyOutline />
-                                <input type="text" placeholder="Add a comment..." onChange={(e)=> handleChange(e) } onKeyDown={()=>submitComment()}/>
-                                <input type="button" value="Post" onClick={()=>submitComment()} />
-                            </div>
-                        </div>
-                        {currentUser.username === editComment.author && (
-                          <IoPencil onClick={() => setEditMode(true)} />
-                        )}
-                        <div>
+                      </div>
+                      {currentUser.username === comment.author && (
+                        <IoPencil onClick={() => setEditMode(true)} />
+                      )}
+                      <div>
                         <BsHeart />
                       </div>
                     </>
@@ -204,7 +199,6 @@ const PostModal = (props) => {
                   <IoHeartOutline />
                   <IoChatbubbleOutline />
                   <IoPaperPlaneOutline />
-
                 </div>
                 <IoBookmarkOutline />
               </div>
@@ -216,8 +210,17 @@ const PostModal = (props) => {
               <div className="popup-time">1 year</div>
               <div className="popup-add-comment">
                 <IoHappyOutline />
-                <input type="text" placeholder="Add a comment..." />
-                <input type="button" value="Post" />
+                <input
+                  type="text"
+                  placeholder="Add a comment..."
+                  onChange={e => handleChange(e)}
+                  onKeyDown={(event) => submitComment(event)}
+                />
+                <input
+                  type="button"
+                  value="Post"
+                  onClick={() => submitComment()}
+                />
               </div>
             </div>
           </div>
