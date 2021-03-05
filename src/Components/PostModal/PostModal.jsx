@@ -4,7 +4,7 @@ import "./PostModal.scss";
 import "../../Styling/Shapes.scss";
 import { Link } from "react-router-dom";
 import { BsHeart, BsThreeDots } from "react-icons/bs";
-
+import Placeholder from "../../Assets/placeholder.png"
 import {
   IoBookmarkOutline,
   IoChatbubbleOutline,
@@ -24,6 +24,8 @@ import {
   deleteCommentAction,
   editCommentAction,
 } from "../../Actions/commentActions";
+import { getSelectedUserProfile } from "../../Actions/userActions";
+import { Place } from "@material-ui/icons";
 
 const PostModal = props => {
   const [showOptions, setOptions] = useState({ options: false });
@@ -52,6 +54,8 @@ const PostModal = props => {
         dispatch(writeCommentOnProfileAction(newComment))
     };
   };
+
+
 
   const commentId = props.content && props.content.comments;
   console.log("comments", comments)
@@ -151,7 +155,7 @@ const PostModal = props => {
             <div className="popup-description-infos">
               <div className="popup-header">
                 <div>
-                  <img src="https://picsum.photos/600" className="circle-sm" />
+                  <img src={props.content && props.content.authorId ? props.content.authorId.imageUrl : Placeholder} className="circle-sm" />
                   <span>
                     {props.content && props.content.authorId.username}
                   </span>
@@ -171,7 +175,7 @@ const PostModal = props => {
               </div>
               <div className="popup-caption">
               
-                <img src="https://picsum.photos/600" className="circle-sm" />
+                <img src={props.content && props.content.authorId.imageUrl} className="circle-sm" />
                 <span>
                   {props.content && props.content.authorId.username}
                 </span>{" "}
@@ -185,12 +189,13 @@ const PostModal = props => {
               <div className="popup-comment-wrap">
                 {comments && !editMode ? (
                   comments.length > 0 &&
-                  comments.map((comment, index) => (
-                      
-                    <>
+                  comments.map((comment, index) => 
+                  
+                    {
+                    return (                    <>
                       <div className="popup-comment-single" key={index}>
                         <img
-                          src="https://picsum.photos/600"
+                          src={Placeholder}
                           className="circle-sm"
                         />
                         <div className="popup-comment-content">
@@ -215,8 +220,8 @@ const PostModal = props => {
                       <div>
                         <BsHeart />
                       </div>
-                    </>
-                  ))
+                    </>)
+                  })
                 ) : (
                   <input
                     type="text"
