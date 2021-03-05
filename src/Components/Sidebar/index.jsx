@@ -49,21 +49,22 @@ const Sidebar = props => {
     <div className="Sidebar__cointainer d-inline-blok ml-5 pt-5 d-none d-xl-block">
       <div className="Sidebar__header d-inline ">
         <Row>
-          {currentUser && currentUser?.imageUrl ? (
-            <img
-              className="Sidebar__header__avatar"
-              src={currentUser?.imageUrl}
-              alt="avatar placeholder"
-            />
-          ) : (
-            <img
-              className="Sidebar__header__avatar"
-              src="https://i.pravatar.cc/300"
-              alt="avatar placeholder"
-            />
-          )}
-
-          <Col className="Sidebar__header__content">
+          <Col className="col-3 p-0">
+            {currentUser && currentUser?.imageUrl ? (
+              <img
+                className="Sidebar__header__avatar"
+                src={currentUser?.imageUrl}
+                alt="avatar placeholder"
+              />
+            ) : (
+              <img
+                className="Sidebar__header__avatar"
+                src="https://i.pravatar.cc/300"
+                alt="avatar placeholder"
+              />
+            )}
+          </Col>
+          <Col className="Sidebar__header__content col-6 p-0">
             <h5 className="Sidebar__header__username">
               {currentUser?.username}
             </h5>
@@ -72,16 +73,17 @@ const Sidebar = props => {
               {currentUser?.lastname}
             </p>
           </Col>
-          <Col className="p-0 text-right">
+          <div className="p-0 text-right">
             <span className="Sidebar__header__button  ">Switch</span>
-          </Col>
+          </div>
         </Row>
       </div>
-      <Row className="Sidebar__suggestion d-flex justify-content-between   align-items-center">
-        <h6 className=" font-weight-bold Sidebar__suggestion__title  text-black-50 m-0 mr-4">
+      <Row className="Sidebar__suggestion d-flex justify-content-between  mt-4 align-items-center">
+        <h6 className=" font-weight-bold Sidebar__suggestion__title  text-black-50 m-0">
           Suggestions for you
         </h6>
-        <Col className="p-0 text-right">
+
+        <div className="p-0 ">
           <Button
             className="
               Sidebar__suggestion__button 
@@ -89,11 +91,12 @@ const Sidebar = props => {
           >
             See all
           </Button>
-        </Col>
+        </div>
+
         {followingUsers &&
           followingUsers.slice(0, 4).map(following => (
             <>
-              <Row key={uniqid} className="mb-3 mt-2">
+              <Row key={uniqid} className="mb-3 mt-2 d-flex  w-100 p-0 ">
                 {following.imageUrl ? (
                   <img
                     className="Sidebar__suggestion__avatar ml-3 align-self-center"
@@ -108,10 +111,10 @@ const Sidebar = props => {
                   />
                 )}
 
-                <Col className="flex-grow-1 mr-3 Sidebar__suggestion__content justify-content-between">
+                <Col className="flex-grow-1 ml-3 mr-3 col-6 Sidebar__suggestion__content  w-50">
                   <h6
                     onClick={handleShow}
-                    className="mb-0 Sidebar__suggestion__username bolder"
+                    className="mb-0  Sidebar__suggestion__username bolder"
                   >
                     {following.username}
                   </h6>
@@ -120,15 +123,13 @@ const Sidebar = props => {
                     Followed
                   </span>
                 </Col>
-                <div
-                  className=" ml-3 pl-3 Sidebar__suggestion__button"
-                  onClick={() => handleFollow()}
+
+                <Col
+                  className=" Sidebar__suggestion__button col- mr-0 px-0  align-self-center"
+                  onClick={e => handleFollow(e)}
                 >
-                  <div>{isFollow ? "Unfollow" : "Follow"}</div>
-                </div>
-                {/* <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
-                    Unfollow
-                  </Button> */}
+                  {isFollow ? "Unfollow" : "Follow"}
+                </Col>
               </Row>
             </>
           ))}
