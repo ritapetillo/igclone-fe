@@ -73,7 +73,12 @@ const Sidebar = props => {
             </p>
           </Col>
           <Col className="p-0 text-right">
-            <span className="Sidebar__header__button  ">Switch</span>
+            <span
+              style={{ marginRight: "17px" }}
+              className="Sidebar__header__button  "
+            >
+              Switch
+            </span>
           </Col>
         </Row>
       </div>
@@ -83,6 +88,7 @@ const Sidebar = props => {
         </h6>
         <Col className="p-0 text-right">
           <Button
+            style={{ marginRight: "17px" }}
             className="
               Sidebar__suggestion__button 
               Sidebar__suggestion__Suggestbutton p-0"
@@ -90,10 +96,14 @@ const Sidebar = props => {
             See all
           </Button>
         </Col>
+
         {followingUsers &&
           followingUsers.slice(0, 4).map(following => (
             <>
-              <Row key={uniqid} className="mb-3 mt-2">
+              <Row
+                key={uniqid}
+                className="mb-3 mt-2  w-100 d-flex justify-content-between"
+              >
                 {following.imageUrl ? (
                   <img
                     className="Sidebar__suggestion__avatar ml-3 align-self-center"
@@ -108,27 +118,24 @@ const Sidebar = props => {
                   />
                 )}
 
-                <Col className="flex-grow-1 mr-3 Sidebar__suggestion__content justify-content-between">
+                <div className="flex-grow-1  Sidebar__suggestion__content justify-content-between">
                   <h6
                     onClick={handleShow}
-                    className="mb-0 Sidebar__suggestion__username bolder"
+                    className="mb-0 ml-3 Sidebar__suggestion__username bolder w-50"
                   >
                     {following.username}
                   </h6>
 
-                  <span className="Sidebar__suggestion__description text-right p-0 w-100">
+                  <span className="Sidebar__suggestion__description text-right p-0 ml-3">
                     Followed
                   </span>
-                </Col>
+                </div>
                 <div
-                  className=" ml-3 pl-3 Sidebar__suggestion__button"
+                  className="  Sidebar__suggestion__button align-self-center"
                   onClick={() => handleFollow()}
                 >
-                  <div>{isFollow ? "Unfollow" : "Follow"}</div>
+                  {isFollow ? "Unfollow" : "Follow"}
                 </div>
-                {/* <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
-                    Unfollow
-                  </Button> */}
               </Row>
             </>
           ))}
