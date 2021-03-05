@@ -3,6 +3,8 @@ import "./SinglePost.scss";
 import "../../Styling/Shapes.scss";
 import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
+import { Link } from "react-router-dom";
+
 import uniqid from "uniqid"
 //ICONS
 import { BsThreeDots, BsPersonFill } from "react-icons/bs";
@@ -109,8 +111,7 @@ const SinglePost = ({ post }) => {
               )}
             </div>
             <div className="username">
-              {/*<Link to={`/${user._id}`}>*/}
-              {post ? post.authorId?.username : "username"}
+            <Link to={`/profile/${post.authorId.username}`}>      {post ? post.authorId?.username : "Username"}</Link>        
               {/*</Link>*/}
             </div>
           </div>
