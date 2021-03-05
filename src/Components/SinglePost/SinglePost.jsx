@@ -32,7 +32,9 @@ const SinglePost = ({ post }) => {
   const [username, setUsername] = useState("");
   const [displayComment, setDisplayComments] = useState(false);
   const [usersLiked, setUsersLiked] = useState([]);
-  const [writeComment, setWriteComment] = useState([])
+  const [writtenComment, setWrittenComment] = useState([])
+
+  const comment=useRef()
 
   const currentUser = useSelector(
     (state) => state.currentUser?.user.currentUser
@@ -53,7 +55,7 @@ const SinglePost = ({ post }) => {
     }
 
   const handleChange= async (event) => {
-    setWriteComment({text: comment.current.value});
+    setWrittenComment({text: comment.current.value});
   }
 
   useEffect(() => {
@@ -82,6 +84,20 @@ const SinglePost = ({ post }) => {
     setLike(!like);
   };
 
+
+const handleKeyDown = async (event) => {
+    if (event.key === 'Enter') {
+      const writtenComment = {
+          text: comment.current.value,
+          postId: postId
+      }
+      console.log("writtenComment", writtenComment)
+      dispatch(writeCommentOnFeedsAction(postId, comment.current.value))    }
+  }
+
+  const handleChange= async (event) => {
+    setWrittenComment({text: comment.current.value,});
+  }
   return (
     <>
       <PostOptionsV post={post} show={showPopup} close={setPopup} />{" "}
