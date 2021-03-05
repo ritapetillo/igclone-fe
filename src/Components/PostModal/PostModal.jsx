@@ -51,7 +51,7 @@ const PostModal = props => {
     };
   };
 
-  const commentId =props.content && props.content.comments;
+  const commentId = props.content && props.content.comments;
   console.log("comments", comments)
   console.log("props.content", props.content);
 
