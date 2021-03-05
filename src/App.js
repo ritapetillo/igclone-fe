@@ -6,7 +6,6 @@ import Navbar from "./Components/Navbar/Navbar";
 import Login from "./Pages/Login";
 
 import SocketTest from "./Pages/SocketTest";
-import Feed from "./Pages/Feed/Feeds";
 import Profile from "./Pages/Profile/Profile";
 
 import SinglePost from "./Components/SinglePost/SinglePost";
@@ -22,11 +21,12 @@ import { getCurrentChat } from "./Actions/chatActions";
 import { loginAction } from "./Actions/userActions";
 import { AuthContext } from "./Context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
-
+import Feeds from "./Pages/feed/Feeds";
 
 function App() {
   return (
     <div className="App">
+      
       <Switch>
         <Route exact path="/login" component={SignIn} />
         <Route exact path="/signup" component={SignUp} />
@@ -41,7 +41,7 @@ function App() {
             <Route exact path="/inbox" component={Inbox} />
 
             <Route exact path="/login2" component={Login} />
-            <Route exact path="/" component={Feed} />
+            <Route exact path="/" component={Feeds} />
           </div>
         </AuthContext>
       </Switch>
