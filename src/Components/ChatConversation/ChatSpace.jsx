@@ -51,6 +51,9 @@ const ChatSpace = () => {
     console.log(socket);
     socket.emit("joinRoom", () => {
       console.log("joined Rooms");
+      return () => {
+        socket.emit("disconnect");
+      };
     });
     if (socket) {
       socket.on("message", (message) => {
@@ -59,7 +62,6 @@ const ChatSpace = () => {
         arrayMsg.push(message);
         setMessages([]);
         const newMessages = messages.push(message);
-        scrollDown();
       });
       socket.on("isTyping", (status) => {
         console.log("typing");

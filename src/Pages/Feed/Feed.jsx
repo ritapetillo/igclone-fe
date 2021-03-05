@@ -8,11 +8,11 @@ import { fetchAllUsers } from "../../Api/userApi";
 import { socketContext } from "../../Context/SocketContext";
 
 //*styles
-import "./Feed.scss";
+import "./feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.post.followingUsersPosts);
+  const posts = useSelector((state) => state.post.followingUsersPosts);
   const { socket } = useContext(socketContext);
   useEffect(() => {
     dispatch(getFollowingUsersPostsAction());
@@ -25,7 +25,7 @@ const Feed = () => {
         <Row className="justify-content-between " id="feed">
           <Col md={12} lg={12} xl={4} className="d-flex p-0 ">
             <div className="Feed__post mx-auto ">
-              {posts ? posts?.map(post => <SinglePost post={post} />) : ""}
+              {posts ? posts?.map((post) => <SinglePost post={post} />) : ""}
             </div>
           </Col>
           <Col xs={0} md={0} lg={5}>

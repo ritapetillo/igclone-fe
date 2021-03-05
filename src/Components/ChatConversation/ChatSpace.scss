@@ -56,10 +56,10 @@
     padding: 10px 20px;
     .chat-space__body-message-space {
       overflow-y: auto;
-      height: 100%;
+      height: 600px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: end;
 
       .chat-space__message {
         overflow-anchor: none;
