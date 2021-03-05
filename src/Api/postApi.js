@@ -60,9 +60,11 @@ export const makeNewPost = async (formData) => {
   }
 };
 
-export const editMyPost = async (postID) => {
+export const editMyPost = async (data, postId) => {
   try {
-    const post = await axios.put(`${REACT_APP_API_URI}/api/post/${postID}`, {
+    const post = await axios.put(`${REACT_APP_API_URI}/api/post/${postId}`,
+    data,
+    {
       withCredentials: true,
     });
     return post.data;
