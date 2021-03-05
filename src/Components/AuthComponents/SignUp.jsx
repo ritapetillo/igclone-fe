@@ -26,7 +26,7 @@ const SignUp = () => {
     dispatch(registerUserAction());
   }, [username, fullname, email, password]);
 
-  const handleRegister = e => {
+  const handleRegister = (e) => {
     e.preventDefault();
 
     const credentials = {
@@ -77,7 +77,6 @@ const SignUp = () => {
             >
               <Button
                 className="SignUp__button py-2 px-4 d-flex justify-content-center"
-                type="submit"
                 onClick={() => {
                   window.location.href = `${REACT_APP_API_URI}/api/auth/facebook`;
                 }}
