@@ -21,7 +21,7 @@ const Sidebar = props => {
   const followingUsers = useSelector(
     state => state.currentUser?.user?.currentUser?.following
   );
-console.log("followingUsers._id", followingUsers._id)
+  console.log("followingUsers._id", followingUsers._id);
   useEffect(() => {
     isFollow();
     setUsersFollow([...usersFollow, followingUsers._id]);
@@ -33,7 +33,7 @@ console.log("followingUsers._id", followingUsers._id)
     setFollow(follow);
   };
 
-  const handleFollow = async ()  => {
+  const handleFollow = async () => {
     if (follow) {
       await unfollowUser(followingUsers._id);
       const newArray = usersFollow.filter(user => user !== followingUsers._id);
@@ -46,97 +46,95 @@ console.log("followingUsers._id", followingUsers._id)
   };
 
   return (
-    <div className="Sidebar__cointainer d-inline-blok  pt-5">
-      <Container>
-        <div className="Sidebar__header d-inline">
-          <Row>
-{currentUser && currentUser?.imageUrl ? (
+    <div className="Sidebar__cointainer d-inline-blok ml-5 pt-5 d-none d-xl-block">
+      <div className="Sidebar__header d-inline ">
+        <Row>
+          {currentUser && currentUser?.imageUrl ? (
+            <img
+              className="Sidebar__header__avatar"
+              src={currentUser?.imageUrl}
+              alt="avatar placeholder"
+            />
+          ) : (
+            <img
+              className="Sidebar__header__avatar"
+              src="https://i.pravatar.cc/300"
+              alt="avatar placeholder"
+            />
+          )}
 
-              <img
-                className="Sidebar__header__avatar"
-                src={currentUser?.imageUrl}
-                alt="avatar placeholder"
-              />
-            ) : (
-              <img
-                className="Sidebar__header__avatar"
-                src="https://i.pravatar.cc/300"
-                alt="avatar placeholder"
-              />
-            )}
-
-            <Col className="Sidebar__header__content">
-              <h5 className="Sidebar__header__username">
-                {currentUser?.username}
-              </h5>
-              <p className="text-muted d-flex flex-grow-1 Sidebar__header__description">
-                {currentUser?.name}
-                {currentUser?.lastname}
-              </p>
-            </Col>
-            <Col className="p-0 text-right">
-              <span className="Sidebar__header__button  ">Switch</span>
-            </Col>
-          </Row>
-        </div>
-        <Row className="Sidebar__suggestion d-flex justify-content-between   align-items-center">
-          <h6 className=" font-weight-bold Sidebar__suggestion__title  text-black-50 m-0 mr-4">
-            Suggestions for you
-          </h6>
+          <Col className="Sidebar__header__content">
+            <h5 className="Sidebar__header__username">
+              {currentUser?.username}
+            </h5>
+            <p className="text-muted d-flex flex-grow-1 Sidebar__header__description">
+              {currentUser?.name}
+              {currentUser?.lastname}
+            </p>
+          </Col>
           <Col className="p-0 text-right">
-            <Button
-              className="
+            <span className="Sidebar__header__button  ">Switch</span>
+          </Col>
+        </Row>
+      </div>
+      <Row className="Sidebar__suggestion d-flex justify-content-between   align-items-center">
+        <h6 className=" font-weight-bold Sidebar__suggestion__title  text-black-50 m-0 mr-4">
+          Suggestions for you
+        </h6>
+        <Col className="p-0 text-right">
+          <Button
+            className="
               Sidebar__suggestion__button 
               Sidebar__suggestion__Suggestbutton p-0"
-            >
-              See all
-            </Button>
-          </Col>
-          {followingUsers &&
-            followingUsers.slice(0, 4).map(following => (
-              <>
-                <Row key={uniqid} className="mb-3 mt-2">
-                  {following.imageUrl ? (
-                    <img
-                      className="Sidebar__suggestion__avatar ml-3 align-self-center"
-                      src={following.imageUrl}
-                      alt="avatar placeholder"
-                    />
-                  ) : (
-                    <img
-                      className="Sidebar__suggestion__avatar ml-3 align-self-center"
-                      src="https://i.pravatar.cc/300"
-                      alt="avatar placeholder"
-                    />
-                  )}
+          >
+            See all
+          </Button>
+        </Col>
+        {followingUsers &&
+          followingUsers.slice(0, 4).map(following => (
+            <>
+              <Row key={uniqid} className="mb-3 mt-2">
+                {following.imageUrl ? (
+                  <img
+                    className="Sidebar__suggestion__avatar ml-3 align-self-center"
+                    src={following.imageUrl}
+                    alt="avatar placeholder"
+                  />
+                ) : (
+                  <img
+                    className="Sidebar__suggestion__avatar ml-3 align-self-center"
+                    src="https://i.pravatar.cc/300"
+                    alt="avatar placeholder"
+                  />
+                )}
 
-                  <Col className="flex-grow-1 mr-3 Sidebar__suggestion__content justify-content-between">
-                    <h6
-                      onClick={handleShow}
-                      className="mb-0 Sidebar__suggestion__username bolder"
-                    >
-                      {following.username}
-                    </h6>
-
-                    <span className="Sidebar__suggestion__description text-right p-0 w-100">
-                      Followed
-                    </span>
-                  </Col>
-                  <div
-                    className=" ml-3 pl-3 Sidebar__suggestion__button"
-                    onClick={() => handleFollow()}
+                <Col className="flex-grow-1 mr-3 Sidebar__suggestion__content justify-content-between">
+                  <h6
+                    onClick={handleShow}
+                    className="mb-0 Sidebar__suggestion__username bolder"
                   >
-                    <div>{isFollow ? "Unfollow" : "Follow"}</div>
-                  </div>
-                  {/* <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
+                    {following.username}
+                  </h6>
+
+                  <span className="Sidebar__suggestion__description text-right p-0 w-100">
+                    Followed
+                  </span>
+                </Col>
+                <div
+                  className=" ml-3 pl-3 Sidebar__suggestion__button"
+                  onClick={() => handleFollow()}
+                >
+                  <div>{isFollow ? "Unfollow" : "Follow"}</div>
+                </div>
+                {/* <Button className=" ml-3 pl-3 Sidebar__suggestion__button">
                     Unfollow
                   </Button> */}
-                </Row>
-              </>
-            ))}
-        </Row>
+              </Row>
+            </>
+          ))}
+      </Row>
 
-        {/* 
+      {/* 
           
           <Modal >
             <Modal.Header closeButton>
@@ -154,7 +152,7 @@ console.log("followingUsers._id", followingUsers._id)
               </Button>
             </Modal.Footer> 
           </Modal>*/}
-        {/* <div show={show} onHide={handleClose} className="Sidebar__modal">
+      {/* <div show={show} onHide={handleClose} className="Sidebar__modal">
           <div className="Sidebar__modal__header"></div>
             <img
               className="Sidebar__modal__avatar "
@@ -171,7 +169,6 @@ console.log("followingUsers._id", followingUsers._id)
           <div className="Sidebar__modal__postPreview"></div>
           <div className="Sidebar__modal__footer"></div>
         </div>*/}
-      </Container>
     </div>
   );
 };
