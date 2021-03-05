@@ -6,7 +6,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import Login from "./Pages/Login";
 
 import SocketTest from "./Pages/SocketTest";
-import Feed from "./Pages/feed/Feeds";
+import Feed from "./Pages/Feed/Feed";
 import Profile from "./Pages/Profile/Profile";
 
 import SinglePost from "./Components/SinglePost/SinglePost";
