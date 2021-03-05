@@ -126,12 +126,13 @@ export const getFollowingUsersPostsAction = () => async (dispatch) => {
 };
 
 //ALL OF A USER's POSTS
-export const getUsersPostAction = () => async (dispatch) => {
+export const getUsersPostAction = (username) => async (dispatch) => {
   try {
     dispatch({
       type: POST_LOADING,
     });
-    const posts = await getPostsFromUser();
+    const posts = await getPostsFromUser(username);
+    console.log(posts);
     if (posts) {
       dispatch({
         type: A_USERS_POSTS_SUCCESS,

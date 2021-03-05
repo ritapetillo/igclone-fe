@@ -33,7 +33,6 @@ const ChatSpace = () => {
   const emjoiiIcon = useRef();
 
   useClickOutside(emjoiiBox, emjoiiIcon, () => setEmojii(false));
-  console.log(socket);
 
   useEffect(() => {
     disaptch(getCurrentChat(params.roomId));

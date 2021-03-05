@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import "./Navbar.scss";
 import SearchResultRow from "../../Components/SearchResultRow/SearchResultRow";
 import Logo from "../../Assets/ig-logo.png";
@@ -20,6 +20,7 @@ import { searchUser } from "../../Api/userApi";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../../Actions/userActions";
+import { socketContext } from "../../Context/SocketContext";
 
 const Navbar = () => {
   const userSearch = useRef();
@@ -27,12 +28,16 @@ const Navbar = () => {
   const [show, setShow] = useState(false);
   const [profileDD, setProfileDD] = useState(false);
   const [searchRes, setShowSR] = useState(false);
+  const { msgReceived, resetMsgNotification } = useContext(socketContext);
 
   const dispatch = useDispatch();
+  const handleCloseSearch = () => {
+    setShowSR(!searchRes);
+  };
 
   useEffect(() => {
-    // dispatch(loginAction());
-  }, []);
+    console.log(msgReceived);
+  }, [msgReceived]);
 
   const state = useSelector((state) => state);
 
@@ -101,7 +106,12 @@ const Navbar = () => {
           >
             <div className="navbar-search-result" style={{ display: "block" }}>
               {users ? (
-                users.map((user) => <SearchResultRow user={user} />)
+                users.map((user) => (
+                  <SearchResultRow
+                    user={user}
+                    handleCloseSearch={handleCloseSearch}
+                  />
+                ))
               ) : (
                 <SearchResultRow />
               )}
@@ -116,7 +126,7 @@ const Navbar = () => {
         content={
           <div className="navbar-profile-dropdown">
             <div className="navbar-profile-dropdown-option">
-              <Link to="/profile">
+              <Link to="/profile/me">
                 <CgProfile /> Profile
               </Link>
             </div>
@@ -138,7 +148,7 @@ const Navbar = () => {
       {/*--------------------- NAVBAR ---------------------*/}
       <div className="nav-wrap">
         <div className="nav-bar-content">
-          <Link to="/feed">
+          <Link to="/">
             {" "}
             <img src={Logo} className="nav-bar-logo" />{" "}
           </Link>
@@ -167,10 +177,20 @@ const Navbar = () => {
               />{" "}
             </Link>
             <Link to="/inbox">
-              <IoPaperPlaneOutline
-                className="nav-icon"
-                style={{ color: "black" }}
-              />
+              <div
+                className="navbar__link-container"
+                onClick={() => resetMsgNotification()}
+              >
+                <IoPaperPlaneOutline
+                  className="nav-icon"
+                  style={{ color: msgReceived != 0 ? "pink" : "black" }}
+                />
+                {msgReceived != 0 && (
+                  <span class="badge badge-pill badge-primary">
+                    {msgReceived}
+                  </span>
+                )}
+              </div>
             </Link>
             <IoCompassOutline className="nav-icon" />
             <IoHeartOutline

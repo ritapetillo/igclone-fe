@@ -88,7 +88,7 @@ export const editProfileAction = data => async dispatch => {
   }
 };
 
-export const deleteProfileAction = () => async dispatch => {
+export const deleteProfileAction = () => async (dispatch) => {
   try {
     dispatch({
       type: PROFILE_LOADING,
@@ -110,7 +110,7 @@ export const deleteProfileAction = () => async dispatch => {
   }
 };
 
-export const changeProfilePictureAction = data => async dispatch => {
+export const changeProfilePictureAction = (data) => async (dispatch) => {
   try {
     dispatch({
       type: PROFILE_LOADING,
@@ -128,6 +128,29 @@ export const changeProfilePictureAction = data => async dispatch => {
       payload: {
         error_msg: "There was a problem updating your profile picture",
       },
+    });
+  }
+};
+
+export const getSelectedUserProfile = (username) => async (dispatch) => {
+  try {
+    console.log("sfsd");
+    dispatch({
+      type: SELECTED_USER_LOADING,
+    });
+    //if there are credentials (which means we are logging in with email and pass)
+
+    const selectedUser = await fetchByUsername(username);
+    if (selectedUser)
+      dispatch({
+        type: SELECTED_USER_SUCCESS,
+        payload: selectedUser,
+      });
+    else throw Error;
+    //after producing tokens, get currentuser
+  } catch (err) {
+    dispatch({
+      type: SELECTED_USER_ERROR,
     });
   }
 };

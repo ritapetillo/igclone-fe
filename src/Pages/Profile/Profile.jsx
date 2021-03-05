@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import "./Profile.scss";
 import "../../Styling/Shapes.scss";
@@ -17,8 +17,14 @@ import Save from "../../Assets/save.svg";
 import Tagged from "../../Assets/tagged.svg";
 import Placeholder from "../../Assets/placeholder.png";
 
-import { getCurrentUserPostsAction } from "../../Actions/postActions";
-import { changeProfilePictureAction } from "../../Actions/userActions";
+import {
+  getCurrentUserPostsAction,
+  getUsersPostAction,
+} from "../../Actions/postActions";
+import {
+  changeProfilePictureAction,
+  getSelectedUserProfile,
+} from "../../Actions/userActions";
 import {
   editProfileAction,
   deleteProfileAction,
@@ -34,7 +40,9 @@ const Profile = () => {
   const [file, setFile] = useState();
 
   const dispatch = useDispatch();
-  const state = useSelector(state => state);
+  const [change, setChange] = useState();
+  const state = useSelector((state) => state);
+  const params = useParams();
   const saveNewProfile = async () => {
     dispatch(
       editProfileAction({
@@ -46,12 +54,31 @@ const Profile = () => {
     );
     setEditMode(false);
   };
+  const getSelectedProfile = useCallback(() => {
+    dispatch(getSelectedUserProfile(params.id));
+    dispatch(getUsersPostAction(params.id));
+    {
+      state.currentUser.selectedUser.user &&
+        setProfile({
+          username: state.currentUser.selectedUser.user.username,
+          name: state.currentUser.selectedUser.user.name,
+          lastname: state.currentUser.selectedUser.user.lastname,
+          bio: state.currentUser.selectedUser.user.bio,
+          followers: state.currentUser.selectedUser.user.followers,
+          following: state.currentUser.selectedUser.user.following,
+          imageUrl: state.currentUser.selectedUser.user.imageUrl,
+        });
+    }
+  }, [
+    params,
+    state.currentUser.selectedUser?.user?._id,
+    state.currentUser.user?.currentUser?._id,
+  ]);
 
-  const onChangeHandler = e => {
-    setProfile({ ...profile, [e.target.id]: e.target.value });
-  };
-  useEffect(() => {
+  const getCurrentUserProfile = useCallback(() => {
     dispatch(getCurrentUserPostsAction());
+    dispatch(getUsersPostAction(params.id));
+
     {
       state.currentUser.user.currentUser &&
         setProfile({
@@ -64,14 +91,67 @@ const Profile = () => {
           imageUrl: state.currentUser.user.currentUser.imageUrl,
         });
     }
-  }, []);
+  }, [params, state.currentUser.user?.currentUser?._id]);
 
-  const propicInput = file => {
+  const onChangeHandler = (e) => {
+    setProfile({ ...profile, [e.target.id]: e.target.value });
+  };
+  useEffect(() => {
+    if (params.id == "me") {
+      getCurrentUserProfile();
+    } else {
+      getSelectedProfile();
+    }
+  }, [params.id]);
+
+  useEffect(() => {
+    if (params.id == "me") {
+      getCurrentUserProfile();
+    } else {
+      console.log(params.id);
+      getSelectedProfile();
+    }
+  }, [getSelectedProfile]);
+
+  const propicInput = (file) => {
     setFile(file);
     const fd = new FormData();
     fd.append("image", file);
     dispatch(changeProfilePictureAction(fd));
   };
+  const posts = useMemo(() => {
+    if (params.id == "me" && state.post.currentUserPosts) {
+      return state.post.currentUserPosts.map((post) => (
+        <>
+          <img
+            src={post.image}
+            className="profile-post-single"
+            onClick={() => {
+              setSelected(post);
+              setShowPost(!showPost);
+            }}
+          />
+        </>
+      ));
+    } else {
+      return state.post.userPosts.map((post) => (
+        <>
+          <img
+            src={post.image}
+            className="profile-post-single"
+            onClick={() => {
+              setSelected(post);
+              setShowPost(!showPost);
+            }}
+          />
+        </>
+      ));
+    }
+  }, [
+    params,
+    state.currentUser.selectedUser?.user?._id,
+    state.currentUser.user?.currentUser?._id,
+  ]);
 
   return (
     <div className="profile-wrap">
@@ -82,7 +162,7 @@ const Profile = () => {
             type="file"
             style={{ display: "none" }}
             id="propic"
-            onChange={e => propicInput(e.target.files[0])}
+            onChange={(e) => propicInput(e.target.files[0])}
           />
           <label for="propic">
             <div className="story-lg">
@@ -105,24 +185,29 @@ const Profile = () => {
                   type="text"
                   className="edit-mode__input"
                   id="username"
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   value={profile && profile.username}
                 />
               )}
             </span>
-            <input
-              type="button"
-              value={!editMode ? "Edit Profile" : "Save Profile"}
-              className="profile-info-edit-user"
-              onClick={
-                !editMode ? () => setEditMode(true) : () => saveNewProfile()
-              }
-            />
-            <IoSettingsOutline
-              className="profile-info-edit-settings"
-              onClick={() => setShowModal(!showModal)}
-            />
-            <UserOptions show={showModal} close={setShowModal} />
+            {params.id === "me" && (
+              <>
+                <input
+                  type="button"
+                  value={!editMode ? "Edit Profile" : "Save Profile"}
+                  className="profile-info-edit-user"
+                  onClick={
+                    !editMode ? () => setEditMode(true) : () => saveNewProfile()
+                  }
+                />
+
+                <IoSettingsOutline
+                  className="profile-info-edit-settings"
+                  onClick={() => setShowModal(!showModal)}
+                />
+                <UserOptions show={showModal} close={setShowModal} />
+              </>
+            )}
           </div>
           <div className="profile-info-interaction">
             <div className="profile-info-interaction-single">
@@ -156,7 +241,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={profile && profile.name}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   className="edit-mode__input"
                   id="name"
                 />
@@ -168,7 +253,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={profile && profile.lastname}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   className="edit-mode__input"
                   id="lastname"
                 />
@@ -181,7 +266,7 @@ const Profile = () => {
                 <textarea
                   className="edit-more__textarea"
                   value={profile.bio}
-                  onChange={e => onChangeHandler(e)}
+                  onChange={(e) => onChangeHandler(e)}
                   id="bio"
                   rows={3}
                 />
@@ -251,19 +336,7 @@ const Profile = () => {
       </div>
       {/* -----------------------------POSTS----------------------------- */}
       <div className="profile-post">
-        {state.post.currentUserPosts &&
-          state.post.currentUserPosts.map(post => (
-            <>
-              <img
-                src={post.image}
-                className="profile-post-single"
-                onClick={() => {
-                  setSelected(post);
-                  setShowPost(!showPost);
-                }}
-              />
-            </>
-          ))}
+        {posts}
         <PostModal show={showPost} close={setShowPost} content={selected} />
       </div>
     </div>

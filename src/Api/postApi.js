@@ -16,12 +16,13 @@ export const getPostsFromFollowers = async () => {
 export const getPostsFromUser = async (username) => {
   try {
     const posts = await axios.get(
-      `${REACT_APP_API_URI}/api/post/user${username}`,
+      `${REACT_APP_API_URI}/api/post/user/all/${username}`,
 
       {
         withCredentials: true,
       }
     );
+    return posts.data;
   } catch (error) {
     console.log(error);
     return null;

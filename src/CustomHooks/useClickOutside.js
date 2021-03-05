@@ -3,10 +3,10 @@ import { BsWindow } from "react-icons/bs";
 
 const useOutsideClick = (ref, ref2, callback) => {
   const handleClick = (e) => {
-    console.log("dsfd");
+   
 
     if (
-      ref.current &&
+      ref.current && ref2.current&&
       !ref.current.contains(e.target) &&
       !ref2.current.contains(e.target)
     ) {

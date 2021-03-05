@@ -8,10 +8,14 @@ import {
   REGISTER_FAIL,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
+  SELECTED_USER_LOADING,
+  SELECTED_USER_SUCCESS,
+  SELECTED_USER_ERROR,
 } from "../Actions/types";
 
 const initialState = {
   user: {},
+  selectedUser: {},
   isAuth: false,
   loading: false,
   registerUser: {},
@@ -58,6 +62,11 @@ const currentUserReducer = (state = initialState, { type, payload }) => {
         error_msg: "Wrong Username and/or Password",
       };
     case REGISTER_LOADING:
+       return {
+        ...state,
+        loading: true,
+      };
+    case SELECTED_USER_LOADING:
       return {
         ...state,
         loading: true,
@@ -79,6 +88,20 @@ const currentUserReducer = (state = initialState, { type, payload }) => {
         error_msg: "Error with registration, possible missing required details",
       };
 
+    case SELECTED_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        selectedUser: payload,
+        error_msg: "",
+      };
+    case SELECTED_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+        selectedUser: {},
+        error_msg: "Profile not existing",
+      };
     default:
       return state;
   }

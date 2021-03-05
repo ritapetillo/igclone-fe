@@ -1,19 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import Sidebar from "../../Components/Sidebar";
 import SinglePost from "../../Components/SinglePost/SinglePost";
 import { getFollowingUsersPostsAction } from "../../Actions/postActions";
 import { fetchAllUsers } from "../../Api/userApi";
+import { socketContext } from "../../Context/SocketContext";
+
 //*styles
-import "./Feed.scss";
+import "./feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  const posts = useSelector(state => state.post.followingUsersPosts);
-
+  const posts = useSelector((state) => state.post.followingUsersPosts);
+  const { socket } = useContext(socketContext);
   useEffect(() => {
     dispatch(getFollowingUsersPostsAction());
+    socket.emit("checkFollowers");
   }, []);
 
   return (
