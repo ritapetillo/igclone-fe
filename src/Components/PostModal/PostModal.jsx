@@ -89,7 +89,7 @@ const PostModal = (props) => {
               <div className="popup-header">
                 <div>
                   <img src="https://picsum.photos/600" className="circle-sm" />
-                  <span>{props.content && props.content.authorId}</span>
+                  <span>{props.content && props.content.authorId.username}</span>
                 </div>
               </div>
               <div className={props.show ? "wrapper-show-post" : "wrapper-hidden-post"} >
@@ -168,7 +168,7 @@ const PostModal = (props) => {
                 </div>
                 <div className="popup-like-count">
                   <img src="https://picsum.photos/600" />{" "}
-                  <span>{props.content && props.content.authorId}</span> and{" "}
+                  <span>{props.content && props.content.authorId.username}</span> and{" "}
                   <span>xx others</span> like this
               </div>
                 <div className="popup-time">1 year</div>
