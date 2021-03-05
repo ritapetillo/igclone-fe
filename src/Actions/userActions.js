@@ -1,8 +1,29 @@
 import { getCurrentUserApi, userLoginApi } from "../Api/authApi.js";
-import {editProfile, deleteProfile, uploadProfilePicture, fetchAllUsers} from "../Api/userApi.js";
-import { LOGIN_FAIL, LOGIN_LOADING, LOGIN_SUCCESS, PROFILE_LOADING, PROFILE_SUCCESS, PROFILE_ERROR } from "./types.js";
 
-export const loginAction = (credentials = "") => async (dispatch) => {
+
+import {
+  editProfile,
+  deleteProfile,
+  uploadProfilePicture,
+  registerUser,
+  fetchByUsername
+} from "../Api/userApi.js";
+import {
+  LOGIN_FAIL,
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
+  PROFILE_LOADING,
+  PROFILE_SUCCESS,
+  PROFILE_ERROR,
+  REGISTER_FAIL,
+  REGISTER_LOADING,
+  REGISTER_SUCCESS,
+  SELECTED_USER_LOADING,
+  SELECTED_USER_SUCCESS,
+  SELECTED_USER_ERROR
+} from "./types.js";
+
+export const loginAction = (credentials = "") => async dispatch => {
   try {
     dispatch({
       type: LOGIN_LOADING,
