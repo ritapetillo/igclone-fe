@@ -6,7 +6,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import Login from "./Pages/Login";
 
 import SocketTest from "./Pages/SocketTest";
-import Feed from "./Pages/Feed/Feeds";
+import Feed from "./Pages/feed/Feeds";
 import Profile from "./Pages/Profile/Profile";
 
 import SinglePost from "./Components/SinglePost/SinglePost";
@@ -22,7 +22,6 @@ import { getCurrentChat } from "./Actions/chatActions";
 import { loginAction } from "./Actions/userActions";
 import { AuthContext } from "./Context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
-import Feeds from "./Pages/Feed/feed";
 
 function App() {
   return (
