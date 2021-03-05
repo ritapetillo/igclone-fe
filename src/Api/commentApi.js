@@ -37,11 +37,11 @@ export const newComment = async (data) => {
   }
 };
 
-export const editComment = async (data) => {
+export const editComment = async (data, postId) => {
   try {
     const comment = await axios.put(
-      `${REACT_APP_API_URI}/api/post/comments/${data.commentId}`,
-      {text: data.text, postId: data.postId},
+      `${REACT_APP_API_URI}/api/post/comments/${data._id}`,
+      {text: data.text, postId: postId},
       {
         withCredentials: true,
       }
@@ -53,10 +53,10 @@ export const editComment = async (data) => {
   }
 };
 
-export const deleteComment = async (postId, commentId) => {
+export const deleteComment = async (data, postId) => {
   try {
     const comment = await axios.delete(
-      `${REACT_APP_API_URI}/api/post/comments/${postId}/${commentId}`,
+      `${REACT_APP_API_URI}/api/post/comments/${postId}/${data._id}`,
       {
         withCredentials: true,
       }

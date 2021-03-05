@@ -73,14 +73,14 @@ export const writeCommentOnProfileAction = (data) => async dispatch => {
 };
 
 
-export const editCommentAction = (data) => async dispatch => {
+export const editCommentAction = (data, postId) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await editComment(data);
+    const comment = await editComment(data, postId);
     if (comment) {
-      dispatch(getPostComments(data.postId));
+      dispatch(getPostComments(postId));
     } else throw new Error();
   } catch (error) {
     dispatch({
@@ -92,14 +92,14 @@ export const editCommentAction = (data) => async dispatch => {
   }
 };
 
-export const deleteCommentAction = (data) => async dispatch => {
+export const deleteCommentAction = (data, postId) => async dispatch => {
   try {
     dispatch({
       type: COMMENT_LOADING,
     });
-    const comment = await deleteComment(data);
+    const comment = await deleteComment(data, postId);
     if (comment) {
-      dispatch(getPostComments(data.postId));
+      dispatch(getPostComments(postId));
     } else throw new Error();
   } catch (error) {
     dispatch({
