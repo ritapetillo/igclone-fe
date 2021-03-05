@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import Sidebar from "../../Components/Sidebar";
@@ -6,7 +6,7 @@ import SinglePost from "../../Components/SinglePost/SinglePost";
 import { getFollowingUsersPostsAction } from "../../Actions/postActions";
 import { fetchAllUsers } from "../../Api/userApi";
 //*styles
-import "./feed.scss";
+import "./Feed.scss";
 
 const Feed = () => {
   const dispatch = useDispatch();
